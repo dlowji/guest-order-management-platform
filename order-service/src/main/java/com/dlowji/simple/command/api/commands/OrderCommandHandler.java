@@ -9,30 +9,7 @@ import org.springframework.stereotype.Component;
 public class OrderCommandHandler {
     @CommandHandler
     public void handle(RequestOrderChangeCommand requestOrderChangeCommand, CommandGateway commandGateway, IOrderRepository orderRepository) {
-        if (!orderRepository.existsById(requestOrderChangeCommand.getOrderId())) {
-            throw new IllegalStateException(String.format("Order with id %s not exists", requestOrderChangeCommand.getOrderId()));
-        }
 
-        boolean select = requestOrderChangeCommand.isSelect();
-        if (select) {
-            SelectDishCommand selectDishCommand = SelectDishCommand.builder()
-                    .orderId(requestOrderChangeCommand.getOrderId())
-                    .dishId(requestOrderChangeCommand.getDishId())
-                    .unit(requestOrderChangeCommand.getUnit())
-                    .price(requestOrderChangeCommand.getPrice())
-                    .quantity(requestOrderChangeCommand.getQuantity())
-                    .build();
-            commandGateway.send(selectDishCommand);
-        } else {
-            DeSelectDishCommand deSelectDishCommand = DeSelectDishCommand.builder()
-                    .orderId(requestOrderChangeCommand.getOrderId())
-                    .dishId(requestOrderChangeCommand.getDishId())
-                    .unit(requestOrderChangeCommand.getUnit())
-                    .price(requestOrderChangeCommand.getPrice())
-                    .quantity(requestOrderChangeCommand.getQuantity())
-                    .build();
-            commandGateway.send(deSelectDishCommand);
-        }
 
     }
 }

@@ -13,4 +13,5 @@ import org.axonframework.modelling.command.TargetAggregateIdentifier;
 public class PlaceOrderCommand {
     @TargetAggregateIdentifier
     private String orderId;
+    private String userId;
 }

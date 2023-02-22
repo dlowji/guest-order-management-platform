@@ -22,7 +22,8 @@ import java.util.Map;
 public class OrderAggregate {
     @AggregateIdentifier
     private String orderId;
-    private final Map<String, Integer> selectedDish = new HashMap<>();
+    private String userId;
+    private Map<String, Integer> selectedDish;
     private boolean confirmed = false;
 
     public OrderAggregate() {
@@ -39,32 +40,51 @@ public class OrderAggregate {
     @CommandHandler
     public void handle(SelectDishCommand selectDishCommand) {
         //validation
-        DishSelectedEvent dishSelectedEvent = new DishSelectedEvent();
+        DishSelectedEvent dishSelectedEvent = DishSelectedEvent.builder()
+                .orderId(selectDishCommand.getOrderId())
+                .userId(selectDishCommand.getUserId())
+                .dishId(selectDishCommand.getDishId())
+                .quantity(selectDishCommand.getQuantity())
+                .build();
 
         AggregateLifecycle.apply(dishSelectedEvent);
     }
 
     @CommandHandler
     public void handle(DeSelectDishCommand deSelectDishCommand) {
-        DishDeSelectedEvent dishDeSelectedEvent = new DishDeSelectedEvent();
+        DishDeSelectedEvent dishDeSelectedEvent = DishDeSelectedEvent.builder()
+                .orderId(deSelectDishCommand.getOrderId())
+                .userId(deSelectDishCommand.getUserId())
+                .dishId(deSelectDishCommand.getDishId())
+                .quantity(deSelectDishCommand.getQuantity())
+                .build();
 
         AggregateLifecycle.apply(dishDeSelectedEvent);
     }
 
     @CommandHandler
     public void handle(PlaceOrderCommand placeOrderCommand) {
-        OrderPlacedEvent orderPlacedEvent = new OrderPlacedEvent();
+        OrderPlacedEvent orderPlacedEvent = OrderPlacedEvent.builder()
+                .orderId(placeOrderCommand.getOrderId())
+                .selectedDish(selectedDish)
+                .build();
+
         AggregateLifecycle.apply(orderPlacedEvent);
     }
 
     @EventSourcingHandler
     public void on(OrderCreatedEvent orderCreatedEvent) {
         this.orderId = orderCreatedEvent.getOrderId();
+        this.userId = orderCreatedEvent.getUserId();
+        this.selectedDish = new HashMap<>();
+        this.confirmed = true;
     }
 
     @EventSourcingHandler
     public void on(DishSelectedEvent dishSelectedEvent) {
         this.orderId = dishSelectedEvent.getOrderId();
+        this.userId = dishSelectedEvent.getUserId();
+        this.confirmed = false;
 
         String dishId = dishSelectedEvent.getDishId();
         if (selectedDish.containsKey(dishId)) {
@@ -78,6 +98,8 @@ public class OrderAggregate {
     @EventSourcingHandler
     public void on(DishDeSelectedEvent dishDeSelectedEvent) {
         this.orderId = dishDeSelectedEvent.getOrderId();
+        this.userId = dishDeSelectedEvent.getUserId();
+        this.confirmed = false;
 
         String dishId = dishDeSelectedEvent.getDishId();
         if (selectedDish.containsKey(dishId)) {
@@ -89,6 +111,7 @@ public class OrderAggregate {
     @EventSourcingHandler
     public void on(OrderPlacedEvent orderPlacedEvent) {
         this.orderId = orderPlacedEvent.getOrderId();
+        this.userId = orderPlacedEvent.getUserId();
         this.confirmed = true;
     }
 }

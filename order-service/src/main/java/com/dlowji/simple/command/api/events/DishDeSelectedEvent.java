@@ -14,7 +14,6 @@ import java.math.BigDecimal;
 public class DishDeSelectedEvent {
     private String orderId;
     private String dishId;
-    private String unit;
-    private BigDecimal price;
     private Integer quantity;
+    private String userId;
 }

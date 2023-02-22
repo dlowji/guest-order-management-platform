@@ -10,5 +10,4 @@ public class CreateOrderCommand {
     @TargetAggregateIdentifier
     private String orderId;
     private String userId;
-
 }

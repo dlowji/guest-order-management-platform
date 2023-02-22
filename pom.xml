@@ -10,6 +10,9 @@
     <packaging>pom</packaging>
     <modules>
         <module>order-service</module>
+        <module>kitchen-service</module>
+        <module>account-service</module>
+        <module>common-service</module>
     </modules>
 
     <properties>
