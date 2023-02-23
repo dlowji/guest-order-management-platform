@@ -18,8 +18,6 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/accounts")
 public class AccountCommandController {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(AccountCommandController.class);
     private final CommandGateway commandGateway;
 
     public AccountCommandController(CommandGateway commandGateway) {
@@ -28,11 +26,13 @@ public class AccountCommandController {
 
     @PostMapping("/create")
     public String create(@RequestBody AccountRequest accountRequest) {
-        LOGGER.debug("Create account");
         try {
             String employeeId = UUID.randomUUID().toString();
+
             RequestCreateEmployeeCommand requestCreateEmployeeCommand = RequestCreateEmployeeCommand.builder()
                     .employeeId(employeeId)
+                    .username(accountRequest.getUsername())
+                    .password(accountRequest.getPassword())
                     .fullName(accountRequest.getFullName())
                     .email(accountRequest.getEmail())
                     .gender(accountRequest.isGender())
@@ -43,21 +43,8 @@ public class AccountCommandController {
                     .roleId(accountRequest.getRoleId())
                     .build();
 
-            commandGateway.sendAndWait(requestCreateEmployeeCommand);
-
-            String accountId = UUID.randomUUID().toString();
-            RequestCreateAccountCommand requestCreateAccountCommand = RequestCreateAccountCommand.builder()
-                    .accountId(accountId)
-                    .username(accountRequest.getUsername())
-                    .password(accountRequest.getPassword())
-                    .employeeId(employeeId)
-                    .build();
-            return commandGateway.sendAndWait(requestCreateAccountCommand);
+            return commandGateway.sendAndWait(requestCreateEmployeeCommand);
         } catch (CommandExecutionException exception) {
-            LOGGER.warn("Create Account Command FAILED with message: {}", exception.getMessage());
-            if (exception.getCause() != null) {
-                LOGGER.warn("Caused by: {} {}", exception.getCause().getClass().getName(), exception.getCause().getMessage());
-            }
             return "";
         }
     }

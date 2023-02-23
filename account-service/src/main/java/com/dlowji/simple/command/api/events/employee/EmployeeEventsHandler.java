@@ -6,8 +6,6 @@ import com.dlowji.simple.command.api.data.IRoleRepository;
 import com.dlowji.simple.command.api.data.Role;
 import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -15,7 +13,6 @@ import java.util.Optional;
 @Component
 @ProcessingGroup("employee")
 public class EmployeeEventsHandler {
-    private final Logger LOGGER = LoggerFactory.getLogger(EmployeeEventsHandler.class);
     private final IEmployeeRepository employeeRepository;
     private final IRoleRepository roleRepository;
 
@@ -26,12 +23,11 @@ public class EmployeeEventsHandler {
 
     @EventHandler
     public void on(EmployeeCreatedEvent employeeCreatedEvent) {
-        LOGGER.info("EmployeeCreatedEvent in Handler for employee Id: {}", employeeCreatedEvent.getEmployeeId());
-//        String roleId = employeeCreatedEvent.getRoleId();
-//        Optional<Role> existRole = roleRepository.findById(roleId);
-//
-//        if (existRole.isPresent()) {
-//            Role role = existRole.get();
+        String roleId = employeeCreatedEvent.getRoleId();
+        Optional<Role> existRole = roleRepository.findById(roleId);
+
+        if (existRole.isPresent()) {
+            Role role = existRole.get();
 
             Employee employee = Employee.builder()
                     .employeeId(employeeCreatedEvent.getEmployeeId())
@@ -42,10 +38,10 @@ public class EmployeeEventsHandler {
                     .salary(employeeCreatedEvent.getSalary())
                     .phone(employeeCreatedEvent.getPhone())
                     .address(employeeCreatedEvent.getAddress())
-//                    .role(role)
+                    .role(role)
                     .build();
             employeeRepository.save(employee);
-//        }
+        }
     }
 }
 

@@ -13,12 +13,12 @@ import org.springframework.stereotype.Component;
 public class EmployeeCommandHandler {
     @CommandHandler
     public void on(RequestCreateEmployeeCommand requestCreateEmployeeCommand, CommandGateway commandGateway, IEmployeeRepository employeeRepository, IRoleRepository roleRepository) {
-        if (employeeRepository.existsByEmail(requestCreateEmployeeCommand.getEmail())) {
-            throw new IllegalStateException(String.format("Email: %s is already exists", requestCreateEmployeeCommand.getEmail()));
-        }
-        if (employeeRepository.existsByPhone(requestCreateEmployeeCommand.getPhone())) {
-            throw new IllegalStateException(String.format("Phone: %s is already exists", requestCreateEmployeeCommand.getPhone()));
-        }
+//        if (employeeRepository.existsByEmail(requestCreateEmployeeCommand.getEmail())) {
+//            throw new IllegalStateException(String.format("Email: %s is already exists", requestCreateEmployeeCommand.getEmail()));
+//        }
+//        if (employeeRepository.existsByPhone(requestCreateEmployeeCommand.getPhone())) {
+//            throw new IllegalStateException(String.format("Phone: %s is already exists", requestCreateEmployeeCommand.getPhone()));
+//        }
 //        if (!roleRepository.existsById(requestCreateEmployeeCommand.getRoleId())) {
 //            throw new IllegalStateException(String.format("Role with id %s does not exist", requestCreateEmployeeCommand.getRoleId()));
 //        }

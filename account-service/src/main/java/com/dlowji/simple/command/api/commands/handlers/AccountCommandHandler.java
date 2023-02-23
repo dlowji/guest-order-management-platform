@@ -14,12 +14,12 @@ import org.springframework.stereotype.Component;
 public class AccountCommandHandler {
     @CommandHandler
     public void handle(RequestCreateAccountCommand requestCreateAccountCommand, CommandGateway commandGateway, IAccountRepository accountRepository, IEmployeeRepository employeeRepository) {
-        if (accountRepository.existsByUsername(requestCreateAccountCommand.getUsername())) {
-            throw new IllegalStateException(String.format("Account with username %s already exists", requestCreateAccountCommand.getUsername()));
-        }
-        if (employeeRepository.existsById(requestCreateAccountCommand.getEmployeeId())) {
-            throw new IllegalStateException(String.format("Employee with id %s does not exist", requestCreateAccountCommand.getEmployeeId()));
-        }
+//        if (accountRepository.existsByUsername(requestCreateAccountCommand.getUsername())) {
+//            throw new IllegalStateException(String.format("Account with username %s already exists", requestCreateAccountCommand.getUsername()));
+//        }
+//        if (employeeRepository.existsById(requestCreateAccountCommand.getEmployeeId())) {
+//            throw new IllegalStateException(String.format("Employee with id %s does not exist", requestCreateAccountCommand.getEmployeeId()));
+//        }
         CreateAccountCommand createAccountCommand = new CreateAccountCommand();
         BeanUtils.copyProperties(requestCreateAccountCommand, createAccountCommand);
         commandGateway.send(createAccountCommand);
