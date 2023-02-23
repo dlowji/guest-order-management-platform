@@ -8,9 +8,6 @@ import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.spring.stereotype.Aggregate;
 
-import java.time.ZonedDateTime;
-import java.util.UUID;
-
 @Aggregate
 public class AccountAggregate {
     @AggregateIdentifier
@@ -26,7 +23,6 @@ public class AccountAggregate {
     public AccountAggregate(CreateAccountCommand createAccountCommand) {
         //encrypt password
         String hashedPwd = createAccountCommand.getPassword();
-
         AccountCreatedEvent accountCreatedEvent = AccountCreatedEvent.builder()
                 .accountId(createAccountCommand.getAccountId())
                 .username(createAccountCommand.getUsername())

@@ -4,58 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89a18001-5f1e-4cd5-bd47-59be2fec2b84" name="Changes" comment="implement order service">
-      <change afterPath="$PROJECT_DIR$/account-service/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/AccountServiceApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/aggregates/AccountAggregate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/aggregates/EmployeeAggregate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/commands/CreateAccountCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/commands/CreateEmployeeCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/commands/RequestCreateAccountCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/commands/RequestCreateEmployeeCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/commands/handlers/AccountCommandHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/commands/handlers/EmployeeCommandHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/controller/AccountCommandController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/data/Account.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/data/Employee.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/data/IAccountRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/data/IEmployeeRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/data/IRoleRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/data/IScheduleRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/data/Role.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/data/Schedule.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/events/account/AccountCreatedEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/events/account/AccountEventsHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/events/employee/EmployeeCreatedEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/events/employee/EmployeeEventsHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/model/AccountRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common-service/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common-service/src/main/java/com/dlowji/simple/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common-service/src/main/java/com/dlowji/simple/data/TimeStamp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kitchen-service/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/KitchenServiceApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/controller/KitchenCommandController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/data/Dish.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/data/Ingredient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/data/Recipe.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/enums/DishStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kitchen-service/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+    <list default="true" id="89a18001-5f1e-4cd5-bd47-59be2fec2b84" name="Changes" comment="implement kitchen-service, account-service, common-service&#10;can create employee and account in account-service">
+      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/saga/AccountProcessingSAGA.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/data/RecipeLineItem.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/aggregate/OrderAggregate.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/aggregate/OrderAggregate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/commands/CreateOrderCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/commands/CreateOrderCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/commands/DeSelectDishCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/commands/DeSelectDishCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/commands/OrderCommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/commands/OrderCommandHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/commands/PlaceOrderCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/commands/PlaceOrderCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/commands/SelectDishCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/commands/SelectDishCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/controller/OrderCommandController.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/controller/OrderCommandController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/events/DishDeSelectedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/events/DishDeSelectedEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/events/DishSelectedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/events/DishSelectedEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/events/OrderPlacedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/events/OrderPlacedEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/controller/OrderQueryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/controller/OrderQueryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/aggregates/AccountAggregate.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/aggregates/AccountAggregate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/aggregates/EmployeeAggregate.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/aggregates/EmployeeAggregate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/commands/CreateAccountCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/commands/CreateAccountCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/commands/CreateEmployeeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/commands/CreateEmployeeCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/commands/RequestCreateEmployeeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/commands/RequestCreateEmployeeCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/commands/handlers/AccountCommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/commands/handlers/AccountCommandHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/commands/handlers/EmployeeCommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/commands/handlers/EmployeeCommandHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/controller/AccountCommandController.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/controller/AccountCommandController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/events/account/AccountCreatedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/events/account/AccountCreatedEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/events/account/AccountEventsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/events/account/AccountEventsHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/events/employee/EmployeeCreatedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/events/employee/EmployeeCreatedEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/events/employee/EmployeeEventsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/events/employee/EmployeeEventsHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/controller/KitchenCommandController.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/controller/KitchenCommandController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/data/Dish.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/data/Dish.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/data/Ingredient.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/data/Ingredient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/data/Recipe.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/data/Recipe.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,6 +82,13 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
   <component name="RunManager" selected="Spring Boot.AccountServiceApplication">
     <configuration name="AccountServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="account-service" />
@@ -169,7 +144,10 @@
       <workItem from="1676970563691" duration="25579000" />
       <workItem from="1677047517732" duration="6055000" />
       <workItem from="1677055936422" duration="2848000" />
-      <workItem from="1677062174226" duration="13134000" />
+      <workItem from="1677062174226" duration="14221000" />
+      <workItem from="1677125436969" duration="2223000" />
+      <workItem from="1677146270398" duration="5679000" />
+      <workItem from="1677153466504" duration="4760000" />
     </task>
     <task id="LOCAL-00001" summary="config pom file of parent folder">
       <created>1676885189780</created>
@@ -185,7 +163,14 @@
       <option name="project" value="LOCAL" />
       <updated>1676996160352</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="implement kitchen-service, account-service, common-service&#10;can create employee and account in account-service">
+      <created>1677081615275</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1677081615275</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -215,6 +200,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="config pom file of parent folder" />
     <MESSAGE value="implement order service" />
-    <option name="LAST_COMMIT_MESSAGE" value="implement order service" />
+    <MESSAGE value="implement kitchen-service, account-service, common-service&#10;can create employee and account in account-service" />
+    <option name="LAST_COMMIT_MESSAGE" value="implement kitchen-service, account-service, common-service&#10;can create employee and account in account-service" />
   </component>
 </project>

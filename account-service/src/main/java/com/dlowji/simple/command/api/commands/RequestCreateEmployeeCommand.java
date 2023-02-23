@@ -14,6 +14,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class RequestCreateEmployeeCommand {
     private String employeeId;
+    private String username;
+    private String password;
     private String fullName;
     private String email;
     private boolean gender;

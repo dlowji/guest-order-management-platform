@@ -21,4 +21,8 @@ public class KitchenCommandController {
         this.commandGateway = commandGateway;
     }
 
+    @PostMapping("/dish/create")
+    public String createDish() {
+        return "";
+    }
 }

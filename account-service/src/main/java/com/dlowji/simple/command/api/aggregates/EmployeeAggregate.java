@@ -25,6 +25,10 @@ public class EmployeeAggregate {
     private String address;
     private String roleId;
 
+    public EmployeeAggregate() {
+
+    }
+
     @CommandHandler
     public EmployeeAggregate(CreateEmployeeCommand createEmployeeCommand) {
         EmployeeCreatedEvent employeeCreatedEvent = new EmployeeCreatedEvent();
