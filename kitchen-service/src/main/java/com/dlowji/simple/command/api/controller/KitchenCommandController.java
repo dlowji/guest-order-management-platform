@@ -1,28 +1,32 @@
 package com.dlowji.simple.command.api.controller;
 
-import com.dlowji.simple.KitchenServiceApplication;
+import com.dlowji.simple.command.api.model.DishRequest;
+import com.dlowji.simple.command.api.service.KitchenCommandService;
 import org.axonframework.commandhandling.gateway.CommandGateway;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/kitchens")
 public class KitchenCommandController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(KitchenServiceApplication.class);
+    private final KitchenCommandService kitchenCommandService;
 
     private final CommandGateway commandGateway;
 
-    public KitchenCommandController(CommandGateway commandGateway) {
+    public KitchenCommandController(KitchenCommandService kitchenCommandService, CommandGateway commandGateway) {
+        this.kitchenCommandService = kitchenCommandService;
         this.commandGateway = commandGateway;
     }
 
-    @PostMapping("/dish/create")
-    public String createDish() {
-        return "";
+    @PostMapping("/create")
+    @ResponseStatus(HttpStatus.CREATED)
+    public CompletableFuture<String> createDish(@RequestBody DishRequest dishRequest) {
+        return kitchenCommandService.createDish(dishRequest);
     }
 }
