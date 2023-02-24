@@ -4,24 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89a18001-5f1e-4cd5-bd47-59be2fec2b84" name="Changes" comment="implement saga pattern to create account">
-      <change afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/aggregate/KitchenAggregate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/commands/CreateDishCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/data/IDishRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/events/DishCreatedEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/events/DishEventsHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/model/DishRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/model/DishResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/service/KitchenCommandService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/query/api/controller/KitchenQueryController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/query/api/projection/KitchenProjection.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/query/api/queries/GetDishesQuery.java" afterDir="false" />
+    <list default="true" id="89a18001-5f1e-4cd5-bd47-59be2fec2b84" name="Changes" comment="implement kitchen service">
+      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/model/AccountResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/controller/AccountQueryController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/projection/AccountProjection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/queries/GetAccountsQuery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/dlowji/simple/ApiGatewayApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/controller/KitchenCommandController.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/controller/KitchenCommandController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/data/Dish.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/data/Dish.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/data/Ingredient.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/data/Recipe.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/data/RecipeLineItem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,6 +78,9 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
   <component name="RunDashboard">
     <option name="configurationTypes">
       <set>
@@ -87,10 +88,23 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.AccountServiceApplication">
+  <component name="RunManager" selected="Spring Boot.ApiGatewayApplication">
     <configuration name="AccountServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="account-service" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.dlowji.simple.AccountServiceApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.dlowji.simple.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ApiGatewayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="api-gateway" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.dlowji.simple.ApiGatewayApplication" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.dlowji.simple.*" />
@@ -123,6 +137,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.ApiGatewayApplication" />
         <item itemvalue="Spring Boot.AccountServiceApplication" />
         <item itemvalue="Spring Boot.OrderServiceApplication (1)" />
       </list>
@@ -147,7 +162,7 @@
       <workItem from="1677146270398" duration="5679000" />
       <workItem from="1677153466504" duration="4760000" />
       <workItem from="1677165946349" duration="249000" />
-      <workItem from="1677231086576" duration="5087000" />
+      <workItem from="1677231086576" duration="12028000" />
     </task>
     <task id="LOCAL-00001" summary="config pom file of parent folder">
       <created>1676885189780</created>
@@ -177,7 +192,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677166004912</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="implement kitchen service">
+      <created>1677238549552</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1677238549552</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -209,6 +231,7 @@
     <MESSAGE value="implement order service" />
     <MESSAGE value="implement kitchen-service, account-service, common-service&#10;can create employee and account in account-service" />
     <MESSAGE value="implement saga pattern to create account" />
-    <option name="LAST_COMMIT_MESSAGE" value="implement saga pattern to create account" />
+    <MESSAGE value="implement kitchen service" />
+    <option name="LAST_COMMIT_MESSAGE" value="implement kitchen service" />
   </component>
 </project>
