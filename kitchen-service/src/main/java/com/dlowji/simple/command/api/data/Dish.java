@@ -6,15 +6,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -23,9 +21,8 @@ public class Dish extends TimeStamp {
     @Id
     private String dishId;
     private String title;
+    private String image;
     private BigDecimal price;
     private String summary;
-    private DishStatus dishStatus;
-    @OneToOne
-    private Recipe recipe;
+    private String dishStatus;
 }
