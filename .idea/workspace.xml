@@ -4,21 +4,44 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89a18001-5f1e-4cd5-bd47-59be2fec2b84" name="Changes" comment="implement kitchen service">
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/model/AccountResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/controller/AccountQueryController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/projection/AccountProjection.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/queries/GetAccountsQuery.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/dlowji/simple/ApiGatewayApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common-service/src/main/resources/application.properties" afterDir="false" />
+    <list default="true" id="89a18001-5f1e-4cd5-bd47-59be2fec2b84" name="Changes" comment="implement api gateway">
+      <change afterPath="$PROJECT_DIR$/common-service/src/main/java/com/dlowji/simple/utils/NumberUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common-service/src/main/java/com/dlowji/simple/utils/StringUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-history-service/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-history-service/src/main/java/com/dlowji/simple/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/aggregate/TableAggregate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/commands/CreateTableCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/controller/TableCommandController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/data/ITableRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/data/SeveredTable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/enums/TableStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/events/TableCreatedEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/events/TableEventsHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/OrderDetailResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/TableRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/TableResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/services/TableCommandService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/controller/TableQueryController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/projection/TableProjection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/queries/GetOrderDetailByIdQuery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/queries/GetOrdersByStatusQuery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/queries/GetOrdersByUserIdQuery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/queries/GetTableByCapacityQuery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/queries/GetTableByIdQuery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/queries/GetTablesByStatusQuery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/queries/GetTablesQuery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/service/OrderQueryService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/service/TableQueryService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/saga/AccountProcessingSAGA.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/saga/AccountProcessingSAGA.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/data/IOrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/data/IOrderRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/data/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/data/Order.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/events/OrderPlacedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/events/OrderPlacedEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/OrderResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/OrderResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/controller/OrderQueryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/controller/OrderQueryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/queries/GetOrdersQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/queries/GetOrdersQuery.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -74,7 +97,8 @@
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;18e21b96d95f4269bdf71505823cb2fe&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;58fecff4e6050aeee4e3b3f3fd6035f7&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -88,7 +112,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.ApiGatewayApplication">
+  <component name="RunManager" selected="Spring Boot.AccountServiceApplication">
     <configuration name="AccountServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="account-service" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.dlowji.simple.AccountServiceApplication" />
@@ -137,8 +161,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Spring Boot.ApiGatewayApplication" />
         <item itemvalue="Spring Boot.AccountServiceApplication" />
+        <item itemvalue="Spring Boot.ApiGatewayApplication" />
         <item itemvalue="Spring Boot.OrderServiceApplication (1)" />
       </list>
     </recent_temporary>
@@ -162,7 +186,10 @@
       <workItem from="1677146270398" duration="5679000" />
       <workItem from="1677153466504" duration="4760000" />
       <workItem from="1677165946349" duration="249000" />
-      <workItem from="1677231086576" duration="12028000" />
+      <workItem from="1677231086576" duration="15648000" />
+      <workItem from="1677477998913" duration="4346000" />
+      <workItem from="1677497889692" duration="51000" />
+      <workItem from="1677566497111" duration="10855000" />
     </task>
     <task id="LOCAL-00001" summary="config pom file of parent folder">
       <created>1676885189780</created>
@@ -199,7 +226,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677238549552</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="implement api gateway">
+      <created>1677246811023</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1677246811023</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -232,6 +266,7 @@
     <MESSAGE value="implement kitchen-service, account-service, common-service&#10;can create employee and account in account-service" />
     <MESSAGE value="implement saga pattern to create account" />
     <MESSAGE value="implement kitchen service" />
-    <option name="LAST_COMMIT_MESSAGE" value="implement kitchen service" />
+    <MESSAGE value="implement api gateway" />
+    <option name="LAST_COMMIT_MESSAGE" value="implement api gateway" />
   </component>
 </project>

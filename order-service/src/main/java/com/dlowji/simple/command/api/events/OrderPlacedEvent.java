@@ -13,7 +13,6 @@ import java.util.Map;
 @AllArgsConstructor
 public class OrderPlacedEvent {
     private String orderId;
-
     private Map<String, Integer> selectedDish;
     private String userId;
 }
