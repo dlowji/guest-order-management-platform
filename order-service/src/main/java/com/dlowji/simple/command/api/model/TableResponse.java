@@ -1,23 +1,21 @@
 package com.dlowji.simple.command.api.model;
 
-import com.dlowji.simple.command.api.enums.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderResponse {
-    private String orderId;
-    private String userId;
-    private OrderStatus orderStatus;
-    private BigDecimal grandTotal;
+@Builder
+public class TableResponse {
+    private String tableId;
+    private String code;
+    private String tableStatus;
+    private Integer capacity;
     private ZonedDateTime createdAt;
     private ZonedDateTime updatedAt;
 }

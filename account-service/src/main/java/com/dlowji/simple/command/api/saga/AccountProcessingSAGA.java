@@ -25,7 +25,6 @@ public class AccountProcessingSAGA {
     @SagaEventHandler(associationProperty = "employeeId")
     public void handle(EmployeeCreatedEvent employeeCreatedEvent) {
         String accountId = UUID.randomUUID().toString();
-
         //associate Saga
         SagaLifecycle.associateWith("accountId", accountId);
         RequestCreateAccountCommand requestCreateAccountCommand = RequestCreateAccountCommand.builder()

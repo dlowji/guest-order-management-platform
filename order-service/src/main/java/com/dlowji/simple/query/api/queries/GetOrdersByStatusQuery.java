@@ -1,14 +1,15 @@
 package com.dlowji.simple.query.api.queries;
 
+import com.dlowji.simple.command.api.enums.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.checkerframework.checker.units.qual.A;
 
-@Builder
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetOrdersQuery {
+public class GetOrdersByStatusQuery {
+    private OrderStatus orderStatus;
 }

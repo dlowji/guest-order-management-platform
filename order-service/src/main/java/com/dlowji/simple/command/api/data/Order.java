@@ -1,24 +1,24 @@
 package com.dlowji.simple.command.api.data;
 
 import com.dlowji.simple.command.api.enums.OrderStatus;
+import com.dlowji.simple.data.TimeStamp;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name="t_orders")
-public class Order {
+public class Order extends TimeStamp {
     @Id
     private String orderId;
     private String userId;
@@ -51,6 +51,4 @@ public class Order {
     private BigDecimal discount;
     //grandTotal = total - itemDiscount - discount
     private BigDecimal grandTotal;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 }

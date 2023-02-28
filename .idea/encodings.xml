@@ -9,6 +9,8 @@
     <file url="file://$PROJECT_DIR$/common-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/kitchen-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/kitchen-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-history-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-history-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />

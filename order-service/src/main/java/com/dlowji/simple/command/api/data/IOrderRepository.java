@@ -1,7 +1,10 @@
 package com.dlowji.simple.command.api.data;
 
+import com.dlowji.simple.command.api.enums.OrderStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface IOrderRepository extends JpaRepository<Order, String> {
+import java.util.List;
 
+public interface IOrderRepository extends JpaRepository<Order, String> {
+    List<Order> findAllByOrderStatus(OrderStatus orderStatus);
 }
