@@ -3,6 +3,7 @@ package com.dlowji.simple.command.api.model;
 import lombok.Builder;
 
 import java.math.BigDecimal;
+import java.time.ZonedDateTime;
 
 @Builder
 public class DishResponse {
@@ -12,4 +13,6 @@ public class DishResponse {
     private BigDecimal price;
     private String summary;
     private String dishStatus;
+    private ZonedDateTime createdAt;
+    private ZonedDateTime updatedAt;
 }

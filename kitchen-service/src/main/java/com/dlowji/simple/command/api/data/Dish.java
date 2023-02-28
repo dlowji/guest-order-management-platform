@@ -2,10 +2,7 @@ package com.dlowji.simple.command.api.data;
 
 import com.dlowji.simple.command.api.enums.DishStatus;
 import com.dlowji.simple.data.TimeStamp;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -25,4 +22,6 @@ public class Dish extends TimeStamp {
     private BigDecimal price;
     private String summary;
     private String dishStatus;
+    @ManyToOne
+    private Category category;
 }
