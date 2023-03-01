@@ -24,6 +24,7 @@ import java.util.UUID;
 public class OrderEventsHandler {
 
     private final IOrderRepository orderRepository;
+
     private final IOrderLineItemRepository orderLineItemRepository;
     @EventHandler
     public void on(OrderCreatedEvent orderCreatedEvent) {
@@ -39,8 +40,6 @@ public class OrderEventsHandler {
                 .promoCode("")
                 .discount(BigDecimal.valueOf(0))
                 .grandTotal(BigDecimal.valueOf(0))
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
                 .build();
         orderRepository.save(order);
     }
