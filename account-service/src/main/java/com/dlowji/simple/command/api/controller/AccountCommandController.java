@@ -1,13 +1,14 @@
 package com.dlowji.simple.command.api.controller;
 
-import com.dlowji.simple.command.api.commands.CreateAccountCommand;
-import com.dlowji.simple.command.api.commands.RequestCreateAccountCommand;
 import com.dlowji.simple.command.api.commands.RequestCreateEmployeeCommand;
+import com.dlowji.simple.command.api.model.AccountLoginRequest;
 import com.dlowji.simple.command.api.model.AccountRequest;
+import com.dlowji.simple.command.api.service.AuthService;
+import com.dlowji.simple.command.api.util.JwtUtil;
 import org.axonframework.commandhandling.CommandExecutionException;
 import org.axonframework.commandhandling.gateway.CommandGateway;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,12 +20,17 @@ import java.util.UUID;
 @RequestMapping("/accounts")
 public class AccountCommandController {
     private final CommandGateway commandGateway;
+    private final AuthService authService;
 
-    public AccountCommandController(CommandGateway commandGateway) {
+    public AccountCommandController(CommandGateway commandGateway, AuthService authService) {
         this.commandGateway = commandGateway;
+        this.authService = authService;
     }
-
-    @PostMapping("/create")
+    @PostMapping("/auth/login")
+    public ResponseEntity<?> login(@RequestBody AccountLoginRequest accountLoginRequest) {
+        return authService.login(accountLoginRequest);
+    }
+    @PostMapping("/auth/register")
     public String create(@RequestBody AccountRequest accountRequest) {
         try {
             String employeeId = UUID.randomUUID().toString();

@@ -14,7 +14,6 @@
         <module>account-service</module>
         <module>common-service</module>
         <module>api-gateway</module>
-        <module>order-history-service</module>
     </modules>
 
     <properties>
