@@ -18,6 +18,8 @@ public class ApiGatewayConfig {
     public RouteLocator routes(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route("accounts", r -> r.path("/accounts/**").filters(f -> f.filter(filter)).uri("http://localhost:8083"))
+                .route("orders", r -> r.path("/orders/**").filters(f -> f.filter(filter)).uri("http://localhost:8081"))
+                .route("kitchens", r -> r.path("/kitchens/**").filters(f -> f.filter(filter)).uri("http://localhost:8082"))
                 .build();
     }
 }

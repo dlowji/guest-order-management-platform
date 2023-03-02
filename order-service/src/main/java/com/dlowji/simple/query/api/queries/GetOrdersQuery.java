@@ -8,7 +8,5 @@ import org.checkerframework.checker.units.qual.A;
 
 @Builder
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class GetOrdersQuery {
 }

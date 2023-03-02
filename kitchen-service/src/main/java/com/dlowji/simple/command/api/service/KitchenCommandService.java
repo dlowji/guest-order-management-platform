@@ -25,7 +25,8 @@ public class KitchenCommandService {
                 .image(dishRequest.getImage())
                 .price(dishRequest.getPrice())
                 .summary(dishRequest.getSummary())
-                .dishStatus(DishStatus.AVAILABLE.toString())
+                .categoryId(dishRequest.getCategoryId())
+                .dishStatus(DishStatus.AVAILABLE)
                 .build();
         return commandGateway.send(createDishCommand);
     }

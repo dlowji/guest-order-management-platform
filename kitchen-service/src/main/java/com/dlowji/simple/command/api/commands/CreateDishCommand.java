@@ -1,5 +1,6 @@
 package com.dlowji.simple.command.api.commands;
 
+import com.dlowji.simple.command.api.enums.DishStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,5 +20,6 @@ public class CreateDishCommand {
     private String image;
     private BigDecimal price;
     private String summary;
-    private String dishStatus;
+    private String categoryId;
+    private DishStatus dishStatus;
 }

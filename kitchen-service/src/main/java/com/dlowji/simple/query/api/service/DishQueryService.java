@@ -5,6 +5,7 @@ import com.dlowji.simple.query.api.queries.GetDishesByCategoryQuery;
 import com.dlowji.simple.query.api.queries.GetDishesQuery;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
+import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

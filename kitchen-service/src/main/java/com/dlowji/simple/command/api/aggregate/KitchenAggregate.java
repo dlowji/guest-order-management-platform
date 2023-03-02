@@ -1,6 +1,7 @@
 package com.dlowji.simple.command.api.aggregate;
 
 import com.dlowji.simple.command.api.commands.CreateDishCommand;
+import com.dlowji.simple.command.api.enums.DishStatus;
 import com.dlowji.simple.command.api.events.DishCreatedEvent;
 import com.dlowji.simple.command.api.service.KitchenCommandService;
 import org.axonframework.commandhandling.CommandHandler;
@@ -17,10 +18,10 @@ public class KitchenAggregate {
     @AggregateIdentifier
     private String dishId;
     private String title;
-    private String image;
     private BigDecimal price;
     private String summary;
-    private String dishStatus;
+    private String categoryId;
+    private DishStatus dishStatus;
 
     public KitchenAggregate() {
 
@@ -37,9 +38,9 @@ public class KitchenAggregate {
     public void on(DishCreatedEvent dishCreatedEvent) {
         this.dishId = dishCreatedEvent.getDishId();
         this.title = dishCreatedEvent.getTitle();
-        this.image = dishCreatedEvent.getImage();
         this.price = dishCreatedEvent.getPrice();
         this.summary = dishCreatedEvent.getSummary();
+        this.categoryId = dishCreatedEvent.getCategoryId();
         this.dishStatus = dishCreatedEvent.getDishStatus();
     }
 }

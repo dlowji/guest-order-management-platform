@@ -1,14 +1,13 @@
 package com.dlowji.simple.command.api.data;
 
+import com.dlowji.simple.command.api.converter.OrderStatusConverter;
 import com.dlowji.simple.command.api.enums.OrderStatus;
 import com.dlowji.simple.data.TimeStamp;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -38,6 +37,8 @@ public class Order extends TimeStamp {
         }
         this.orderLineItemList.remove(orderLineItem);
     }
+    @Column(name = "ORDER_STATUS")
+    @Convert(converter = OrderStatusConverter.class)
     private OrderStatus orderStatus;
     //total price of the order items
     private BigDecimal subTotal;

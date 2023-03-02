@@ -17,14 +17,11 @@ import java.util.concurrent.CompletableFuture;
 public class KitchenCommandController {
     private final KitchenCommandService kitchenCommandService;
 
-    private final CommandGateway commandGateway;
-
-    public KitchenCommandController(KitchenCommandService kitchenCommandService, CommandGateway commandGateway) {
+    public KitchenCommandController(KitchenCommandService kitchenCommandService) {
         this.kitchenCommandService = kitchenCommandService;
-        this.commandGateway = commandGateway;
     }
 
-    @PostMapping("/create")
+    @PostMapping("/dishes/create")
     @ResponseStatus(HttpStatus.CREATED)
     public CompletableFuture<String> createDish(@RequestBody DishRequest dishRequest) {
         return kitchenCommandService.createDish(dishRequest);

@@ -8,9 +8,11 @@ import com.dlowji.simple.command.api.model.DishResponse;
 import com.dlowji.simple.query.api.queries.GetDishesByCategoryQuery;
 import com.dlowji.simple.query.api.queries.GetDishesQuery;
 import org.axonframework.queryhandling.QueryHandler;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class KitchenProjection {
     private final IDishRepository dishRepository;
     private final ICategoryRepository categoryRepository;
@@ -42,7 +44,7 @@ public class KitchenProjection {
                 .price(dish.getPrice())
                 .image(dish.getImage())
                 .summary(dish.getSummary())
-                .dishStatus(dish.getDishStatus())
+                .dishStatus(dish.getDishStatus().toString())
                 .createdAt(dish.getCreatedAt())
                 .updatedAt(dish.getUpdatedAt())
                 .build();

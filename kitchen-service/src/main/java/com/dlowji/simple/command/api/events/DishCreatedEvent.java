@@ -1,5 +1,6 @@
 package com.dlowji.simple.command.api.events;
 
+import com.dlowji.simple.command.api.enums.DishStatus;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -11,5 +12,6 @@ public class DishCreatedEvent {
     private String image;
     private BigDecimal price;
     private String summary;
-    private String dishStatus;
+    private String categoryId;
+    private DishStatus dishStatus;
 }

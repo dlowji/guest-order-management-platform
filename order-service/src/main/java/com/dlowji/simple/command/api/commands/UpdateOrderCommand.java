@@ -6,16 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
-import java.math.BigDecimal;
-
-@Builder
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SelectDishCommand {
+public class UpdateOrderCommand {
     @TargetAggregateIdentifier
     private String orderId;
-    private String dishId;
-    private Integer quantity;
-    private String userId;
 }

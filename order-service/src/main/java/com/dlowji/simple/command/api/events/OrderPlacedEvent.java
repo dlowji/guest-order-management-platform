@@ -1,10 +1,12 @@
 package com.dlowji.simple.command.api.events;
 
+import com.dlowji.simple.command.api.model.OrderLineItemRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -13,6 +15,5 @@ import java.util.Map;
 @AllArgsConstructor
 public class OrderPlacedEvent {
     private String orderId;
-    private Map<String, Integer> selectedDish;
-    private String userId;
+    private List<OrderLineItemRequest> orderLineItemRequestList;
 }

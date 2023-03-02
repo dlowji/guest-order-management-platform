@@ -11,7 +11,5 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class OrderLineItemRequest {
     private String dishId;
-    private BigDecimal price;
     private Integer quantity;
-    private String unit;
 }

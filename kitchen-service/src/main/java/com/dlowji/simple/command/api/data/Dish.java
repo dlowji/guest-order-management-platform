@@ -1,5 +1,6 @@
 package com.dlowji.simple.command.api.data;
 
+import com.dlowji.simple.command.api.converter.DishStatusConverter;
 import com.dlowji.simple.command.api.enums.DishStatus;
 import com.dlowji.simple.data.TimeStamp;
 import jakarta.persistence.*;
@@ -20,8 +21,11 @@ public class Dish extends TimeStamp {
     private String title;
     private String image;
     private BigDecimal price;
+    @Lob
     private String summary;
-    private String dishStatus;
+    @Column(name = "DISH_STATUS")
+    @Convert(converter = DishStatusConverter.class)
+    private DishStatus dishStatus;
     @ManyToOne
     private Category category;
 }

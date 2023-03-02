@@ -4,11 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderRequest {
-    private List<OrderLineItemRequest> orderLineItemRequestList;
+public class CreateOrderRequest {
+   private String userId;
+   private String tableId;
 }
