@@ -1,0 +1,28 @@
+body {
+	color: $fontcolor;
+	font-size: $fontsize;
+	font-family: $fontfamily;
+	font-weight: $fontweight;
+	line-height: $lineheight;
+}
+.wrapper {
+	max-width: 1860px;
+	margin: 0 auto;
+}
+
+.menu-dashboard {
+	background-color: $dashboardColor;
+	display: flex;
+	flex-direction: column;
+	// gap: 20px;
+}
+
+.container {
+	max-width: 1170px;
+	margin: 0 auto;
+	padding: 0 15px;
+}
+
+.section {
+	padding: 40px 0;
+}
