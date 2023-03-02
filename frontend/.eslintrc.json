@@ -1,0 +1,51 @@
+{
+	"extends": [
+		// By extending from a plugin config, we can get recommended rules without having to add them manually.
+		"eslint:recommended",
+		"plugin:react/recommended",
+		"plugin:import/recommended",
+		"plugin:jsx-a11y/recommended",
+		"plugin:@typescript-eslint/recommended",
+		// This disables the formatting rules in ESLint that Prettier is going to be responsible for handling.
+		// Make sure it"s always the last config, so it gets the chance to override other configs.
+		"eslint-config-prettier"
+	],
+	"settings": {
+		"react": {
+			// Tells eslint-plugin-react to automatically detect the version of React to use.
+			"version": "detect"
+		},
+		// Tells eslint how to resolve imports
+		"import/resolver": {
+			"node": {
+				"paths": ["src"],
+				"extensions": [".ts", ".tsx"]
+			}
+		}
+	},
+	"rules": {
+		// Add your own rules here to override ones from the extended configs.
+		"no-undef": "off",
+		"prettier/prettier": "off",
+		"react/react-in-jsx-scope": "off",
+		"@typescript-eslint/no-unused-vars": "warn",
+		"react/prop-types": "off",
+		"react/no-unused-prop-types": "warn",
+		"react/require-default-props": "off",
+		"@typescript-eslint/no-empty-interface": [
+			"off",
+			{
+				"allowSingleExtends": true
+			}
+		],
+		"react/function-component-definition": [
+			0,
+			{
+				"namedComponents": "function-declaration"
+			}
+		],
+		"jsx-a11y/anchor-is-valid": "off",
+		"@typescript-eslint/no-misused-promises": "off",
+		"import/no-unresolved": "off"
+	}
+}

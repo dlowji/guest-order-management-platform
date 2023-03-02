@@ -1,0 +1,109 @@
+.order {
+	display: flex;
+	justify-content: space-between;
+	flex-grow: 1;
+	&-left {
+		flex-grow: 1;
+		height: 100vh;
+		padding: 20px 0;
+	}
+
+	&-list {
+		flex: 1;
+		overflow-y: auto;
+		height: 600px;
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		padding: 20px;
+		padding-left: 0;
+		padding-top: 0;
+		margin-right: -20px;
+	}
+	&-item {
+		padding: 20px;
+		border-radius: 20px;
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		border: 1px solid $grayeb;
+		box-shadow: rgba($grayeb, 0.6) 0px 8px 24px;
+		cursor: pointer;
+
+		&-top {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+		&-title {
+			font-size: 22px;
+			font-weight: 700;
+			color: $fontcolor;
+		}
+		&-time {
+			font-size: 18px;
+			font-weight: 500;
+			color: $gray90;
+		}
+		&-bottom {
+			margin-top: auto;
+			display: flex;
+			justify-content: space-between;
+			align-items: flex-end;
+			&-right {
+				display: flex;
+				gap: 10px;
+				align-items: baseline;
+			}
+		}
+		&-table {
+			font-size: 18px;
+			font-weight: 600;
+			color: $fontcolor;
+		}
+		&-quantity {
+			font-size: 14px;
+			font-weight: 400;
+			color: $gray90;
+		}
+		&-price {
+			font-size: 20px;
+			font-weight: 700;
+			color: $fontcolor;
+		}
+		&-status {
+			padding: 5px 10px;
+			color: $grayf7;
+			border-radius: 20px;
+		}
+		&.dineIn {
+			&.active {
+				border: 1px solid $dineInTable;
+				box-shadow: rgba($dineInTable, 0.2) 0px 8px 24px;
+			}
+			& .order-item-status {
+				background-color: $dineInTable;
+			}
+		}
+
+		&.free {
+			&.active {
+				border: 1px solid $freeTable;
+				box-shadow: rgba($freeTable, 0.2) 0px 8px 24px;
+			}
+			& .order-item-status {
+				background-color: $freeTable;
+			}
+		}
+
+		&.ordered {
+			&.active {
+				border: 1px solid $orderedTable;
+				box-shadow: rgba($orderedTable, 0.2) 0px 8px 24px;
+			}
+			& .order-item-status {
+				background-color: $orderedTable;
+			}
+		}
+	}
+}

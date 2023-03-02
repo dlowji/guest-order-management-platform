@@ -1,0 +1,48 @@
+{
+	"name": "frontend",
+	"version": "1.0.0",
+	"author": "S1mpleow",
+	"description": "Frontend for the app",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc && vite build",
+		"preview": "vite preview",
+		"lint": "npx eslint src",
+		"lint:fix": "yarn lint -- --fix",
+		"prettier": "npx prettier src --check",
+		"prettier:fix": "yarn prettier -- --write"
+	},
+	"dependencies": {
+		"@hookform/resolvers": "^2.9.11",
+		"@paypal/react-paypal-js": "^7.8.2",
+		"autoprefixer": "^10.4.13",
+		"postcss": "^8.4.21",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-hook-form": "^7.43.1",
+		"react-router-dom": "^6.8.1",
+		"react-toastify": "^9.1.1",
+		"sass": "^1.58.1",
+		"sweetalert2": "^11.7.2",
+		"tailwindcss": "^3.2.6",
+		"yup": "^1.0.0",
+		"zustand": "^4.3.4"
+	},
+	"devDependencies": {
+		"@types/react": "^18.0.27",
+		"@types/react-dom": "^18.0.10",
+		"@typescript-eslint/eslint-plugin": "^5.52.0",
+		"@typescript-eslint/parser": "^5.52.0",
+		"@vitejs/plugin-react": "^3.1.0",
+		"eslint": "^8.34.0",
+		"eslint-config-prettier": "^8.6.0",
+		"eslint-plugin-import": "^2.27.5",
+		"eslint-plugin-jsx-a11y": "^6.7.1",
+		"eslint-plugin-react": "^7.32.2",
+		"prettier": "^2.8.4",
+		"typescript": "^4.9.3",
+		"vite": "^4.1.0",
+		"vite-tsconfig-paths": "^4.0.5"
+	}
+}

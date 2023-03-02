@@ -1,0 +1,40 @@
+{
+	"compilerOptions": {
+		"target": "ESNext",
+		"useDefineForClassFields": true,
+		"lib": ["DOM", "DOM.Iterable", "ESNext"],
+		"allowJs": false,
+		"skipLibCheck": true,
+		"esModuleInterop": false,
+		"allowSyntheticDefaultImports": true,
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"module": "ESNext",
+		"moduleResolution": "Node",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"noEmit": true,
+		"jsx": "react-jsx",
+		"baseUrl": "src",
+		"paths": {
+			"@pages/*": ["pages/*"],
+			"@components/*": ["components/*"],
+			"@hooks/*": ["hooks/*"],
+			"@utils/*": ["utils/*"],
+			"@styles/*": ["styles/*"],
+			"@modules/*": ["modules/*"],
+			"@assets/*": ["assets/*"],
+			"@customTypes/*": ["types/*"],
+			"@context/*": ["context/*"],
+			"@stores/*": ["stores/*"],
+			"@layouts/*": ["layouts/*"],
+			"@public/*": ["../public/*"],
+			"@config/*": ["../config/*"],
+			"@data/*": ["../data/*"],
+			"@interfaces/*": ["interfaces/*"],
+			"@types/*": ["types/*"]
+		}
+	},
+	"include": ["tailwind.config.cjs", "**/*.ts", "**/*.tsx"],
+	"references": [{ "path": "./tsconfig.node.json" }]
+}
