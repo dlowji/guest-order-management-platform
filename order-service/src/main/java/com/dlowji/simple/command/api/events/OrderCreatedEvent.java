@@ -1,5 +1,6 @@
 package com.dlowji.simple.command.api.events;
 
+import com.dlowji.simple.command.api.enums.OrderStatus;
 import lombok.*;
 
 @Data
@@ -9,4 +10,6 @@ import lombok.*;
 public class OrderCreatedEvent {
     private String orderId;
     private String userId;
+    private String tableId;
+    private OrderStatus orderStatus;
 }

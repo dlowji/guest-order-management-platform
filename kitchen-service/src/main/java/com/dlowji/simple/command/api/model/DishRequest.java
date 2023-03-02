@@ -11,4 +11,5 @@ public class DishRequest {
     private String image;
     private BigDecimal price;
     private String summary;
+    private String categoryId;
 }

@@ -5,6 +5,7 @@ import com.dlowji.simple.command.api.data.IOrderRepository;
 import com.dlowji.simple.command.api.data.Order;
 import com.dlowji.simple.command.api.data.OrderLineItem;
 import com.dlowji.simple.command.api.enums.OrderStatus;
+import com.dlowji.simple.command.api.model.OrderLineItemRequest;
 import lombok.RequiredArgsConstructor;
 import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventHandler;
@@ -13,10 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Component
@@ -49,16 +47,15 @@ public class OrderEventsHandler {
         Optional<Order> result = orderRepository.findById(orderPlacedEvent.getOrderId());
         if (result.isPresent()) {
             Order order = result.get();
-            order.setOrderStatus(OrderStatus.PLACED);
+            order.setOrderStatus(OrderStatus.IN_PROCESSING);
+            List<OrderLineItemRequest> orderLineItemRequestList = orderPlacedEvent.getOrderLineItemRequestList();
 
-            for (Map.Entry<String, Integer> entry : orderPlacedEvent.getSelectedDish().entrySet()) {
+            for (OrderLineItemRequest orderLineItemRequest : orderLineItemRequestList) {
                 OrderLineItem orderLineItem = OrderLineItem.builder()
-                        .dishId(entry.getKey())
-                        .quantity(entry.getValue())
-                        .unit("món")
-                        .price(BigDecimal.valueOf(1200))
+                        .dishId(orderLineItemRequest.getDishId())
+                        .quantity(orderLineItemRequest.getQuantity())
                         .build();
-                orderLineItemRepository.save(orderLineItem);
+//                orderLineItemRepository.save(orderLineItem);
                 order.addLineItem(orderLineItem);
             }
             orderRepository.save(order);

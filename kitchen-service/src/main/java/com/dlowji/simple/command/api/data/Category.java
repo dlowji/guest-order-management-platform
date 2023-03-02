@@ -3,11 +3,9 @@ package com.dlowji.simple.command.api.data;
 import com.dlowji.simple.data.TimeStamp;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
 @Builder

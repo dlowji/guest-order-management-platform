@@ -1,69 +1,32 @@
 package com.dlowji.simple.command.api.controller;
 
-import com.dlowji.simple.command.api.commands.*;
-import com.dlowji.simple.command.api.model.OrderLineItemRequest;
-import com.dlowji.simple.command.api.model.OrderRequest;
-import org.axonframework.commandhandling.gateway.CommandGateway;
+import com.dlowji.simple.command.api.model.CreateOrderRequest;
+import com.dlowji.simple.command.api.model.PlaceOrderRequest;
+import com.dlowji.simple.command.api.services.OrderCommandService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/orders")
 public class OrderCommandController {
 
-    private final CommandGateway commandGateway;
+    private final OrderCommandService orderCommandService;
 
-    public OrderCommandController(CommandGateway commandGateway) {
-        this.commandGateway = commandGateway;
+    public OrderCommandController(OrderCommandService orderCommandService) {
+        this.orderCommandService = orderCommandService;
     }
 
-    @PostMapping("/create/{userId}")
-    public String createOrder(@PathVariable String userId) {
-        String orderId = UUID.randomUUID().toString();
-
-        CreateOrderCommand createOrderCommand = CreateOrderCommand.builder()
-                .orderId(orderId)
-                .userId(userId)
-                .build();
-
-        return commandGateway.sendAndWait(createOrderCommand);
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public CompletableFuture<String> createOrder(@RequestBody CreateOrderRequest orderRequest) {
+        return orderCommandService.createOrder(orderRequest);
     }
 
-    @PostMapping("/select/{orderId}")
-    public String selectDish(@PathVariable String orderId, @RequestBody OrderLineItemRequest orderLineItemRequest) {
-        RequestOrderChangeCommand requestOrderChangeCommand = RequestOrderChangeCommand.builder()
-                .orderId(orderId)
-                .dishId(orderLineItemRequest.getDishId())
-                .unit(orderLineItemRequest.getUnit())
-                .price(orderLineItemRequest.getPrice())
-                .quantity(orderLineItemRequest.getQuantity())
-                .select(true)
-                .build();
-
-        return commandGateway.sendAndWait(requestOrderChangeCommand);
-    }
-
-    @PostMapping("/de-select/{orderId}")
-    public String deSelectDish(@PathVariable String orderId, @RequestBody OrderLineItemRequest orderLineItemRequest) {
-        RequestOrderChangeCommand requestOrderChangeCommand = RequestOrderChangeCommand.builder()
-                .orderId(orderId)
-                .dishId(orderLineItemRequest.getDishId())
-                .unit(orderLineItemRequest.getUnit())
-                .price(orderLineItemRequest.getPrice())
-                .quantity(orderLineItemRequest.getQuantity())
-                .select(false)
-                .build();
-
-        return commandGateway.sendAndWait(requestOrderChangeCommand);
-    }
-
-    @PostMapping("/placed/{orderId}")
-    public String placeOrder(@PathVariable String orderId) {
-        PlaceOrderCommand placeOrderCommand = PlaceOrderCommand.builder()
-                .orderId(orderId)
-                .build();
-
-        return commandGateway.sendAndWait(placeOrderCommand);
+    @PostMapping("/placed")
+    public ResponseEntity<?> placeOrder(@RequestBody PlaceOrderRequest placeOrderRequest) {
+        return orderCommandService.placeOrder(placeOrderRequest);
     }
 }
