@@ -18,6 +18,8 @@ public class OrderLineItem extends TimeStamp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String orderId;
     private String dishId;
     private Integer quantity;
+    private BigDecimal price;
 }
