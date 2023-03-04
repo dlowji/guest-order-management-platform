@@ -1,5 +1,6 @@
 package com.dlowji.simple.command.api.model;
 
+import com.dlowji.simple.command.api.enums.TableStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +15,7 @@ import java.time.ZonedDateTime;
 public class TableResponse {
     private String tableId;
     private String code;
-    private String tableStatus;
+    private TableStatus tableStatus;
     private Integer capacity;
     private ZonedDateTime createdAt;
     private ZonedDateTime updatedAt;

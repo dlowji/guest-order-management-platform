@@ -15,12 +15,14 @@ public class TableAggregate {
     @AggregateIdentifier
     private String tableId;
     private String code;
-    private String tableStatus;
+    private int capacity;
+    private TableStatus tableStatus;
 
     @CommandHandler
     public TableAggregate(CreateTableCommand createTableCommand) {
         TableCreatedEvent tableCreatedEvent = new TableCreatedEvent();
         BeanUtils.copyProperties(createTableCommand, tableCreatedEvent);
+        System.out.println("inside aggregate");
         AggregateLifecycle.apply(tableCreatedEvent);
     }
 
@@ -28,6 +30,7 @@ public class TableAggregate {
     public void on(TableCreatedEvent tableCreatedEvent) {
         this.tableId = tableCreatedEvent.getTableId();
         this.code = tableCreatedEvent.getCode();
-        this.tableStatus = tableCreatedEvent.getTableStatus();
+        this.capacity = tableCreatedEvent.getCapacity();
+        this.tableStatus = TableStatus.FREE;
     }
 }

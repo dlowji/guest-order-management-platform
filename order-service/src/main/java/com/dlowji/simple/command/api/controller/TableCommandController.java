@@ -3,6 +3,7 @@ package com.dlowji.simple.command.api.controller;
 import com.dlowji.simple.command.api.model.TableRequest;
 import com.dlowji.simple.command.api.services.TableCommandService;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +20,8 @@ public class TableCommandController {
     }
 
     @PostMapping
-    public CompletableFuture<String> createTable(TableRequest tableRequest) {
+    public CompletableFuture<String> createTable(@RequestBody TableRequest tableRequest) {
+        System.out.println("inside controller");
         return tableCommandService.createTable(tableRequest);
     }
 }
