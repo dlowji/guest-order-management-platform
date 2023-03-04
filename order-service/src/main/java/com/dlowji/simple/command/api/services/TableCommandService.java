@@ -4,6 +4,8 @@ import com.dlowji.simple.command.api.commands.CreateTableCommand;
 import com.dlowji.simple.command.api.enums.TableStatus;
 import com.dlowji.simple.command.api.model.TableRequest;
 import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -18,7 +20,7 @@ public class TableCommandService {
         this.commandGateway = commandGateway;
     }
 
-    public CompletableFuture<String> createTable(TableRequest tableRequest) {
+    public ResponseEntity<String> createTable(TableRequest tableRequest) {
         String tableId = UUID.randomUUID().toString();
         System.out.println(tableRequest.getCode());
         System.out.println(tableRequest.getCapacity());
@@ -29,6 +31,11 @@ public class TableCommandService {
                 .capacity(tableRequest.getCapacity())
                 .build();
 
-        return commandGateway.send(createTableCommand);
+        try {
+            commandGateway.send(createTableCommand);
+            return ResponseEntity.ok("Create severed table successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating severed: " + e.getMessage());
+        }
     }
 }

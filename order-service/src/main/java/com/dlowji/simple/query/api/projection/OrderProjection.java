@@ -42,9 +42,7 @@ public class OrderProjection {
 
     private OrderDetailResponse mapToOrderDetailResponse(Order order) {
         List<OrderLineItem> orderLineItemList = order.getOrderLineItemList();
-        orderLineItemList.forEach(System.out::println);
         List<OrderLineItemResponse> orderLineItemResponseList = orderLineItemList.stream().map(this::mapToOrderLineItemResponse).toList();
-        orderLineItemResponseList.forEach(System.out::println);
         OrderDetailResponse response = OrderDetailResponse.builder()
                 .orderId(order.getOrderId())
                 .userId(order.getUserId())
@@ -70,6 +68,7 @@ public class OrderProjection {
         return OrderLineItemResponse.builder()
                 .dishId(orderLineItem.getDishId())
                 .quantity(orderLineItem.getQuantity())
+                .price(orderLineItem.getPrice())
                 .build();
     }
 

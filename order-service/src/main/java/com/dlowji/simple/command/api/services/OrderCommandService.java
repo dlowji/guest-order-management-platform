@@ -8,13 +8,11 @@ import com.dlowji.simple.command.api.model.CreateOrderRequest;
 import com.dlowji.simple.command.api.model.OrderLineItemRequest;
 import com.dlowji.simple.command.api.model.PlaceOrderRequest;
 import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
+import java.util.*;
 
 @Service
 public class OrderCommandService {
@@ -26,7 +24,7 @@ public class OrderCommandService {
         this.orderRepository = orderRepository;
     }
 
-    public CompletableFuture<String> createOrder(CreateOrderRequest orderRequest) {
+    public ResponseEntity<?> createOrder(CreateOrderRequest orderRequest) {
         String orderId = UUID.randomUUID().toString();
         String userId = orderRequest.getUserId();
         String tableId = orderRequest.getTableId();
@@ -37,10 +35,18 @@ public class OrderCommandService {
                 .tableID(tableId)
                 .build();
 
-        return commandGateway.send(createOrderCommand);
+        try {
+            commandGateway.send(createOrderCommand);
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "Order created successfully");
+            response.put("orderId", orderId);
+            return ResponseEntity.ok(response);
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating order: " + exception.getMessage());
+        }
     }
 
-    public ResponseEntity<?> placeOrder(PlaceOrderRequest placeOrderRequest) {
+    public ResponseEntity<String> placeOrder(PlaceOrderRequest placeOrderRequest) {
         String orderId = placeOrderRequest.getOrderId();
         Optional<Order> existOrder = orderRepository.findById(orderId);
         if (existOrder.isEmpty()) {
@@ -54,6 +60,11 @@ public class OrderCommandService {
                 .orderLineItemRequestList(orderLineItemRequestList)
                 .build();
 
-        return ResponseEntity.ok(commandGateway.send(placeOrderCommand));
+        try {
+            commandGateway.send(placeOrderCommand);
+            return ResponseEntity.ok("Order placed successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error placing order: "+e.getMessage());
+        }
     }
 }
