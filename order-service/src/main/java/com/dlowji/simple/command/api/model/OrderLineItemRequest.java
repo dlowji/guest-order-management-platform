@@ -12,4 +12,5 @@ import java.math.BigDecimal;
 public class OrderLineItemRequest {
     private String dishId;
     private Integer quantity;
+    private BigDecimal price;
 }

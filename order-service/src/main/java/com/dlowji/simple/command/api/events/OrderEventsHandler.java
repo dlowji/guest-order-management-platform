@@ -45,16 +45,26 @@ public class OrderEventsHandler {
             Order order = result.get();
             order.setOrderStatus(OrderStatus.IN_PROCESSING);
             List<OrderLineItemRequest> orderLineItemRequestList = orderPlacedEvent.getOrderLineItemRequestList();
-
+            BigDecimal subTotal = order.getSubTotal();
+            BigDecimal itemDiscount = order.getItemDiscount();
+            BigDecimal discount = order.getDiscount();
+            BigDecimal tax = order.getTax();
             for (OrderLineItemRequest orderLineItemRequest : orderLineItemRequestList) {
                 OrderLineItem orderLineItem = OrderLineItem.builder()
                         .dishId(orderLineItemRequest.getDishId())
                         .quantity(orderLineItemRequest.getQuantity())
+                        .price(orderLineItemRequest.getPrice())
                         .orderId(order.getOrderId())
                         .build();
                 orderLineItemRepository.save(orderLineItem);
+                subTotal = subTotal.add(orderLineItem.getPrice());
 //                order.getOrderLineItemList().add(orderLineItem);
             }
+            BigDecimal total = subTotal.add(tax);
+            BigDecimal grandTotal = total.subtract(itemDiscount).subtract(discount);
+            order.setSubTotal(subTotal);
+            order.setTotal(total);
+            order.setGrandTotal(grandTotal);
             orderRepository.save(order);
         }
     }
