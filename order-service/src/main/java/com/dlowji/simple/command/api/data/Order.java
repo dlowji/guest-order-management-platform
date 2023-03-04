@@ -21,22 +21,9 @@ public class Order extends TimeStamp {
     @Id
     private String orderId;
     private String userId;
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<OrderLineItem> orderLineItemList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "orderId", orphanRemoval = true)
+    private List<OrderLineItem> orderLineItemList = new ArrayList<>();
 
-    public void addLineItem(OrderLineItem orderLineItem) {
-        if (orderLineItemList == null) {
-            orderLineItemList = new ArrayList<>();
-        }
-        this.orderLineItemList.add(orderLineItem);
-    }
-
-    public void removeLineItem(OrderLineItem orderLineItem) {
-        if (orderLineItemList.size() == 0) {
-            return;
-        }
-        this.orderLineItemList.remove(orderLineItem);
-    }
     @Column(name = "ORDER_STATUS")
     @Convert(converter = OrderStatusConverter.class)
     private OrderStatus orderStatus;

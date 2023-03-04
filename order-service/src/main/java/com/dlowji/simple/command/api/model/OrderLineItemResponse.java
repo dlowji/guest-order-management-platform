@@ -1,19 +1,15 @@
-package com.dlowji.simple.command.api.events;
+package com.dlowji.simple.command.api.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
-@Builder
 @Data
-@NoArgsConstructor
+@Builder
 @AllArgsConstructor
-public class DishSelectedEvent {
-    private String orderId;
+@NoArgsConstructor
+public class OrderLineItemResponse {
     private String dishId;
     private Integer quantity;
-    private String userId;
 }

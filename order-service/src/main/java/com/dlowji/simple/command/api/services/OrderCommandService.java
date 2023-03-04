@@ -51,7 +51,7 @@ public class OrderCommandService {
 
         PlaceOrderCommand placeOrderCommand = PlaceOrderCommand.builder()
                 .orderId(orderId)
-                .orderLineItemRequestList(placeOrderRequest.getOrderLineItemRequestList())
+                .orderLineItemRequestList(orderLineItemRequestList)
                 .build();
 
         return ResponseEntity.ok(commandGateway.send(placeOrderCommand));

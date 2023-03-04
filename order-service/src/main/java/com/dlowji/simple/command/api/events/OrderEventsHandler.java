@@ -1,9 +1,6 @@
 package com.dlowji.simple.command.api.events;
 
-import com.dlowji.simple.command.api.data.IOrderLineItemRepository;
-import com.dlowji.simple.command.api.data.IOrderRepository;
-import com.dlowji.simple.command.api.data.Order;
-import com.dlowji.simple.command.api.data.OrderLineItem;
+import com.dlowji.simple.command.api.data.*;
 import com.dlowji.simple.command.api.enums.OrderStatus;
 import com.dlowji.simple.command.api.model.OrderLineItemRequest;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +26,6 @@ public class OrderEventsHandler {
         Order order = Order.builder()
                 .orderId(orderCreatedEvent.getOrderId())
                 .userId(orderCreatedEvent.getUserId())
-                .orderLineItemList(new ArrayList<>())
                 .orderStatus(OrderStatus.CREATED)
                 .subTotal(BigDecimal.valueOf(0))
                 .itemDiscount(BigDecimal.valueOf(0))
@@ -54,9 +50,10 @@ public class OrderEventsHandler {
                 OrderLineItem orderLineItem = OrderLineItem.builder()
                         .dishId(orderLineItemRequest.getDishId())
                         .quantity(orderLineItemRequest.getQuantity())
+                        .orderId(order.getOrderId())
                         .build();
-//                orderLineItemRepository.save(orderLineItem);
-                order.addLineItem(orderLineItem);
+                orderLineItemRepository.save(orderLineItem);
+//                order.getOrderLineItemList().add(orderLineItem);
             }
             orderRepository.save(order);
         }
