@@ -2,6 +2,7 @@ package com.dlowji.simple.query.api.projection;
 
 import com.dlowji.simple.command.api.data.ITableRepository;
 import com.dlowji.simple.command.api.data.SeveredTable;
+import com.dlowji.simple.command.api.enums.TableStatus;
 import com.dlowji.simple.command.api.model.TableResponse;
 import com.dlowji.simple.query.api.queries.GetTableByCapacityQuery;
 import com.dlowji.simple.query.api.queries.GetTablesByStatusQuery;
@@ -37,7 +38,7 @@ public class TableProjection {
     @QueryHandler
     public List<TableResponse> handle(GetTablesByStatusQuery getTableByStatusQuery) {
         String status = getTableByStatusQuery.getStatus();
-        return tableRepository.findAllByTableStatus(status).stream().map(this::mapToTableResponse).toList();
+        return tableRepository.findAllByTableStatus(TableStatus.valueOf(status)).stream().map(this::mapToTableResponse).toList();
     }
 
     @QueryHandler

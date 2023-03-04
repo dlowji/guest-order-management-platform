@@ -1,9 +1,9 @@
 package com.dlowji.simple.command.api.data;
 
+import com.dlowji.simple.command.api.converter.TableStatusConverter;
+import com.dlowji.simple.command.api.enums.TableStatus;
 import com.dlowji.simple.data.TimeStamp;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 @EqualsAndHashCode(callSuper = true)
@@ -17,6 +17,8 @@ public class SeveredTable extends TimeStamp {
     @Id
     private String tableId;
     private String code;
-    private String tableStatus;
+    @Column(name = "TABLE_STATUS")
+    @Convert(converter = TableStatusConverter.class)
+    private TableStatus tableStatus;
     private Integer capacity;
 }

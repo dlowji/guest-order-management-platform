@@ -9,6 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TableRequest {
     private String code;
-    private Integer capacity;
-    private String tableStatus;
+    private int capacity;
 }
