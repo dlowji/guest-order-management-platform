@@ -28,7 +28,7 @@ public class KitchenCommandController {
         return kitchenCommandService.createDish(dishRequest);
     }
 
-    @PostMapping("/register/category")
+    @PostMapping("/category")
     public String createCategory(@RequestBody CategoryRequest categoryRequest) {
         Category category = Category.builder()
                 .categoryId(categoryRequest.getCategoryId())
