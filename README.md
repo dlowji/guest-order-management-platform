@@ -27,7 +27,7 @@ Besides, chefs can control dishes were ordered by guests, especially ensure the 
 ```json
 {
     "roleId": "R01",
-    "roleName: "Admin",
+    "roleName": "Admin",
     "roleDescription": "Super power role, the role can control everyone such as @Simple0W" 
 }
 ```
