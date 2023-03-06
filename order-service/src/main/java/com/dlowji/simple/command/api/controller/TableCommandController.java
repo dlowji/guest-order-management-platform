@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.concurrent.CompletableFuture;
-
 @RestController
 @RequestMapping("/tables")
 public class TableCommandController {
@@ -21,7 +19,7 @@ public class TableCommandController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createTable(@RequestBody TableRequest tableRequest) {
+    public ResponseEntity<?> createTable(@RequestBody TableRequest tableRequest) {
         return tableCommandService.createTable(tableRequest);
     }
 }

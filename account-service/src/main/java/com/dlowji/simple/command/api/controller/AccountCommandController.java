@@ -1,13 +1,15 @@
 package com.dlowji.simple.command.api.controller;
 
 import com.dlowji.simple.command.api.commands.RequestCreateEmployeeCommand;
+import com.dlowji.simple.command.api.data.IRoleRepository;
+import com.dlowji.simple.command.api.data.Role;
 import com.dlowji.simple.command.api.model.AccountLoginRequest;
 import com.dlowji.simple.command.api.model.AccountRequest;
+import com.dlowji.simple.command.api.model.RoleRequest;
 import com.dlowji.simple.command.api.service.AuthService;
-import com.dlowji.simple.command.api.util.JwtUtil;
 import org.axonframework.commandhandling.CommandExecutionException;
 import org.axonframework.commandhandling.gateway.CommandGateway;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,9 +24,27 @@ public class AccountCommandController {
     private final CommandGateway commandGateway;
     private final AuthService authService;
 
+    @Autowired
+    private IRoleRepository roleRepository;
+
     public AccountCommandController(CommandGateway commandGateway, AuthService authService) {
         this.commandGateway = commandGateway;
         this.authService = authService;
+    }
+
+    @PostMapping("/register/roles")
+    public String addRole(@RequestBody RoleRequest roleRequest) {
+        Role role = Role.builder()
+                .roleId(roleRequest.getRoleId())
+                .roleName(roleRequest.getRoleName())
+                .description(roleRequest.getRoleDescription())
+                .build();
+        try {
+            roleRepository.save(role);
+            return "Success";
+        } catch (Exception e) {
+            return "False";
+        }
     }
     @PostMapping("/auth/login")
     public ResponseEntity<?> login(@RequestBody AccountLoginRequest accountLoginRequest) {

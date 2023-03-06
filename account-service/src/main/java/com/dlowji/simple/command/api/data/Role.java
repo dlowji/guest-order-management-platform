@@ -1,9 +1,7 @@
 package com.dlowji.simple.command.api.data;
 
 import com.dlowji.simple.data.TimeStamp;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 @EqualsAndHashCode(callSuper = true)
