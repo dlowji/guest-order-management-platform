@@ -38,16 +38,16 @@ Besides, chefs can control dishes were ordered by guests, especially ensure the 
 + Body: raw -> JSON
 ```json
 {
-    "username": "annnaan1234", //your_username
-    "password": "cuibap",// your_password
-    "fullName": "Tom Riddle",// your_name
-    "email": "dev.loivo2k2@gmail.com",//your_email
-    "gender": 1,// 0 and 1
+    "username": "annnaan1234",
+    "password": "cuibap",
+    "fullName": "Tom Riddle",
+    "email": "dev.loivo2k2@gmail.com",
+    "gender": 1,
     "salary": 1200,
-    "dob": "2002-01-24",//your dob
-    "address": "Inside My Le's heart", //your address
-    "roleId": "R01", //depend on role id you has added above
-    "phone": "0937732655" //your_phone_number
+    "dob": "2002-01-24",
+    "address": "Inside My Le's heart",
+    "roleId": "R01",
+    "phone": "0937732655"
 }
 ```
 ## Login with JWT Auth in Spring Cloud Gateway
@@ -58,8 +58,8 @@ Besides, chefs can control dishes were ordered by guests, especially ensure the 
 + Body: raw -> JSON
 ```json
 {
- "username":"annnaan1234", //your_username
- "password":"cuibap" //your_password
+ "username":"annnaan1234",
+ "password":"cuibap"
 }
 ```
 ## To use these below API, you have to login and assign the return token value to Authorization header (don't add Bearer because i forget in developing process :<<)
