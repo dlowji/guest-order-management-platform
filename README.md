@@ -19,39 +19,53 @@ Besides, chefs can control dishes were ordered by guests, especially ensure the 
 - Install Postman
 
 ## Usage
+## Add new role
+- To add new role, use the following details in Postman tool:
++ HTTP Method: POST
++ URL: http://localhost:8080/accounts/register/roles
++ Body: raw -> JSON
+```json
+{
+    "roleId": "R01",
+    "roleName: "Admin",
+    "roleDescription": "Super power role, the role can control everyone such as @Simple0W" 
+}
+```
 ## Register account
-- To register account use the following details in Postman tool:
+- To register account, ensure that role data has exist in db, then use the following details in Postman tool:
 + HTTP Method: POST
 + URL: http://localhost:8080/accounts/auth/register
 + Body: raw -> JSON
 ```json
 {
-    "username": "annnaan1234",
-    "password": "cuibap",
-    "fullName": "vo tan loi",
-    "email": "asd@student.tdtu",
-    "gender": 1,
+    "username": "annnaan1234", //your_username
+    "password": "cuibap",// your_password
+    "fullName": "Tom Riddle",// your_name
+    "email": "dev.loivo2k2@gmail.com",//your_email
+    "gender": 1,// 0 and 1
     "salary": 1200,
-    "dob": "2002-01-24",
-    "address": "dong nai",
-    "roleId": "R03",
-    "phone": "1"
+    "dob": "2002-01-24",//your dob
+    "address": "Inside My Le's heart", //your address
+    "roleId": "R01", //depend on role id you has added above
+    "phone": "0937732655" //your_phone_number
 }
 ```
-## Testing JWT Auth in Spring Cloud Gateway
-- To get the JWT token use the following details in Postman tool:
+## Login with JWT Auth in Spring Cloud Gateway
+- In order to login for getting the JWT token, use the following details in Postman tool:
 
 + HTTP Method: POST
 + URL: http://localhost:8080/accounts/auth/login
 + Body: raw -> JSON
 ```json
 {
- "username":"username",
- "password":"password"
+ "username":"annnaan1234", //your_username
+ "password":"cuibap" //your_password
 }
 ```
+## To use these below API, you have to login and assign the return token value to Authorization header (don't add Bearer because i forget in developing process :<<)
+
 ## Create new dish
-- To add a new dish use the following details in Postman tool:
+- To add a new dish, use the following details in Postman tool:
 + HTTP Method: POST
 + URL: http://localhost:8080/kitchens/dishes/create
 + Body: raw -> JSON
@@ -64,6 +78,7 @@ Besides, chefs can control dishes were ordered by guests, especially ensure the 
     "categoryId":"C01"
 }
 ```
+
 ## Get dishes
 - To get menu of dishes use the following details in Postman tool:
 + HTTP Method: GET
@@ -80,6 +95,7 @@ Besides, chefs can control dishes were ordered by guests, especially ensure the 
     "capacity": 10
 }
 ```
+
 ## Get list of tables
 - To get list of tables use the following details in Postman tool:
 + HTTP Method: GET
@@ -101,6 +117,7 @@ Besides, chefs can control dishes were ordered by guests, especially ensure the 
     "tableId": "909fda08-41cc-4163-b06f-bce3e5f69c81"
 }
 ```
+
 ## Place an order
 - To place an order use the following details in Postman tool:
 + HTTP Method: POST
