@@ -19,6 +19,25 @@ Besides, chefs can control dishes were ordered by guests, especially ensure the 
 - Install Postman
 
 ## Usage
+## Register account
+- To register account use the following details in Postman tool:
++ HTTP Method: POST
++ URL: http://localhost:8080/accounts/auth/register
++ Body: raw -> JSON
+```json
+{
+    "username": "annnaan1234",
+    "password": "cuibap",
+    "fullName": "vo tan loi",
+    "email": "asd@student.tdtu",
+    "gender": 1,
+    "salary": 1200,
+    "dob": "2002-01-24",
+    "address": "dong nai",
+    "roleId": "R03",
+    "phone": "1"
+}
+```
 ## Testing JWT Auth in Spring Cloud Gateway
 - To get the JWT token use the following details in Postman tool:
 
@@ -27,8 +46,8 @@ Besides, chefs can control dishes were ordered by guests, especially ensure the 
 + Body: raw -> JSON
 ```json
 {
- "username":"annnaan1234",
- "password":"cuibap"
+ "username":"username",
+ "password":"password"
 }
 ```
 ## Create new dish
