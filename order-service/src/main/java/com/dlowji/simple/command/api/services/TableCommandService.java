@@ -8,8 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 
 @Service
 public class TableCommandService {
@@ -20,7 +21,7 @@ public class TableCommandService {
         this.commandGateway = commandGateway;
     }
 
-    public ResponseEntity<String> createTable(TableRequest tableRequest) {
+    public ResponseEntity<?> createTable(TableRequest tableRequest) {
         String tableId = UUID.randomUUID().toString();
         System.out.println(tableRequest.getCode());
         System.out.println(tableRequest.getCapacity());
@@ -33,7 +34,10 @@ public class TableCommandService {
 
         try {
             commandGateway.send(createTableCommand);
-            return ResponseEntity.ok("Create severed table successfully");
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "Create severed table successfully");
+            response.put("tableId", tableId);
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating severed: " + e.getMessage());
         }
