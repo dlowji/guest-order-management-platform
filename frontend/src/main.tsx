@@ -11,6 +11,8 @@ import Fallback from '@components/common/Fallback';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import MenuRightContent from '@modules/common/MenuRightContent';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const MainLayout = lazy(() =>
 	import('@layouts/MainLayout').then((module) => ({ default: module.default })),
@@ -67,6 +69,15 @@ const router = createBrowserRouter(
 	),
 );
 
+const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			refetchOnWindowFocus: false,
+			staleTime: 1000 * 60 * 2,
+		},
+	},
+});
+
 document.addEventListener('DOMContentLoaded', function () {
 	const container = document.getElementById('root') as HTMLElement;
 	if (!container) throw new Error('No root element found!');
@@ -74,7 +85,10 @@ document.addEventListener('DOMContentLoaded', function () {
 	root.render(
 		<>
 			<Suspense fallback={<Fallback />}>
-				<RouterProvider router={router}></RouterProvider>
+				<QueryClientProvider client={queryClient}>
+					<RouterProvider router={router}></RouterProvider>
+					<ReactQueryDevtools initialIsOpen={false} />
+				</QueryClientProvider>
 			</Suspense>
 			<ToastContainer
 				bodyClassName="font-primary text-sm"

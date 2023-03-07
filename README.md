@@ -1,12 +1,12 @@
 # microservice-midterm
 
 ## Name
-Paimon - Guests Orders Managenemt Platform
+Paimon - Guests Orders Management Platform
 
 ## Description
 Allow guests, staffs and chefs to interact together in real time, enhance dining experience and reduce mistakes.
 Guests can positively order and observe ordered dishes, as well as the grand total of the bill.
-Staffs can write guests's orders on the order slip, transfer them to the kitchen using platform instead of manual.
+Staffs can write guest's orders on the order slip, transfer them to the kitchen using platform instead of manual.
 Besides, chefs can control dishes were ordered by guests, especially ensure the correctness of note from guests.
 
 ## Badges
@@ -19,8 +19,39 @@ Besides, chefs can control dishes were ordered by guests, especially ensure the 
 - Install Postman
 
 ## Usage
-## Testing JWT Auth in Spring Cloud Gateway
-- To get the JWT token use the following details in Postman tool:
+## Add new role
+- To add new role, use the following details in Postman tool:
++ HTTP Method: POST
++ URL: http://localhost:8080/accounts/register/roles
++ Body: raw -> JSON
+```json
+{
+    "roleId": "R01",
+    "roleName": "Admin",
+    "roleDescription": "Super power role, the role can control everyone such as @Simple0W" 
+}
+```
+## Register account
+- To register account, ensure that role data has exist in db, then use the following details in Postman tool:
++ HTTP Method: POST
++ URL: http://localhost:8080/accounts/auth/register
++ Body: raw -> JSON
+```json
+{
+    "username": "annnaan1234",
+    "password": "cuibap",
+    "fullName": "Tom Riddle",
+    "email": "dev.loivo2k2@gmail.com",
+    "gender": 1,
+    "salary": 1200,
+    "dob": "2002-01-24",
+    "address": "Inside My Le's heart",
+    "roleId": "R01",
+    "phone": "0937732655"
+}
+```
+## Login with JWT Auth in Spring Cloud Gateway
+- In order to login for getting the JWT token, use the following details in Postman tool:
 
 + HTTP Method: POST
 + URL: http://localhost:8080/accounts/auth/login
@@ -31,8 +62,10 @@ Besides, chefs can control dishes were ordered by guests, especially ensure the 
  "password":"cuibap"
 }
 ```
+## To use these below API, you have to log in and assign the return token value to Authorization header (don't add Bearer because I forget in developing process :<<)
+
 ## Create new dish
-- To add a new dish use the following details in Postman tool:
+- To add a new dish, use the following details in Postman tool:
 + HTTP Method: POST
 + URL: http://localhost:8080/kitchens/dishes/create
 + Body: raw -> JSON
@@ -45,6 +78,7 @@ Besides, chefs can control dishes were ordered by guests, especially ensure the 
     "categoryId":"C01"
 }
 ```
+
 ## Get dishes
 - To get menu of dishes use the following details in Postman tool:
 + HTTP Method: GET
@@ -61,6 +95,7 @@ Besides, chefs can control dishes were ordered by guests, especially ensure the 
     "capacity": 10
 }
 ```
+
 ## Get list of tables
 - To get list of tables use the following details in Postman tool:
 + HTTP Method: GET
@@ -82,6 +117,7 @@ Besides, chefs can control dishes were ordered by guests, especially ensure the 
     "tableId": "909fda08-41cc-4163-b06f-bce3e5f69c81"
 }
 ```
+
 ## Place an order
 - To place an order use the following details in Postman tool:
 + HTTP Method: POST
@@ -118,7 +154,7 @@ Besides, chefs can control dishes were ordered by guests, especially ensure the 
 ## Roadmap
 - Enhance for final project
 - Release module Loyalty customer rewards
-- Release module Make payment by Paypal
+- Release module Make payment by PayPal
 - Release ...
 
 ## Contributing
