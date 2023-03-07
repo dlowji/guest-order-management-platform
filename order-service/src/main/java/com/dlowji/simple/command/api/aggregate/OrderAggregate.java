@@ -1,20 +1,21 @@
 package com.dlowji.simple.command.api.aggregate;
 
-import com.dlowji.simple.command.api.commands.*;
+import com.dlowji.simple.command.api.commands.CancelOrderCommand;
+import com.dlowji.simple.command.api.commands.CreateOrderCommand;
+import com.dlowji.simple.command.api.commands.PlaceOrderCommand;
 import com.dlowji.simple.command.api.enums.OrderStatus;
-import com.dlowji.simple.command.api.events.*;
+import com.dlowji.simple.command.api.events.OrderCanceledEvent;
+import com.dlowji.simple.command.api.events.OrderCreatedEvent;
+import com.dlowji.simple.command.api.events.OrderPlacedEvent;
 import com.dlowji.simple.command.api.model.OrderLineItemRequest;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.spring.stereotype.Aggregate;
-import org.springframework.beans.BeanUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Aggregate
 public class OrderAggregate {
@@ -32,8 +33,12 @@ public class OrderAggregate {
     @CommandHandler
     public OrderAggregate(CreateOrderCommand createOrderCommand) {
         //validation
-        OrderCreatedEvent orderCreatedEvent = new OrderCreatedEvent();
-        BeanUtils.copyProperties(createOrderCommand, orderCreatedEvent);
+        OrderCreatedEvent orderCreatedEvent = OrderCreatedEvent.builder()
+                .orderId(createOrderCommand.getOrderId())
+                .tableId(createOrderCommand.getTableID())
+                .userId(createOrderCommand.getUserId())
+                .orderStatus(createOrderCommand.getOrderStatus())
+                .build();
         AggregateLifecycle.apply(orderCreatedEvent);
     }
 

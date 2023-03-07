@@ -17,9 +17,6 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="CodeInsightWorkspaceSettings">
-    <option name="optimizeImportsOnTheFly" value="true" />
-  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -81,7 +78,7 @@
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "spring.configuration.checksum": "d6cd5f4fc3b022ce8061212f1f307bbe",
+    "spring.configuration.checksum": "e84b7d6fd08688c7b45a4066f89f8fb6",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -96,6 +93,7 @@
   <component name="RunDashboard">
     <option name="configurationTypes">
       <set>
+        <option value="Application" />
         <option value="SpringBootApplicationConfigurationType" />
       </set>
     </option>
@@ -159,6 +157,7 @@
         <item itemvalue="Spring Boot.KitchenServiceApplication" />
         <item itemvalue="Spring Boot.ApiGatewayApplication" />
         <item itemvalue="Spring Boot.AccountServiceApplication" />
+        <item itemvalue="Spring Boot.ApiGatewayApplication" />
       </list>
     </recent_temporary>
   </component>

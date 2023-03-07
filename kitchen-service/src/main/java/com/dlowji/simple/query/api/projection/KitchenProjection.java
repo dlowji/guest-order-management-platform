@@ -9,6 +9,7 @@ import com.dlowji.simple.query.api.queries.GetDishesByCategoryQuery;
 import com.dlowji.simple.query.api.queries.GetDishesQuery;
 import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -31,8 +32,10 @@ public class KitchenProjection {
 
     @QueryHandler
     public List<DishResponse> handle(GetDishesByCategoryQuery getDishesByCategoryQuery) {
-        String categoryName = getDishesByCategoryQuery.getCategoryName();
+        String categoryName = StringUtils.capitalize(getDishesByCategoryQuery.getCategoryName().toLowerCase());
         Category category = categoryRepository.findByCategoryName(categoryName);
+        System.out.println(categoryName);
+        System.out.println(category);
         List<Dish> dishes = dishRepository.findAllByCategory(category);
         return dishes.stream().map(this::mapToDishResponse).toList();
     }
@@ -45,6 +48,7 @@ public class KitchenProjection {
                 .image(dish.getImage())
                 .summary(dish.getSummary())
                 .dishStatus(dish.getDishStatus().toString())
+                .categoryName(dish.getCategory().getCategoryName())
                 .createdAt(dish.getCreatedAt())
                 .updatedAt(dish.getUpdatedAt())
                 .build();
