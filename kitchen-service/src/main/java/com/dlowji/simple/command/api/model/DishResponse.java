@@ -1,6 +1,5 @@
 package com.dlowji.simple.command.api.model;
 
-import com.dlowji.simple.command.api.enums.DishStatus;
 import lombok.Builder;
 import lombok.Data;
 
@@ -16,6 +15,7 @@ public class DishResponse {
     private BigDecimal price;
     private String summary;
     private String dishStatus;
+    private String categoryName;
     private ZonedDateTime createdAt;
     private ZonedDateTime updatedAt;
 }

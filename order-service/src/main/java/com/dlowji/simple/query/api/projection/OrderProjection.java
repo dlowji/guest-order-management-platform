@@ -3,7 +3,6 @@ package com.dlowji.simple.query.api.projection;
 import com.dlowji.simple.command.api.data.IOrderRepository;
 import com.dlowji.simple.command.api.data.Order;
 import com.dlowji.simple.command.api.data.OrderLineItem;
-import com.dlowji.simple.command.api.enums.OrderStatus;
 import com.dlowji.simple.command.api.model.OrderDetailResponse;
 import com.dlowji.simple.command.api.model.OrderLineItemResponse;
 import com.dlowji.simple.command.api.model.OrderResponse;
@@ -12,8 +11,6 @@ import com.dlowji.simple.query.api.queries.GetOrdersQuery;
 import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -76,6 +73,7 @@ public class OrderProjection {
         return OrderResponse.builder()
                 .orderId(order.getOrderId())
                 .userId(order.getUserId())
+                .tableId(order.getTableId())
                 .orderStatus(order.getOrderStatus())
                 .grandTotal(order.getGrandTotal())
                 .createdAt(order.getCreatedAt())

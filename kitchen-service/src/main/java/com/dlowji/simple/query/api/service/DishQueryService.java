@@ -5,10 +5,12 @@ import com.dlowji.simple.query.api.queries.GetDishesByCategoryQuery;
 import com.dlowji.simple.query.api.queries.GetDishesQuery;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
-import org.axonframework.queryhandling.QueryHandler;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class DishQueryService {
@@ -18,15 +20,39 @@ public class DishQueryService {
         this.queryGateway = queryGateway;
     }
 
-    public List<DishResponse> getAllDishes() {
+    public ResponseEntity<?> getAllDishes() {
         GetDishesQuery getDishesQuery = GetDishesQuery.builder().build();
-        return queryGateway.query(getDishesQuery, ResponseTypes.multipleInstancesOf(DishResponse.class)).join();
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            List<DishResponse> dishResponseList = queryGateway.query(getDishesQuery, ResponseTypes.multipleInstancesOf(DishResponse.class)).join();
+            response.put("code", 0);
+            response.put("message", "Get all dishes successfully");
+            response.put("data", dishResponseList);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("code", 500);
+            response.put("message", "Error all dishes: " + e.getMessage());
+            return ResponseEntity.internalServerError().body(response);
+        }
     }
 
-    public List<DishResponse> getDishesByCategory(String categoryName) {
+    public ResponseEntity<?> getDishesByCategory(String categoryName) {
         GetDishesByCategoryQuery getDishesByCategoryQuery = GetDishesByCategoryQuery.builder()
                 .categoryName(categoryName)
                 .build();
-        return queryGateway.query(getDishesByCategoryQuery, ResponseTypes.multipleInstancesOf(DishResponse.class)).join();
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            List<DishResponse> dishResponseList = queryGateway.query(getDishesByCategoryQuery, ResponseTypes.multipleInstancesOf(DishResponse.class)).join();
+            response.put("code", 0);
+            response.put("message", "Get dishes by category successfully");
+            response.put("data", dishResponseList);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("code", 500);
+            response.put("message", "Error get dishes by category: " + e.getMessage());
+            return ResponseEntity.internalServerError().body(response);
+        }
     }
 }

@@ -4,7 +4,6 @@ import com.dlowji.simple.command.api.commands.CreateTableCommand;
 import com.dlowji.simple.command.api.enums.TableStatus;
 import com.dlowji.simple.command.api.model.TableRequest;
 import org.axonframework.commandhandling.gateway.CommandGateway;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +22,6 @@ public class TableCommandService {
 
     public ResponseEntity<?> createTable(TableRequest tableRequest) {
         String tableId = UUID.randomUUID().toString();
-        System.out.println(tableRequest.getCode());
-        System.out.println(tableRequest.getCapacity());
         CreateTableCommand createTableCommand = CreateTableCommand.builder()
                 .tableId(tableId)
                 .code(tableRequest.getCode())
@@ -32,14 +29,17 @@ public class TableCommandService {
                 .capacity(tableRequest.getCapacity())
                 .build();
 
+        Map<String, Object> response = new HashMap<>();
         try {
             commandGateway.send(createTableCommand);
-            Map<String, Object> response = new HashMap<>();
+            response.put("code", 0);
             response.put("message", "Create severed table successfully");
             response.put("tableId", tableId);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating severed: " + e.getMessage());
+            response.put("code", 502);
+            response.put("message", "Error creating severed table: " + e.getMessage());
+            return ResponseEntity.internalServerError().body(response);
         }
     }
 }

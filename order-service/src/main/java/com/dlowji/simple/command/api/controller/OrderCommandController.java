@@ -25,7 +25,7 @@ public class OrderCommandController {
     }
 
     @PostMapping("/placed")
-    public ResponseEntity<String> placeOrder(@RequestBody PlaceOrderRequest placeOrderRequest) {
+    public ResponseEntity<?> placeOrder(@RequestBody PlaceOrderRequest placeOrderRequest) {
         return orderCommandService.placeOrder(placeOrderRequest);
     }
 }

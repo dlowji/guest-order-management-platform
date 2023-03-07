@@ -1,12 +1,9 @@
 package com.dlowji.simple.query.api.controller;
 
-import com.dlowji.simple.command.api.model.OrderDetailResponse;
-import com.dlowji.simple.command.api.model.OrderResponse;
 import com.dlowji.simple.query.api.service.OrderQueryService;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -19,14 +16,12 @@ public class OrderQueryController {
     }
 
     @GetMapping()
-    @ResponseStatus(HttpStatus.OK)
-    public List<OrderResponse> getAllOrders(@RequestParam Map<String, String> queryParams) {
+    public ResponseEntity<?> getAllOrders(@RequestParam Map<String, String> queryParams) {
         return orderQueryService.getOrdersByProperties(queryParams);
     }
 
     @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public OrderDetailResponse getOrderById(@PathVariable String id) {
+    public ResponseEntity<?> getOrderById(@PathVariable String id) {
         return orderQueryService.getOrderDetail(id);
     }
 

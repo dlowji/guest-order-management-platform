@@ -4,15 +4,16 @@ import com.dlowji.simple.command.api.commands.CreateOrderCommand;
 import com.dlowji.simple.command.api.commands.PlaceOrderCommand;
 import com.dlowji.simple.command.api.data.IOrderRepository;
 import com.dlowji.simple.command.api.data.Order;
+import com.dlowji.simple.command.api.enums.OrderStatus;
 import com.dlowji.simple.command.api.model.CreateOrderRequest;
 import com.dlowji.simple.command.api.model.OrderLineItemRequest;
 import com.dlowji.simple.command.api.model.PlaceOrderRequest;
 import org.axonframework.commandhandling.gateway.CommandGateway;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class OrderCommandService {
@@ -28,29 +29,34 @@ public class OrderCommandService {
         String orderId = UUID.randomUUID().toString();
         String userId = orderRequest.getUserId();
         String tableId = orderRequest.getTableId();
-
         CreateOrderCommand createOrderCommand = CreateOrderCommand.builder()
                 .orderId(orderId)
                 .userId(userId)
                 .tableID(tableId)
+                .orderStatus(OrderStatus.CREATED)
                 .build();
-
+        Map<String, Object> response = new HashMap<>();
         try {
-            commandGateway.send(createOrderCommand);
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Order created successfully");
-            response.put("orderId", orderId);
+            String orderId2 = commandGateway.sendAndWait(createOrderCommand);
+            response.put("code", 0);
+            response.put("message", "Create order successfully");
+            response.put("orderId", orderId2);
             return ResponseEntity.ok(response);
-        } catch (Exception exception) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating order: " + exception.getMessage());
+        } catch (Exception e) {
+            response.put("code", 500);
+            response.put("message", "Error create order " + e.getMessage());
+            return ResponseEntity.internalServerError().body(response);
         }
     }
 
-    public ResponseEntity<String> placeOrder(PlaceOrderRequest placeOrderRequest) {
+    public ResponseEntity<?> placeOrder(PlaceOrderRequest placeOrderRequest) {
         String orderId = placeOrderRequest.getOrderId();
         Optional<Order> existOrder = orderRepository.findById(orderId);
         if (existOrder.isEmpty()) {
-            return ResponseEntity.badRequest().body("Order is not exist");
+            Map<String, Object> response = new HashMap<>();
+            response.put("code", 501);
+            response.put("message", "Order is not exist");
+            return ResponseEntity.badRequest().body(response);
         }
 
         List<OrderLineItemRequest> orderLineItemRequestList = placeOrderRequest.getOrderLineItemRequestList();
@@ -59,12 +65,17 @@ public class OrderCommandService {
                 .orderId(orderId)
                 .orderLineItemRequestList(orderLineItemRequestList)
                 .build();
-
+        Map<String, Object> response = new HashMap<>();
         try {
-            commandGateway.send(placeOrderCommand);
-            return ResponseEntity.ok("Order placed successfully");
+            CompletableFuture<String> orderId2 = commandGateway.send(placeOrderCommand);
+            response.put("code", 0);
+            response.put("message", "Place order successfully");
+            response.put("orderId", orderId2);
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error placing order: "+e.getMessage());
+            response.put("code", 500);
+            response.put("message", "Error create order " + e.getMessage());
+            return ResponseEntity.internalServerError().body(response);
         }
     }
 }

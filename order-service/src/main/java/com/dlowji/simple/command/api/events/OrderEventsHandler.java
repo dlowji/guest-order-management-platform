@@ -1,6 +1,9 @@
 package com.dlowji.simple.command.api.events;
 
-import com.dlowji.simple.command.api.data.*;
+import com.dlowji.simple.command.api.data.IOrderLineItemRepository;
+import com.dlowji.simple.command.api.data.IOrderRepository;
+import com.dlowji.simple.command.api.data.Order;
+import com.dlowji.simple.command.api.data.OrderLineItem;
 import com.dlowji.simple.command.api.enums.OrderStatus;
 import com.dlowji.simple.command.api.model.OrderLineItemRequest;
 import lombok.RequiredArgsConstructor;
@@ -10,8 +13,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Component
@@ -26,7 +29,8 @@ public class OrderEventsHandler {
         Order order = Order.builder()
                 .orderId(orderCreatedEvent.getOrderId())
                 .userId(orderCreatedEvent.getUserId())
-                .orderStatus(OrderStatus.CREATED)
+                .tableId(orderCreatedEvent.getTableId())
+                .orderStatus(orderCreatedEvent.getOrderStatus())
                 .subTotal(BigDecimal.valueOf(0))
                 .itemDiscount(BigDecimal.valueOf(0))
                 .tax(BigDecimal.valueOf(0))
@@ -40,9 +44,9 @@ public class OrderEventsHandler {
 
     @EventHandler
     public void on(OrderPlacedEvent orderPlacedEvent) {
-        Optional<Order> result = orderRepository.findById(orderPlacedEvent.getOrderId());
-        if (result.isPresent()) {
-            Order order = result.get();
+        Optional<Order> existOrder = orderRepository.findById(orderPlacedEvent.getOrderId());
+        if (existOrder.isPresent()) {
+            Order order = existOrder.get();
             order.setOrderStatus(OrderStatus.IN_PROCESSING);
             List<OrderLineItemRequest> orderLineItemRequestList = orderPlacedEvent.getOrderLineItemRequestList();
             BigDecimal subTotal = order.getSubTotal();
@@ -57,7 +61,7 @@ public class OrderEventsHandler {
                         .orderId(order.getOrderId())
                         .build();
                 orderLineItemRepository.save(orderLineItem);
-                subTotal = subTotal.add(orderLineItem.getPrice());
+//                subTotal = subTotal.add(orderLineItem.getPrice());
 //                order.getOrderLineItemList().add(orderLineItem);
             }
             BigDecimal total = subTotal.add(tax);

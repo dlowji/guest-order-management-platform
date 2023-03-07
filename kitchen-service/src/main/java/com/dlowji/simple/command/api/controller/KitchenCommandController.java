@@ -26,7 +26,7 @@ public class KitchenCommandController {
     @ResponseStatus(HttpStatus.CREATED)
     public CompletableFuture<String> createDish(@RequestBody DishRequest dishRequest) {
         return kitchenCommandService.createDish(dishRequest);
-    }
+}
 
     @PostMapping("/category")
     public String createCategory(@RequestBody CategoryRequest categoryRequest) {
