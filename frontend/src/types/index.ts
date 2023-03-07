@@ -1,1 +1,1 @@
-export type TStatusTable = 'available' | 'occupied' | 'ordered';
+export type TStatusTable = 'FREE' | 'OCCUPIED' | 'CHECK_IN';

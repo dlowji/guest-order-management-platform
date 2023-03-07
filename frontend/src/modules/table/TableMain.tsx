@@ -3,7 +3,13 @@ import * as React from 'react';
 import TableList from './TableList';
 import TableItem from './TableItem';
 import { TStatusTable } from '@customTypes/index';
-
+import { useQuery } from '@tanstack/react-query';
+import tableApi from '@api/table';
+import { ITableResponse } from '@interfaces/table';
+import CategoriesHeader from '@modules/common/CategoriesHeader';
+import { categoriesTableItems } from 'constants/categoryTableItem';
+import { useQueryString } from '@utils/queryString';
+import CircleLoading from '@components/loading/CircleLoading';
 interface ITableMainProps {}
 
 const tableItem = [
@@ -46,21 +52,46 @@ const tableItem = [
 ];
 
 const TableMain: React.FunctionComponent<ITableMainProps> = (props) => {
+	const queryString: { q?: string } = useQueryString();
+	const status = queryString.q ? queryString.q : '';
+
+	const { error, data, isFetching } = useQuery({
+		queryKey: ['table', status],
+		queryFn: () => {
+			return tableApi.getTables(status);
+		},
+	});
+
 	return (
 		<div className="table-left">
-			<MainContentHeader title="Choose tables"></MainContentHeader>
+			<MainContentHeader
+				title="Choose tables"
+				quantity={data?.length ? `${data.length} tables` : '0 tables'}
+			></MainContentHeader>
+			<CategoriesHeader
+				categories={categoriesTableItems}
+				className="!mt-[10px] "
+			></CategoriesHeader>
 			<TableList>
-				{tableItem.map((item) => (
-					<TableItem
-						key={item.id}
-						item={{
-							id: item.id,
-							seats: item.seats,
-							title: item.title,
-							status: item.status as TStatusTable,
-						}}
-					></TableItem>
-				))}
+				{isFetching && (
+					<div className="flex items-center justify-center w-full">
+						<CircleLoading color="#ff7200"></CircleLoading>
+					</div>
+				)}
+				{data &&
+					!isFetching &&
+					!error &&
+					data.map((item: ITableResponse) => (
+						<TableItem
+							key={item.tableId}
+							item={{
+								id: item.tableId,
+								seats: item.capacity,
+								title: item.code,
+								status: item.tableStatus as TStatusTable,
+							}}
+						></TableItem>
+					))}
 			</TableList>
 		</div>
 	);

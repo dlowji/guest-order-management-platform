@@ -32,7 +32,8 @@
 			"@config/*": ["../config/*"],
 			"@data/*": ["../data/*"],
 			"@interfaces/*": ["interfaces/*"],
-			"@types/*": ["types/*"]
+			"@types/*": ["types/*"],
+			"@api/*": ["api/*"]
 		}
 	},
 	"include": ["tailwind.config.cjs", "**/*.ts", "**/*.tsx"],
