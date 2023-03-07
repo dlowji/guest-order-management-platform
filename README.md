@@ -1,12 +1,12 @@
 # microservice-midterm
 
 ## Name
-Paimon - Guests Orders Managenemt Platform
+Paimon - Guests Orders Management Platform
 
 ## Description
 Allow guests, staffs and chefs to interact together in real time, enhance dining experience and reduce mistakes.
 Guests can positively order and observe ordered dishes, as well as the grand total of the bill.
-Staffs can write guests's orders on the order slip, transfer them to the kitchen using platform instead of manual.
+Staffs can write guest's orders on the order slip, transfer them to the kitchen using platform instead of manual.
 Besides, chefs can control dishes were ordered by guests, especially ensure the correctness of note from guests.
 
 ## Badges
@@ -62,7 +62,7 @@ Besides, chefs can control dishes were ordered by guests, especially ensure the 
  "password":"cuibap"
 }
 ```
-## To use these below API, you have to login and assign the return token value to Authorization header (don't add Bearer because i forget in developing process :<<)
+## To use these below API, you have to log in and assign the return token value to Authorization header (don't add Bearer because I forget in developing process :<<)
 
 ## Create new dish
 - To add a new dish, use the following details in Postman tool:
@@ -154,7 +154,7 @@ Besides, chefs can control dishes were ordered by guests, especially ensure the 
 ## Roadmap
 - Enhance for final project
 - Release module Loyalty customer rewards
-- Release module Make payment by Paypal
+- Release module Make payment by PayPal
 - Release ...
 
 ## Contributing
