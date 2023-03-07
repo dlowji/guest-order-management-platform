@@ -7,7 +7,7 @@ interface ITableItem {
 	seats: number;
 	title: string;
 	status: TStatusTable;
-	id: number;
+	id: string;
 }
 
 interface ITableItemProps {
@@ -15,18 +15,18 @@ interface ITableItemProps {
 }
 
 const TableItem: React.FunctionComponent<ITableItemProps> = ({
-	item: { seats = 2, title = 'Table 1', status = 'available', id },
+	item: { seats = 2, title = 'Table 1', status = 'FREE', id },
 }) => {
 	if (seats % 2 !== 0) seats += 1;
 	const statusColor = React.useMemo(() => {
-		if (status === 'available') return 'table-item-free';
-		if (status === 'occupied') return 'table-item-dineIn';
-		if (status === 'ordered') return 'table-item-ordered';
+		if (status === 'FREE') return 'table-item-free';
+		if (status === 'OCCUPIED') return 'table-item-dineIn';
+		if (status === 'CHECK_IN') return 'table-item-ordered';
 		return '';
 	}, [status]);
 	const navigate = useNavigate();
-	const handleChooseTable = async (id: number) => {
-		if (status === 'available') {
+	const handleChooseTable = async (id: string) => {
+		if (status === 'FREE') {
 			Swal.fire({
 				title: 'Choose table',
 				text: `Do you want to choose this ${title}?`,
@@ -43,11 +43,11 @@ const TableItem: React.FunctionComponent<ITableItemProps> = ({
 			});
 		}
 
-		if (status === 'ordered') {
+		if (status === 'CHECK_IN') {
 			toast.error('This table is ordered, please choose another table');
 		}
 
-		if (status === 'occupied') {
+		if (status === 'OCCUPIED') {
 			toast.error('This table is occupied, please choose another table');
 		}
 	};
