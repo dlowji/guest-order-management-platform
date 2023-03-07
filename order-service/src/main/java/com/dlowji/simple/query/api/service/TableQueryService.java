@@ -32,15 +32,18 @@ public class TableQueryService {
 
         String status = queryParams.get("status");
         if (!StringUtils.isBlankString(status)) {
-            tableQuery = GetTablesByStatusQuery.builder()
-                    .status(status)
+            GetTablesByStatusQuery getTablesByStatusQuery = GetTablesByStatusQuery.builder()
+                    .status(status.toUpperCase())
                     .build();
+
+            return queryGateway.query(getTablesByStatusQuery, ResponseTypes.multipleInstancesOf(TableResponse.class)).join();
         }
         String capacity = queryParams.get("capacity");
         if (NumberUtils.isInteger(capacity)) {
-            tableQuery = GetTableByCapacityQuery.builder()
+            GetTableByCapacityQuery getTableByCapacityQuery = GetTableByCapacityQuery.builder()
                     .capacity(Integer.parseInt(capacity))
                     .build();
+            return queryGateway.query(getTableByCapacityQuery, ResponseTypes.multipleInstancesOf(TableResponse.class)).join();
         }
 
         return queryGateway.query(tableQuery, ResponseTypes.multipleInstancesOf(TableResponse.class)).join();
