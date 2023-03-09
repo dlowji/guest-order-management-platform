@@ -5,6 +5,7 @@ import com.dlowji.simple.command.api.data.ICategoryRepository;
 import com.dlowji.simple.command.api.model.CategoryRequest;
 import com.dlowji.simple.command.api.model.DishRequest;
 import com.dlowji.simple.command.api.service.KitchenCommandService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -24,12 +25,12 @@ public class KitchenCommandController {
 
     @PostMapping("/dishes/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public CompletableFuture<String> createDish(@RequestBody DishRequest dishRequest) {
+    public CompletableFuture<String> createDish(@Valid @RequestBody DishRequest dishRequest) {
         return kitchenCommandService.createDish(dishRequest);
 }
 
     @PostMapping("/category")
-    public String createCategory(@RequestBody CategoryRequest categoryRequest) {
+    public String createCategory(@Valid @RequestBody CategoryRequest categoryRequest) {
         Category category = Category.builder()
                 .categoryId(categoryRequest.getCategoryId())
                 .categoryName(categoryRequest.getCategoryName())
