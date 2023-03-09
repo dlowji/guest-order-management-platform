@@ -17,7 +17,7 @@ const TableContentItem: React.FunctionComponent<ITableContentItemProps> = ({
 			<div className="table-information__item__title">{title}</div>
 			<div className="table-information__item__status">{status}</div>
 			<div className="table-information__item__quantity">
-				{status === 'available' ? 'Available' : `${quantity} people`}
+				{status === 'FREE' ? 'FREE' : `${quantity} people`}
 			</div>
 		</div>
 	);

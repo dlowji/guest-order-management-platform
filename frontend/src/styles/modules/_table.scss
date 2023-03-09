@@ -4,8 +4,9 @@
 	flex-grow: 1;
 	&-left {
 		flex-grow: 1;
-		overflow-y: auto;
-		height: 100vh;
+		// overflow-y: auto;
+		// height: 100vh;
+		margin-bottom: 40px;
 	}
 	&-heading {
 		font-size: 26px;

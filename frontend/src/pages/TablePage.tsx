@@ -8,7 +8,6 @@ const TablePage: React.FunctionComponent<ITablePageProps> = () => {
 	return (
 		<section className="table">
 			<TableMain></TableMain>
-			<TableContentOrder></TableContentOrder>
 		</section>
 	);
 };

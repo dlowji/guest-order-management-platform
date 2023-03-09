@@ -61,7 +61,7 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = () => {
 				</Input>
 			</FormGroup>
 
-			<div className="flex justify-between items-center mb-6">
+			{/* <div className="flex justify-between items-center mb-6">
 				<FormGroup className="gap-3 items-center !flex-row !mb-0">
 					<Checkbox name="remember" id="remember" control={control} />
 					<Label htmlFor="remember">Remember me</Label>
@@ -87,7 +87,7 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = () => {
 						Sign up
 					</Button>
 				</div>
-			</FormGroup>
+			</FormGroup> */}
 
 			<Button type="submit" className="w-full text-white" isLoading={isSubmitting}>
 				Sign in
