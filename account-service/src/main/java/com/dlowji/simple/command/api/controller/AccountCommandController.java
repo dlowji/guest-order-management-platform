@@ -6,8 +6,7 @@ import com.dlowji.simple.command.api.model.AccountLoginRequest;
 import com.dlowji.simple.command.api.model.AccountRegisterRequest;
 import com.dlowji.simple.command.api.model.RoleRequest;
 import com.dlowji.simple.command.api.service.AuthService;
-import org.axonframework.commandhandling.gateway.CommandGateway;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,19 +16,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/accounts")
 public class AccountCommandController {
-    private final CommandGateway commandGateway;
     private final AuthService authService;
 
-    @Autowired
-    private IRoleRepository roleRepository;
+    private final IRoleRepository roleRepository;
 
-    public AccountCommandController(CommandGateway commandGateway, AuthService authService) {
-        this.commandGateway = commandGateway;
+    public AccountCommandController(AuthService authService, IRoleRepository roleRepository) {
         this.authService = authService;
+        this.roleRepository = roleRepository;
     }
 
     @PostMapping("/register/roles")
-    public String addRole(@RequestBody RoleRequest roleRequest) {
+    public String addRole(@Valid @RequestBody RoleRequest roleRequest) {
         Role role = Role.builder()
                 .roleId(roleRequest.getRoleId())
                 .roleName(roleRequest.getRoleName())
@@ -43,11 +40,11 @@ public class AccountCommandController {
         }
     }
     @PostMapping("/auth/login")
-    public ResponseEntity<?> login(@RequestBody AccountLoginRequest accountLoginRequest) {
+    public ResponseEntity<?> login(@Valid @RequestBody AccountLoginRequest accountLoginRequest) {
         return authService.login(accountLoginRequest);
     }
     @PostMapping("/auth/register")
-    public ResponseEntity<?> register(@RequestBody AccountRegisterRequest accountRequest) {
+    public ResponseEntity<?> register(@Valid @RequestBody AccountRegisterRequest accountRequest) {
         return authService.register(accountRequest);
     }
 }
