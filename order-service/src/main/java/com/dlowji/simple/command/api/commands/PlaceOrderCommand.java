@@ -1,7 +1,6 @@
 package com.dlowji.simple.command.api.commands;
 
-import com.dlowji.simple.command.api.data.OrderLineItem;
-import com.dlowji.simple.command.api.model.OrderLineItemRequest;
+import com.dlowji.simple.command.api.model.CustomOrderLineItemRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,5 +16,5 @@ import java.util.List;
 public class PlaceOrderCommand {
     @TargetAggregateIdentifier
     private String orderId;
-    private List<OrderLineItemRequest> orderLineItemRequestList;
+    private List<CustomOrderLineItemRequest> customOrderLineItemRequests;
 }

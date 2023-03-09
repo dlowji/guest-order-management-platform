@@ -1,13 +1,14 @@
-package com.dlowji.simple.command.api.model;
+package com.dlowji.simple.query.api.queries;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderLineItemRequest {
+public class GetDishByIdQuery {
     private String dishId;
-    private Integer quantity;
 }

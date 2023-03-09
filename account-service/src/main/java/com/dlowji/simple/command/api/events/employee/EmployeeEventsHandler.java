@@ -24,23 +24,24 @@ public class EmployeeEventsHandler {
     @EventHandler
     public void on(EmployeeCreatedEvent employeeCreatedEvent) {
         String roleId = employeeCreatedEvent.getRoleId();
-        Optional<Role> existRole = roleRepository.findById(roleId);
-
-        if (existRole.isPresent()) {
-            Role role = existRole.get();
-
-            Employee employee = Employee.builder()
-                    .employeeId(employeeCreatedEvent.getEmployeeId())
-                    .fullName(employeeCreatedEvent.getFullName())
-                    .email(employeeCreatedEvent.getEmail())
-                    .gender(employeeCreatedEvent.isGender())
-                    .dob(employeeCreatedEvent.getDob())
-                    .salary(employeeCreatedEvent.getSalary())
-                    .phone(employeeCreatedEvent.getPhone())
-                    .address(employeeCreatedEvent.getAddress())
-                    .role(role)
-                    .build();
-            employeeRepository.save(employee);
+        if (roleId != null) {
+            Optional<Role> existRole = roleRepository.findById(roleId);
+            if (existRole.isPresent()) {
+                Role role = existRole.get();
+                Employee employee = Employee.builder()
+                        .employeeId(employeeCreatedEvent.getEmployeeId())
+                        .fullName(employeeCreatedEvent.getFullName())
+                        .email(employeeCreatedEvent.getEmail())
+                        .gender(employeeCreatedEvent.isGender())
+                        .dob(employeeCreatedEvent.getDob())
+                        .salary(employeeCreatedEvent.getSalary())
+                        .phone(employeeCreatedEvent.getPhone())
+                        .address(employeeCreatedEvent.getAddress())
+                        .role(role)
+                        .build();
+                employeeRepository.save(employee);
+                System.out.println("save employee ");
+            }
         }
     }
 }

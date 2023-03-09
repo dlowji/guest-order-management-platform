@@ -1,6 +1,6 @@
 package com.dlowji.simple.command.api.saga;
 
-import com.dlowji.simple.command.api.commands.RequestCreateAccountCommand;
+import com.dlowji.simple.command.api.commands.CreateAccountCommand;
 import com.dlowji.simple.command.api.events.account.AccountCreatedEvent;
 import com.dlowji.simple.command.api.events.employee.EmployeeCreatedEvent;
 import org.axonframework.commandhandling.gateway.CommandGateway;
@@ -27,17 +27,16 @@ public class AccountProcessingSAGA {
         String accountId = UUID.randomUUID().toString();
         //associate Saga
         SagaLifecycle.associateWith("accountId", accountId);
-        RequestCreateAccountCommand requestCreateAccountCommand = RequestCreateAccountCommand.builder()
+        commandGateway.send(CreateAccountCommand.builder()
                 .accountId(accountId)
                 .username(employeeCreatedEvent.getUsername())
                 .password(employeeCreatedEvent.getPassword())
                 .employeeId(employeeCreatedEvent.getEmployeeId())
-                .build();
-        commandGateway.send(requestCreateAccountCommand);
+                .build());
     }
 
     @SagaEventHandler(associationProperty = "accountId")
     public void handle(AccountCreatedEvent accountCreatedEvent) {
-
+        System.out.println(accountCreatedEvent.getAccountId());
     }
 }

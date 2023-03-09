@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccountRequest {
+public class AccountRegisterRequest {
     private String username;
     private String password;
     private String fullName;

@@ -25,8 +25,9 @@ public class AccountEventsHandler {
     @EventHandler
     public void on(AccountCreatedEvent accountCreatedEvent) {
         String employeeId = accountCreatedEvent.getEmployeeId();
+        System.out.println(employeeId);
+        System.out.println(employeeRepository.existsById(employeeId));
         Optional<Employee> existEmployee = employeeRepository.findById(employeeId);
-        employeeRepository.findAll();
         if (existEmployee.isPresent()) {
             Employee employee = existEmployee.get();
             Account account = Account.builder()
