@@ -20,7 +20,7 @@ class Http {
 		this.uniqueInstance.interceptors.response.use(this.onResponse, this.onResponseError);
 	}
 	private onRequest = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
-		console.info(`[request] [${JSON.stringify(config)}]`);
+		// console.info(`[request] [${JSON.stringify(config)}]`);
 		const token = getTokenService();
 		if (token) {
 			config.headers['Authorization'] = 'Bearer ' + token;
@@ -30,17 +30,17 @@ class Http {
 	};
 
 	private onRequestError = (error: AxiosError): Promise<AxiosError> => {
-		console.error(`[request error] [${JSON.stringify(error)}]`);
+		// console.error(`[request error] [${JSON.stringify(error)}]`);
 		return Promise.reject(error);
 	};
 
 	private onResponse = (response: AxiosResponse): AxiosResponse => {
-		console.info(`[response] [${JSON.stringify(response)}]`);
+		// console.info(`[response] [${JSON.stringify(response)}]`);
 		return response;
 	};
 
 	private onResponseError = (error: AxiosError): Promise<AxiosError> => {
-		console.error(`[response error] [${JSON.stringify(error)}]`);
+		// console.error(`[response error] [${JSON.stringify(error)}]`);
 		const originalRequest = error.config;
 		const navigate = useNavigate();
 
