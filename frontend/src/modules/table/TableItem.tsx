@@ -28,6 +28,9 @@ const TableItem: React.FunctionComponent<ITableItemProps> = ({
 		return '';
 	}, [status]);
 	const navigate = useNavigate();
+
+	const fakeUserID = `85e91e71-7ec2-454e-b0bd-f7cbeb5b588b`;
+
 	const handleChooseTable = async (id: string) => {
 		if (status === 'FREE') {
 			Swal.fire({
@@ -39,7 +42,7 @@ const TableItem: React.FunctionComponent<ITableItemProps> = ({
 				confirmButtonColor: '#3085d6',
 				cancelButtonColor: '#d33',
 				showCancelButton: true,
-			}).then((result) => {
+			}).then(async (result) => {
 				if (result.isConfirmed) {
 					// navigate(`/menu/order/${id}`);
 				}

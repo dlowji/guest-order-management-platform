@@ -1,7 +1,6 @@
 import type { AxiosInstance } from 'axios';
 import http from './http';
 import { ITableResponse } from '@interfaces/table';
-import axios from 'axios';
 
 class TableApi {
 	private url: string;
@@ -9,13 +8,7 @@ class TableApi {
 
 	constructor() {
 		this.url = `/tables`;
-		this.request = axios.create({
-			baseURL: `http://localhost:8081`,
-			timeout: 10000,
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		});
+		this.request = http;
 	}
 
 	public async getTables(status?: string): Promise<ITableResponse[]> {

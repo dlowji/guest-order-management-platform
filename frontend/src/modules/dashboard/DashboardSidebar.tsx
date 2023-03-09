@@ -1,4 +1,6 @@
 import Role from '@constants/ERole';
+import { DropdownProvider, useDropdown } from '@context/useDropdown';
+import SubMenuSidebar from '@modules/common/SubMenuSidebar';
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -56,7 +58,7 @@ const DashboardSidebar: React.FunctionComponent<IDashboardSidebarProps> = () => 
 			toastId: id,
 		});
 	};
-	const currentRole = Role.ADMIN;
+	const currentRole = Role.EMPLOYEE;
 
 	const itemsFilter = React.useMemo(() => {
 		return items.filter((item) => item.permissions.includes(currentRole));
@@ -66,7 +68,7 @@ const DashboardSidebar: React.FunctionComponent<IDashboardSidebarProps> = () => 
 		<div className="sidebar">
 			<div className="sidebar-logo">
 				<img srcSet="/images/logo.png 2x" alt="logo" />
-				<span className="sidebar-title">Hotpot</span>
+				<span className="sidebar-title">Palmon</span>
 			</div>
 			<ul className="sidebar-list">
 				{itemsFilter.map((item) => (
@@ -88,12 +90,9 @@ const DashboardSidebar: React.FunctionComponent<IDashboardSidebarProps> = () => 
 					</li>
 				))}
 			</ul>
-			<div className="sidebar-profile flex items-center gap-10">
-				<div className="sidebar-profile-container">
-					<img srcSet="/images/profile.jpg 2x" alt="profile" />
-					<span className="sidebar-profile-name">Admin</span>
-				</div>
-			</div>
+			<DropdownProvider>
+				<SubMenuSidebar />
+			</DropdownProvider>
 		</div>
 	);
 };
