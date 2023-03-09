@@ -25,4 +25,9 @@ public class KitchenQueryController {
 
         return dishQueryService.getAllDishes();
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getDishByID(@PathVariable String id) {
+        return dishQueryService.getDishById(id);
+    }
 }

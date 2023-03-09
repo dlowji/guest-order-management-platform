@@ -1,6 +1,7 @@
 package com.dlowji.simple.query.api.service;
 
 import com.dlowji.simple.command.api.model.DishResponse;
+import com.dlowji.simple.query.api.queries.GetDishByIdQuery;
 import com.dlowji.simple.query.api.queries.GetDishesByCategoryQuery;
 import com.dlowji.simple.query.api.queries.GetDishesQuery;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
@@ -54,5 +55,25 @@ public class DishQueryService {
             response.put("message", "Error get dishes by category: " + e.getMessage());
             return ResponseEntity.internalServerError().body(response);
         }
+    }
+
+    public ResponseEntity<?> getDishById(String id) {
+        GetDishByIdQuery getDishByIdQuery = GetDishByIdQuery.builder()
+                .dishId(id)
+                .build();
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            DishResponse dishResponse = queryGateway.query(getDishByIdQuery, ResponseTypes.instanceOf(DishResponse.class)).join();
+            response.put("code", 0);
+            response.put("message", "Get dish by id successfully");
+            response.put("data", dishResponse);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("code", 500);
+            response.put("message", "Error get dish by id: " + e.getMessage());
+            return ResponseEntity.internalServerError().body(response);
+        }
+
     }
 }

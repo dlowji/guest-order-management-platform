@@ -3,15 +3,20 @@ package com.dlowji.simple.command.api.services;
 import com.dlowji.simple.command.api.commands.CreateOrderCommand;
 import com.dlowji.simple.command.api.commands.PlaceOrderCommand;
 import com.dlowji.simple.command.api.data.IOrderRepository;
+import com.dlowji.simple.command.api.data.ITableRepository;
 import com.dlowji.simple.command.api.data.Order;
+import com.dlowji.simple.command.api.data.SeveredTable;
 import com.dlowji.simple.command.api.enums.OrderStatus;
-import com.dlowji.simple.command.api.model.CreateOrderRequest;
-import com.dlowji.simple.command.api.model.OrderLineItemRequest;
-import com.dlowji.simple.command.api.model.PlaceOrderRequest;
+import com.dlowji.simple.command.api.enums.TableStatus;
+import com.dlowji.simple.command.api.model.*;
+import com.dlowji.simple.query.api.queries.GetDishByIdQuery;
 import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.axonframework.messaging.responsetypes.ResponseTypes;
+import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
@@ -20,22 +25,42 @@ public class OrderCommandService {
     private final CommandGateway commandGateway;
     private final IOrderRepository orderRepository;
 
-    public OrderCommandService(CommandGateway commandGateway, IOrderRepository orderRepository) {
+    private final ITableRepository tableRepository;
+    private final QueryGateway queryGateway;
+
+    public OrderCommandService(CommandGateway commandGateway, IOrderRepository orderRepository, ITableRepository tableRepository, QueryGateway queryGateway) {
         this.commandGateway = commandGateway;
         this.orderRepository = orderRepository;
+        this.tableRepository = tableRepository;
+        this.queryGateway = queryGateway;
     }
 
     public ResponseEntity<?> createOrder(CreateOrderRequest orderRequest) {
         String orderId = UUID.randomUUID().toString();
         String userId = orderRequest.getUserId();
         String tableId = orderRequest.getTableId();
+        Map<String, Object> response = new HashMap<>();
+
+        Optional<SeveredTable> existTable = tableRepository.findById(tableId);
+        if (existTable.isEmpty()) {
+            response.put("code", 500);
+            response.put("message", "Table does not exist");
+            return ResponseEntity.badRequest().body(response);
+        } else {
+            SeveredTable table = existTable.get();
+            if (table.getTableStatus() != TableStatus.FREE) {
+                response.put("code", 500);
+                response.put("message", "Table does not free right now");
+                return ResponseEntity.badRequest().body(response);
+            }
+        }
+
         CreateOrderCommand createOrderCommand = CreateOrderCommand.builder()
                 .orderId(orderId)
                 .userId(userId)
                 .tableID(tableId)
                 .orderStatus(OrderStatus.CREATED)
                 .build();
-        Map<String, Object> response = new HashMap<>();
         try {
             String orderId2 = commandGateway.sendAndWait(createOrderCommand);
             response.put("code", 0);
@@ -52,22 +77,44 @@ public class OrderCommandService {
     public ResponseEntity<?> placeOrder(PlaceOrderRequest placeOrderRequest) {
         String orderId = placeOrderRequest.getOrderId();
         Optional<Order> existOrder = orderRepository.findById(orderId);
+        Map<String, Object> response = new HashMap<>();
         if (existOrder.isEmpty()) {
-            Map<String, Object> response = new HashMap<>();
             response.put("code", 501);
             response.put("message", "Order is not exist");
             return ResponseEntity.badRequest().body(response);
         }
 
         List<OrderLineItemRequest> orderLineItemRequestList = placeOrderRequest.getOrderLineItemRequestList();
+        List<CustomOrderLineItemRequest> customOrderLineItemRequests = new ArrayList<>();
+
+        for (OrderLineItemRequest orderLineItemRequest : orderLineItemRequestList) {
+            String dishId = orderLineItemRequest.getDishId();
+            GetDishByIdQuery getDishByIdQuery = GetDishByIdQuery.builder()
+                    .dishId(dishId)
+                    .build();
+            DishResponse dishResponse = queryGateway.query(getDishByIdQuery, ResponseTypes.instanceOf(DishResponse.class)).join();
+            System.out.println(dishResponse);
+            if (null == dishResponse) {
+                response.put("code", 500);
+                response.put("message", "Dish does not exist");
+                return ResponseEntity.badRequest().body(response);
+            } else {
+                BigDecimal price = dishResponse.getPrice();
+                CustomOrderLineItemRequest customOrderLineItemRequest = CustomOrderLineItemRequest.builder()
+                        .dishId(dishResponse.getDishId())
+                        .quantity(orderLineItemRequest.getQuantity())
+                        .price(price)
+                        .build();
+                customOrderLineItemRequests.add(customOrderLineItemRequest);
+            }
+        }
 
         PlaceOrderCommand placeOrderCommand = PlaceOrderCommand.builder()
                 .orderId(orderId)
-                .orderLineItemRequestList(orderLineItemRequestList)
+                .customOrderLineItemRequests(customOrderLineItemRequests)
                 .build();
-        Map<String, Object> response = new HashMap<>();
         try {
-            CompletableFuture<String> orderId2 = commandGateway.send(placeOrderCommand);
+            CompletableFuture<String> orderId2 = commandGateway.sendAndWait(placeOrderCommand);
             response.put("code", 0);
             response.put("message", "Place order successfully");
             response.put("orderId", orderId2);

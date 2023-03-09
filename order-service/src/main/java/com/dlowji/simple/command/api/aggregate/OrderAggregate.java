@@ -7,7 +7,7 @@ import com.dlowji.simple.command.api.enums.OrderStatus;
 import com.dlowji.simple.command.api.events.OrderCanceledEvent;
 import com.dlowji.simple.command.api.events.OrderCreatedEvent;
 import com.dlowji.simple.command.api.events.OrderPlacedEvent;
-import com.dlowji.simple.command.api.model.OrderLineItemRequest;
+import com.dlowji.simple.command.api.model.CustomOrderLineItemRequest;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -23,7 +23,7 @@ public class OrderAggregate {
     private String orderId;
     private String userId;
     private String tableId;
-    private List<OrderLineItemRequest> selectedDish;
+    private List<CustomOrderLineItemRequest> selectedDish;
     private OrderStatus orderStatus;
     private boolean confirmed = false;
 
@@ -56,7 +56,7 @@ public class OrderAggregate {
     public void handle(PlaceOrderCommand placeOrderCommand) {
         OrderPlacedEvent orderPlacedEvent = OrderPlacedEvent.builder()
                 .orderId(placeOrderCommand.getOrderId())
-                .orderLineItemRequestList(placeOrderCommand.getOrderLineItemRequestList())
+                .customOrderLineItemRequests(placeOrderCommand.getCustomOrderLineItemRequests())
                 .build();
 
         AggregateLifecycle.apply(orderPlacedEvent);
@@ -75,7 +75,7 @@ public class OrderAggregate {
     @EventSourcingHandler
     public void on(OrderPlacedEvent orderPlacedEvent) {
         this.orderId = orderPlacedEvent.getOrderId();
-        this.selectedDish = orderPlacedEvent.getOrderLineItemRequestList();
+        this.selectedDish = orderPlacedEvent.getCustomOrderLineItemRequests();
         this.orderStatus = OrderStatus.IN_PROCESSING;
         this.confirmed = true;
     }
