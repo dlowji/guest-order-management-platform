@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 export default function useToggleValue(initialValue = false): {
 	value: boolean;
-	handleToggleValue: React.Dispatch<React.SetStateAction<boolean>>;
+	handleToggleValue: () => void;
 } {
 	const [value, setValue] = useState<boolean>(initialValue);
 	const handleToggleValue = () => {

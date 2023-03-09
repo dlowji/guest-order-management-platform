@@ -89,6 +89,7 @@ const TableMain: React.FunctionComponent<ITableMainProps> = (props) => {
 								seats: item.capacity,
 								title: item.code,
 								status: item.tableStatus as TStatusTable,
+								updatedAt: item.updatedAt,
 							}}
 						></TableItem>
 					))}

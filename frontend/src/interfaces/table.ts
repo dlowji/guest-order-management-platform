@@ -3,6 +3,7 @@ interface ITableResponse {
 	code: string;
 	tableStatus: string;
 	capacity: number;
+	updatedAt: string;
 }
 
 export type { ITableResponse };

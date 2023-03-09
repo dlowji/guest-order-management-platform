@@ -1,15 +1,52 @@
+import Role from '@constants/ERole';
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import { toast } from 'react-toastify';
 interface IDashboardSidebarProps {}
 
 const items = [
-	{ name: 'Home', href: '/', icon: 'fa-solid fa-house', isActive: false },
-	{ name: 'Table', href: '/table', icon: 'fa-solid fa-table', isActive: true },
-	{ name: 'Menu', href: '/menu', icon: 'fa-sharp fa-solid fa-bell-concierge', isActive: true },
-	{ name: 'Order', href: '/order', icon: 'fa-solid fa-cart-shopping', isActive: true },
-	{ name: 'History', href: '/history', icon: 'fa-solid fa-clock', isActive: false },
-	{ name: 'Report', href: '/report', icon: 'fa-solid fa-chart-simple', isActive: false },
+	{
+		name: 'Home',
+		href: '/',
+		icon: 'fa-solid fa-house',
+		isActive: false,
+		permissions: [Role.EMPLOYEE],
+	},
+	{
+		name: 'Table',
+		href: '/table',
+		icon: 'fa-solid fa-table',
+		isActive: true,
+		permissions: [Role.EMPLOYEE],
+	},
+	{
+		name: 'Menu',
+		href: '/menu',
+		icon: 'fa-sharp fa-solid fa-bell-concierge',
+		isActive: true,
+		permissions: [Role.EMPLOYEE, Role.CHEF],
+	},
+	{
+		name: 'Order',
+		href: '/order',
+		icon: 'fa-solid fa-cart-shopping',
+		isActive: true,
+		permissions: [Role.EMPLOYEE, Role.CHEF],
+	},
+	{
+		name: 'History',
+		href: '/history',
+		icon: 'fa-solid fa-clock',
+		isActive: false,
+		permissions: [Role.ADMIN, Role.EMPLOYEE],
+	},
+	{
+		name: 'Report',
+		href: '/report',
+		icon: 'fa-solid fa-chart-simple',
+		isActive: false,
+		permissions: [Role.ADMIN],
+	},
 ];
 
 const DashboardSidebar: React.FunctionComponent<IDashboardSidebarProps> = () => {
@@ -19,6 +56,12 @@ const DashboardSidebar: React.FunctionComponent<IDashboardSidebarProps> = () => 
 			toastId: id,
 		});
 	};
+	const currentRole = Role.ADMIN;
+
+	const itemsFilter = React.useMemo(() => {
+		return items.filter((item) => item.permissions.includes(currentRole));
+	}, [currentRole]);
+
 	return (
 		<div className="sidebar">
 			<div className="sidebar-logo">
@@ -26,7 +69,7 @@ const DashboardSidebar: React.FunctionComponent<IDashboardSidebarProps> = () => 
 				<span className="sidebar-title">Hotpot</span>
 			</div>
 			<ul className="sidebar-list">
-				{items.map((item) => (
+				{itemsFilter.map((item) => (
 					<li className="sidebar-item" key={item.name}>
 						{!item.isActive ? (
 							<button className="sidebar-link" onClick={() => handleItemInActive(item.href)}>
@@ -45,7 +88,7 @@ const DashboardSidebar: React.FunctionComponent<IDashboardSidebarProps> = () => 
 					</li>
 				))}
 			</ul>
-			<div className="sidebar-profile">
+			<div className="sidebar-profile flex items-center gap-10">
 				<div className="sidebar-profile-container">
 					<img srcSet="/images/profile.jpg 2x" alt="profile" />
 					<span className="sidebar-profile-name">Admin</span>

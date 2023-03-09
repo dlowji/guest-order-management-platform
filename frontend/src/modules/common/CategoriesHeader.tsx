@@ -2,7 +2,7 @@ import * as React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 
 interface ICategoryItem {
-	id: number;
+	id: number | string;
 	name: string;
 	icon?: string | React.ReactNode;
 	link?: string;
@@ -41,7 +41,8 @@ const CategoriesHeader: React.FunctionComponent<ICategoriesHeaderProps> = ({
 						<NavLink
 							to={category.link ? category.link : '/'}
 							className={() =>
-								activeCategory === category.name.toLowerCase()
+								activeCategory === category.name?.toLowerCase() ||
+								activeCategory === category.id?.toString()?.toLowerCase()
 									? `categories-item categories-item-active`
 									: `categories-item`
 							}

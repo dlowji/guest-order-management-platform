@@ -38,8 +38,6 @@
 		padding: 40px 0;
 		padding-right: 20px;
 		border-radius: 30px;
-		overflow-y: auto;
-		max-height: 630px;
 	}
 
 	&-item {
@@ -120,8 +118,17 @@
 		padding: 20px;
 		background-color: #fafafa;
 		border-radius: 30px;
-		overflow: hidden;
-		height: calc(100vh - $heightSidebar - 40px);
+		transform: translateX(100%);
+		position: fixed;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		transition: all 0.3s ease;
+		max-height: 1000px;
+		z-index: 100;
+		&.active {
+			transform: translateX(0);
+		}
 	}
 	&-order {
 		display: flex;
@@ -132,6 +139,7 @@
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
+			gap: 10px;
 			margin-bottom: 20px;
 			span {
 				font-size: 20px;
@@ -142,6 +150,15 @@
 				font-size: 16px;
 				font-weight: 400;
 				color: $gray90;
+			}
+			span,
+			h4 {
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				word-break: break-word;
 			}
 		}
 		&-list {
