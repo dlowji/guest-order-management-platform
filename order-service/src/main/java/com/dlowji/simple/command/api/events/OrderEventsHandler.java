@@ -27,7 +27,7 @@ public class OrderEventsHandler {
     public void on(OrderCreatedEvent orderCreatedEvent) {
         Order order = Order.builder()
                 .orderId(orderCreatedEvent.getOrderId())
-                .userId(orderCreatedEvent.getUserId())
+                .accountId(orderCreatedEvent.getAccountId())
                 .tableId(orderCreatedEvent.getTableId())
                 .orderStatus(orderCreatedEvent.getOrderStatus())
                 .subTotal(BigDecimal.valueOf(0))
@@ -65,8 +65,9 @@ public class OrderEventsHandler {
                             .orderId(order.getOrderId())
                             .build();
                     orderLineItemRepository.save(orderLineItem);
-//                subTotal = subTotal.add(orderLineItem.getPrice());
-//                order.getOrderLineItemList().add(orderLineItem);
+                    if (customOrderLineItemRequest.getPrice() != null) {
+                        subTotal = subTotal.add(customOrderLineItemRequest.getPrice());
+                    }
                 }
                 BigDecimal total = subTotal.add(tax);
                 BigDecimal grandTotal = total.subtract(itemDiscount).subtract(discount);

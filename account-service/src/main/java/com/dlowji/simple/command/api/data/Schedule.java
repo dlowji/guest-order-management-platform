@@ -7,6 +7,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @EqualsAndHashCode(callSuper = true)
@@ -21,8 +22,7 @@ public class Schedule extends TimeStamp {
     private String scheduleId;
     private LocalTime startWorkHour;
     private LocalTime endWorkHour;
-    private boolean holiday;
-    private boolean weekend;
+    private LocalDate workDate;
     @OneToOne
     private Employee employee;
 }
