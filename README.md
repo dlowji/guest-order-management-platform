@@ -62,7 +62,7 @@ Besides, chefs can control dishes were ordered by guests, especially ensure the 
  "password":"cuibap"
 }
 ```
-## To use these below API, you have to log in and assign the return token value to Authorization header (don't add Bearer because I forget in developing process :<<)
+## To use these below API, you have to log in and assign the returned token value to Authorization header
 
 ## Create new dish
 - To add a new dish, use the following details in Postman tool:
@@ -113,7 +113,7 @@ Besides, chefs can control dishes were ordered by guests, especially ensure the 
 + Body: raw -> JSON
 ```json
 {
-    "userId": "909fda08-41cc-4163-b06f-bce3e5f69c82",
+    "accountId": "909fda08-41cc-4163-b06f-bce3e5f69c82",
     "tableId": "909fda08-41cc-4163-b06f-bce3e5f69c81"
 }
 ```
