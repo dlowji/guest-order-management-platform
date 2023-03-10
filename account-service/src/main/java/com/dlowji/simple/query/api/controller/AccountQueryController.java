@@ -10,7 +10,7 @@ import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +29,7 @@ public class AccountQueryController {
     @GetMapping
     public ResponseEntity<?> getAllAccounts() {
         GetAccountsQuery getAccountsQuery = new GetAccountsQuery();
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new LinkedHashMap<>();
         try {
             List<AccountResponse> accountResponseList = queryGateway.query(getAccountsQuery, ResponseTypes.multipleInstancesOf(AccountResponse.class)).join();
             response.put("code", 0);
@@ -48,7 +48,7 @@ public class AccountQueryController {
         GetAccountByIdQuery getAccountByIdQuery = GetAccountByIdQuery.builder()
                 .accountId(id)
                 .build();
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new LinkedHashMap<>();
         try {
             AccountResponse accountResponse = queryGateway.query(getAccountByIdQuery, ResponseTypes.instanceOf(AccountResponse.class)).join();
             response.put("code", 0);
@@ -65,7 +65,7 @@ public class AccountQueryController {
     @GetMapping("/getme")
     public ResponseEntity<?> getMe(@RequestHeader(value = "Authorization") String authorizationHeader) {
         System.out.println(authorizationHeader);
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new LinkedHashMap<>();
         try {
             jwtUtil.validateToken(authorizationHeader);
             Claims claims = jwtUtil.getClaims(authorizationHeader);

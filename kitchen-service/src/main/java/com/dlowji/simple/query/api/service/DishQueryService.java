@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,7 +43,7 @@ public class DishQueryService {
         GetDishesByCategoryQuery getDishesByCategoryQuery = GetDishesByCategoryQuery.builder()
                 .categoryName(categoryName)
                 .build();
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new LinkedHashMap<>();
 
         try {
             List<DishResponse> dishResponseList = queryGateway.query(getDishesByCategoryQuery, ResponseTypes.multipleInstancesOf(DishResponse.class)).join();
@@ -61,7 +62,7 @@ public class DishQueryService {
         GetDishByIdQuery getDishByIdQuery = GetDishByIdQuery.builder()
                 .dishId(id)
                 .build();
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new LinkedHashMap<>();
 
         try {
             DishResponse dishResponse = queryGateway.query(getDishByIdQuery, ResponseTypes.instanceOf(DishResponse.class)).join();

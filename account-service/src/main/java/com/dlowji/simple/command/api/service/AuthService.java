@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -35,7 +35,7 @@ public class AuthService {
     }
 
     public ResponseEntity<?> login(AccountLoginRequest accountLoginRequest) {
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new LinkedHashMap<>();
         //decode password
         String username = accountLoginRequest.getUsername();
         boolean isExistUsername = accountRepository.existsByUsername(username);
@@ -55,8 +55,11 @@ public class AuthService {
             }
             String token = jwtUtil.generateToken(username);
             response.put("code", 0);
-            response.put("message", "Login success");
+            response.put("id", account.getAccountId());
+            response.put("username", account.getUsername());
+            response.put("role", account.getEmployee().getRole().getRoleName());
             response.put("access_token", token);
+            response.put("token_type", "Bearer");
             return ResponseEntity.ok(response);
         }
 
@@ -87,7 +90,7 @@ public class AuthService {
     }
 
     public ResponseEntity<?> register(AccountRegisterRequest accountRequest) {
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new LinkedHashMap<>();
         String username = accountRequest.getUsername();
         String hashedPwd = accountRequest.getPassword();
         boolean existUsername = accountRepository.existsByUsername(username);
@@ -122,9 +125,10 @@ public class AuthService {
                 .roleId(accountRequest.getRoleId())
                 .build();
         try {
-            commandGateway.send(createEmployeeCommand);
+            String employeeId2 = commandGateway.sendAndWait(createEmployeeCommand);
             response.put("code", 0);
             response.put("message", "Register employee successfully");
+            response.put("employeeId", employeeId2);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             response.put("code", 511);
@@ -134,7 +138,7 @@ public class AuthService {
     }
 
     public ResponseEntity<?> logout(AccountLogoutRequest accountLogoutRequest) {
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new LinkedHashMap<>();
         String accountId = accountLogoutRequest.getAccountId();
         String scheduleId = accountLogoutRequest.getScheduleId();
         boolean result = updateSchedule(accountId, scheduleId);
