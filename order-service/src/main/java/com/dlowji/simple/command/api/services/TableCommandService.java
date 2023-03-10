@@ -7,7 +7,7 @@ import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -29,7 +29,7 @@ public class TableCommandService {
                 .capacity(tableRequest.getCapacity())
                 .build();
 
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new LinkedHashMap<>();
         try {
             commandGateway.send(createTableCommand);
             response.put("code", 0);

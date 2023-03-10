@@ -39,7 +39,7 @@ public class OrderCommandService {
         String orderId = UUID.randomUUID().toString();
         String accountId = orderRequest.getAccountId();
         String tableId = orderRequest.getTableId();
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new LinkedHashMap<>();
 
         GetAccountByIdQuery getAccountByIdQuery = GetAccountByIdQuery.builder()
                 .accountId(accountId)
@@ -87,7 +87,7 @@ public class OrderCommandService {
     public ResponseEntity<?> placeOrder(PlaceOrderRequest placeOrderRequest) {
         String orderId = placeOrderRequest.getOrderId();
         Optional<Order> existOrder = orderRepository.findById(orderId);
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new LinkedHashMap<>();
         if (existOrder.isEmpty()) {
             response.put("code", 501);
             response.put("message", "Order is not exist");

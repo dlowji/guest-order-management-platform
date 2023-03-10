@@ -13,7 +13,7 @@ import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +26,7 @@ public class OrderQueryService {
     }
 
     public ResponseEntity<?> getOrdersByProperties(Map<String, String> queryParams) {
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new LinkedHashMap<>();
 
         String status = queryParams.get("status");
         if (!StringUtils.isBlankString(status)) {
@@ -78,7 +78,7 @@ public class OrderQueryService {
         GetOrderDetailByIdQuery getOrderDetailByIdQuery = GetOrderDetailByIdQuery.builder()
                 .orderId(id)
                 .build();
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new LinkedHashMap<>();
         try {
             OrderDetailResponse orderDetailResponse = queryGateway.query(getOrderDetailByIdQuery, ResponseTypes.instanceOf(OrderDetailResponse.class)).join();
             response.put("code", 0);
