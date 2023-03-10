@@ -1,16 +1,21 @@
 package com.dlowji.simple.command.api.service;
 
 import com.dlowji.simple.command.api.commands.CreateEmployeeCommand;
+import com.dlowji.simple.command.api.commands.CreateScheduleCommand;
+import com.dlowji.simple.command.api.commands.UpdateScheduleCommand;
 import com.dlowji.simple.command.api.data.Account;
 import com.dlowji.simple.command.api.data.IAccountRepository;
 import com.dlowji.simple.command.api.data.IRoleRepository;
 import com.dlowji.simple.command.api.model.AccountLoginRequest;
+import com.dlowji.simple.command.api.model.AccountLogoutRequest;
 import com.dlowji.simple.command.api.model.AccountRegisterRequest;
 import com.dlowji.simple.command.api.util.JwtUtil;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -42,6 +47,12 @@ public class AuthService {
         Account account = accountRepository.findByUsername(username);
         boolean match = account.getPassword().equals(accountLoginRequest.getPassword());
         if (match) {
+            boolean result = createSchedule(account.getEmployee().getEmployeeId());
+            if (!result) {
+                response.put("code", 550);
+                response.put("message", "Error create work schedule");
+                return ResponseEntity.internalServerError().body(response);
+            }
             String token = jwtUtil.generateToken(username);
             response.put("code", 0);
             response.put("message", "Login success");
@@ -52,6 +63,27 @@ public class AuthService {
         response.put("code", 500);
         response.put("message", "Wrong password");
         return ResponseEntity.badRequest().body(response);
+    }
+
+    private boolean createSchedule(String employeeId) {
+        String scheduleId = UUID.randomUUID().toString();
+        LocalTime currentTime = LocalTime.now();
+        LocalDate currentDate = LocalDate.now();
+        CreateScheduleCommand createScheduleCommand = CreateScheduleCommand.builder()
+                .scheduleId(scheduleId)
+                .startWorkHour(currentTime)
+                .endWorkHour(currentTime.plusHours(1))
+                .workDate(currentDate)
+                .employeeId(employeeId)
+                .build();
+
+        try {
+            commandGateway.send(createScheduleCommand);
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 
     public ResponseEntity<?> register(AccountRegisterRequest accountRequest) {
@@ -98,6 +130,39 @@ public class AuthService {
             response.put("code", 511);
             response.put("message", "Error registering employee: " + e.getMessage());
             return ResponseEntity.internalServerError().body(response);
+        }
+    }
+
+    public ResponseEntity<?> logout(AccountLogoutRequest accountLogoutRequest) {
+        Map<String, Object> response = new HashMap<>();
+        String accountId = accountLogoutRequest.getAccountId();
+        String scheduleId = accountLogoutRequest.getScheduleId();
+        boolean result = updateSchedule(accountId, scheduleId);
+
+        if (result) {
+            response.put("code", 0);
+            response.put("message", "Logout successfully");
+            return ResponseEntity.ok(response);
+        }
+
+        response.put("code", "550");
+        response.put("message", "Error logout account");
+        return ResponseEntity.internalServerError().body(response);
+    }
+
+    private boolean updateSchedule(String accountId, String scheduleId) {
+        LocalTime currentTime = LocalTime.now();
+
+        UpdateScheduleCommand updateScheduleCommand = UpdateScheduleCommand.builder()
+                .scheduleId(scheduleId)
+                .endWorkHour(currentTime)
+                .build();
+
+        try {
+            commandGateway.send(updateScheduleCommand);
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 }

@@ -20,7 +20,7 @@ import java.util.List;
 public class Order extends TimeStamp {
     @Id
     private String orderId;
-    private String userId;
+    private String accountId;
     private String tableId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "orderId", orphanRemoval = true)
     private List<OrderLineItem> orderLineItemList = new ArrayList<>();

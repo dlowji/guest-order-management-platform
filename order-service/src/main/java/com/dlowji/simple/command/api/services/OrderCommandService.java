@@ -9,6 +9,7 @@ import com.dlowji.simple.command.api.data.SeveredTable;
 import com.dlowji.simple.command.api.enums.OrderStatus;
 import com.dlowji.simple.command.api.enums.TableStatus;
 import com.dlowji.simple.command.api.model.*;
+import com.dlowji.simple.query.api.queries.GetAccountByIdQuery;
 import com.dlowji.simple.query.api.queries.GetDishByIdQuery;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
@@ -18,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
 
 @Service
 public class OrderCommandService {
@@ -37,10 +37,20 @@ public class OrderCommandService {
 
     public ResponseEntity<?> createOrder(CreateOrderRequest orderRequest) {
         String orderId = UUID.randomUUID().toString();
-        String userId = orderRequest.getUserId();
+        String accountId = orderRequest.getAccountId();
         String tableId = orderRequest.getTableId();
         Map<String, Object> response = new HashMap<>();
 
+        GetAccountByIdQuery getAccountByIdQuery = GetAccountByIdQuery.builder()
+                .accountId(accountId)
+                .build();
+        AccountResponse accountResponse = queryGateway.query(getAccountByIdQuery, ResponseTypes.instanceOf(AccountResponse.class)).join();
+        System.out.println(accountResponse);
+        if (accountResponse == null) {
+            response.put("code", 520);
+            response.put("message", "Account does not exist");
+            return ResponseEntity.badRequest().body(response);
+        }
         Optional<SeveredTable> existTable = tableRepository.findById(tableId);
         if (existTable.isEmpty()) {
             response.put("code", 500);
@@ -57,7 +67,7 @@ public class OrderCommandService {
 
         CreateOrderCommand createOrderCommand = CreateOrderCommand.builder()
                 .orderId(orderId)
-                .userId(userId)
+                .accountId(accountId)
                 .tableID(tableId)
                 .orderStatus(OrderStatus.CREATED)
                 .build();
@@ -114,14 +124,14 @@ public class OrderCommandService {
                 .customOrderLineItemRequests(customOrderLineItemRequests)
                 .build();
         try {
-            CompletableFuture<String> orderId2 = commandGateway.sendAndWait(placeOrderCommand);
+            String orderId2 = commandGateway.sendAndWait(placeOrderCommand);
             response.put("code", 0);
             response.put("message", "Place order successfully");
             response.put("orderId", orderId2);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             response.put("code", 500);
-            response.put("message", "Error create order " + e.getMessage());
+            response.put("message", "Error place order " + e.getMessage());
             return ResponseEntity.internalServerError().body(response);
         }
     }

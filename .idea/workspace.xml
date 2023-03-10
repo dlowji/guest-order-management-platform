@@ -4,22 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89a18001-5f1e-4cd5-bd47-59be2fec2b84" name="Changes" comment="validate endpoint">
+    <list default="true" id="89a18001-5f1e-4cd5-bd47-59be2fec2b84" name="Changes" comment="add validator for request model">
+      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/aggregates/ScheduleAggregate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/commands/CreateScheduleCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/commands/UpdateScheduleCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/events/schedule/ScheduleCreatedEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/events/schedule/ScheduleEventsHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/events/schedule/ScheduleUpdatedEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/model/AccountLogoutRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/queries/GetAccountByIdQuery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/AccountResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/queries/GetAccountByIdQuery.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/controller/AccountCommandController.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/controller/AccountCommandController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/model/AccountLoginRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/model/AccountLoginRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/model/AccountRegisterRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/model/AccountRegisterRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/model/RoleRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/model/RoleRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/controller/KitchenCommandController.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/controller/KitchenCommandController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/model/CategoryRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/model/CategoryRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/model/DishRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/model/DishRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/controller/OrderCommandController.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/controller/OrderCommandController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/controller/TableCommandController.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/controller/TableCommandController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/CreateOrderRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/CreateOrderRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/OrderLineItemRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/OrderLineItemRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/PlaceOrderRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/PlaceOrderRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/TableRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/TableRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/data/Schedule.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/data/Schedule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/service/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/controller/AccountQueryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/controller/AccountQueryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/projection/AccountProjection.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/projection/AccountProjection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/commands/CreateOrderCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/commands/CreateOrderCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/data/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/data/Order.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/events/OrderCreatedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/events/OrderCreatedEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/events/OrderEventsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/events/OrderEventsHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/services/OrderCommandService.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/services/OrderCommandService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -211,7 +217,8 @@
       <workItem from="1678071860916" duration="2723000" />
       <workItem from="1678156235288" duration="1176000" />
       <workItem from="1678328434234" duration="5780000" />
-      <workItem from="1678354531142" duration="19831000" />
+      <workItem from="1678354531142" duration="20095000" />
+      <workItem from="1678415931938" duration="7612000" />
     </task>
     <task id="LOCAL-00001" summary="config pom file of parent folder">
       <created>1676885189780</created>
@@ -325,7 +332,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678369110700</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="add validator for request model">
+      <created>1678380905335</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1678380905335</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -371,6 +385,7 @@
     <MESSAGE value="edit token expire time" />
     <MESSAGE value="update returned data of services" />
     <MESSAGE value="validate endpoint" />
-    <option name="LAST_COMMIT_MESSAGE" value="validate endpoint" />
+    <MESSAGE value="add validator for request model" />
+    <option name="LAST_COMMIT_MESSAGE" value="add validator for request model" />
   </component>
 </project>

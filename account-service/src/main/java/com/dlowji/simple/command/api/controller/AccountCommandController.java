@@ -3,6 +3,7 @@ package com.dlowji.simple.command.api.controller;
 import com.dlowji.simple.command.api.data.IRoleRepository;
 import com.dlowji.simple.command.api.data.Role;
 import com.dlowji.simple.command.api.model.AccountLoginRequest;
+import com.dlowji.simple.command.api.model.AccountLogoutRequest;
 import com.dlowji.simple.command.api.model.AccountRegisterRequest;
 import com.dlowji.simple.command.api.model.RoleRequest;
 import com.dlowji.simple.command.api.service.AuthService;
@@ -39,12 +40,19 @@ public class AccountCommandController {
             return "False";
         }
     }
+
     @PostMapping("/auth/login")
     public ResponseEntity<?> login(@Valid @RequestBody AccountLoginRequest accountLoginRequest) {
         return authService.login(accountLoginRequest);
     }
+
     @PostMapping("/auth/register")
     public ResponseEntity<?> register(@Valid @RequestBody AccountRegisterRequest accountRequest) {
         return authService.register(accountRequest);
+    }
+
+    @PostMapping("/auth/logout")
+    public ResponseEntity<?> logout(@Valid @RequestBody AccountLogoutRequest accountLogoutRequest) {
+        return authService.logout(accountLogoutRequest);
     }
 }

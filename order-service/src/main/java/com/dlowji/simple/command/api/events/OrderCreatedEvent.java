@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 public class OrderCreatedEvent {
     private String orderId;
-    private String userId;
+    private String accountId;
     private String tableId;
     private OrderStatus orderStatus;
 }
