@@ -6,6 +6,7 @@ import com.dlowji.simple.command.api.commands.UpdateScheduleCommand;
 import com.dlowji.simple.command.api.data.Account;
 import com.dlowji.simple.command.api.data.IAccountRepository;
 import com.dlowji.simple.command.api.data.IRoleRepository;
+import com.dlowji.simple.command.api.data.IScheduleRepository;
 import com.dlowji.simple.command.api.model.AccountLoginRequest;
 import com.dlowji.simple.command.api.model.AccountLogoutRequest;
 import com.dlowji.simple.command.api.model.AccountRegisterRequest;
@@ -24,12 +25,14 @@ import java.util.UUID;
 public class AuthService {
     private final IAccountRepository accountRepository;
     private final IRoleRepository roleRepository;
+    private final IScheduleRepository scheduleRepository;
     private final CommandGateway commandGateway;
     private final JwtUtil jwtUtil;
 
-    public AuthService(IAccountRepository accountRepository, IRoleRepository roleRepository, CommandGateway commandGateway, JwtUtil jwtUtil) {
+    public AuthService(IAccountRepository accountRepository, IRoleRepository roleRepository, IScheduleRepository scheduleRepository, CommandGateway commandGateway, JwtUtil jwtUtil) {
         this.accountRepository = accountRepository;
         this.roleRepository = roleRepository;
+        this.scheduleRepository = scheduleRepository;
         this.commandGateway = commandGateway;
         this.jwtUtil = jwtUtil;
     }
@@ -140,8 +143,19 @@ public class AuthService {
     public ResponseEntity<?> logout(AccountLogoutRequest accountLogoutRequest) {
         Map<String, Object> response = new LinkedHashMap<>();
         String accountId = accountLogoutRequest.getAccountId();
+        if (!accountRepository.existsById(accountId)) {
+            response.put("code", 100);
+            response.put("message", "Account not exist");
+            return ResponseEntity.badRequest().body(response);
+        }
         String scheduleId = accountLogoutRequest.getScheduleId();
-        boolean result = updateSchedule(accountId, scheduleId);
+        if (!scheduleRepository.existsById(scheduleId)) {
+            response.put("code", 100);
+            response.put("message", "Schedule not exist");
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        boolean result = updateSchedule(scheduleId);
 
         if (result) {
             response.put("code", 0);
@@ -154,7 +168,7 @@ public class AuthService {
         return ResponseEntity.internalServerError().body(response);
     }
 
-    private boolean updateSchedule(String accountId, String scheduleId) {
+    private boolean updateSchedule(String scheduleId) {
         LocalTime currentTime = LocalTime.now();
 
         UpdateScheduleCommand updateScheduleCommand = UpdateScheduleCommand.builder()

@@ -42,7 +42,7 @@ public class OrderProjection {
         List<OrderLineItemResponse> orderLineItemResponseList = orderLineItemList.stream().map(this::mapToOrderLineItemResponse).toList();
         OrderDetailResponse response = OrderDetailResponse.builder()
                 .orderId(order.getOrderId())
-                .userId(order.getUserId())
+                .accountId(order.getAccountId())
                 .orderLineItemResponseList(new ArrayList<>())
                 .orderStatus(order.getOrderStatus())
                 .subTotal(order.getSubTotal())
@@ -72,7 +72,7 @@ public class OrderProjection {
     private OrderResponse mapToOrderResponse(Order order) {
         return OrderResponse.builder()
                 .orderId(order.getOrderId())
-                .userId(order.getUserId())
+                .accountId(order.getAccountId())
                 .tableId(order.getTableId())
                 .orderStatus(order.getOrderStatus())
                 .grandTotal(order.getGrandTotal())
