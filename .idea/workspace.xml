@@ -4,27 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89a18001-5f1e-4cd5-bd47-59be2fec2b84" name="Changes" comment="implement get order history">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+    <list default="true" id="89a18001-5f1e-4cd5-bd47-59be2fec2b84" name="Changes" comment="update FE">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/controller/AccountCommandController.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/controller/AccountCommandController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/model/AccountResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/model/AccountResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/projection/AccountProjection.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/projection/AccountProjection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/java/com/dlowji/simple/filter/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/dlowji/simple/filter/JwtAuthenticationFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/api/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/api/auth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/api/http.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/api/http.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/api/order.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/api/order.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/button/Button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/button/Button.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/constants/ERole.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/constants/ERole.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/layouts/AuthenticationLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/layouts/AuthenticationLayout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/modules/common/ProtectedRoute.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/common/ProtectedRoute.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/modules/table/TableItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/table/TableItem.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/LoginPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/LoginPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/useAuth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/useAuth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/types/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/types/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/AccountResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/AccountResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/controller/OrderQueryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/controller/OrderQueryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/common/MenuRightContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/common/MenuRightContent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/model/DishRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/model/DishRequest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -176,9 +159,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.KitchenServiceApplication" />
         <item itemvalue="Spring Boot.OrderServiceApplication" />
         <item itemvalue="Spring Boot.AccountServiceApplication" />
-        <item itemvalue="Spring Boot.KitchenServiceApplication" />
         <item itemvalue="Spring Boot.ApiGatewayApplication" />
       </list>
     </recent_temporary>
@@ -376,7 +359,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678539543778</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="update FE">
+      <created>1678552555822</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1678552555822</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -427,6 +417,7 @@
     <MESSAGE value="update jwt" />
     <MESSAGE value="fix bug inside order service" />
     <MESSAGE value="implement get order history" />
-    <option name="LAST_COMMIT_MESSAGE" value="implement get order history" />
+    <MESSAGE value="update FE" />
+    <option name="LAST_COMMIT_MESSAGE" value="update FE" />
   </component>
 </project>
