@@ -4,6 +4,7 @@ import com.dlowji.simple.command.api.data.Account;
 import com.dlowji.simple.command.api.data.IAccountRepository;
 import com.dlowji.simple.command.api.model.AccountResponse;
 import com.dlowji.simple.query.api.queries.GetAccountByIdQuery;
+import com.dlowji.simple.query.api.queries.GetAccountByUsernameQuery;
 import com.dlowji.simple.query.api.queries.GetAccountsQuery;
 import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.stereotype.Component;
@@ -36,11 +37,24 @@ public class AccountProjection {
         return existAccount.map(this::mapToAccountResponse).orElse(null);
     }
 
+    @QueryHandler
+    public AccountResponse handle(GetAccountByUsernameQuery getAccountByUsernameQuery) {
+        String username = getAccountByUsernameQuery.getUsername();
+        if (username == null) {
+            return null;
+        }
+        Account existAccount = accountRepository.findByUsername(username);
+        if (existAccount == null) {
+            return null;
+        }
+
+        return mapToAccountResponse(existAccount);
+    }
+
     private AccountResponse mapToAccountResponse(Account account) {
         return AccountResponse.builder()
                 .accountId(account.getAccountId())
                 .username(account.getUsername())
-                .password(account.getPassword())
                 .employeeId(account.getEmployee().getEmployeeId())
                 .roleId(account.getEmployee().getRole().getRoleId())
                 .build();

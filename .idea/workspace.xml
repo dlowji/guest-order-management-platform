@@ -4,10 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89a18001-5f1e-4cd5-bd47-59be2fec2b84" name="Changes" comment="implement get order history">
+    <list default="true" id="89a18001-5f1e-4cd5-bd47-59be2fec2b84" name="Changes" comment="fix bug">
+      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/queries/GetAccountByUsernameQuery.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/aggregates/ScheduleAggregate.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/aggregates/ScheduleAggregate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/model/AccountResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/model/AccountResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/controller/AccountQueryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/controller/AccountQueryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/projection/AccountProjection.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/projection/AccountProjection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -203,7 +207,7 @@
       <workItem from="1678415931938" duration="14959000" />
       <workItem from="1678513581326" duration="9291000" />
       <workItem from="1678529324220" duration="2566000" />
-      <workItem from="1678539266506" duration="1934000" />
+      <workItem from="1678539266506" duration="3255000" />
     </task>
     <task id="LOCAL-00001" summary="config pom file of parent folder">
       <created>1676885189780</created>
@@ -352,7 +356,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678539543778</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="fix bug">
+      <created>1678546516550</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1678546516550</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -403,6 +414,7 @@
     <MESSAGE value="update jwt" />
     <MESSAGE value="fix bug inside order service" />
     <MESSAGE value="implement get order history" />
-    <option name="LAST_COMMIT_MESSAGE" value="implement get order history" />
+    <MESSAGE value="fix bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix bug" />
   </component>
 </project>
