@@ -3,16 +3,20 @@ package com.dlowji.simple.query.api.service;
 import com.dlowji.simple.command.api.enums.OrderStatus;
 import com.dlowji.simple.command.api.model.OrderDetailResponse;
 import com.dlowji.simple.command.api.model.OrderResponse;
-import com.dlowji.simple.query.api.queries.GetOrderDetailByIdQuery;
-import com.dlowji.simple.query.api.queries.GetOrdersByStatusQuery;
-import com.dlowji.simple.query.api.queries.GetOrdersByUserIdQuery;
-import com.dlowji.simple.query.api.queries.GetOrdersQuery;
+import com.dlowji.simple.model.ScheduleDetailResponse;
+import com.dlowji.simple.queries.GetScheduleDetailByIdQuery;
+import com.dlowji.simple.query.api.queries.*;
 import com.dlowji.simple.utils.StringUtils;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZonedDateTime;
+import java.time.chrono.ChronoZonedDateTime;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,5 +94,76 @@ public class OrderQueryService {
             response.put("message", "Error getting order detail by id: " + e.getMessage());
             return ResponseEntity.internalServerError().body(response);
         }
+    }
+
+    public ResponseEntity<?> getOrderHistoryBySchedule(String scheduleId) {
+        Map<String, Object> response = new LinkedHashMap<>();
+        GetScheduleDetailByIdQuery getScheduleDetailByIdQuery = GetScheduleDetailByIdQuery.builder()
+                .scheduleId(scheduleId)
+                .build();
+
+        ScheduleDetailResponse scheduleDetailResponse = queryGateway.query(getScheduleDetailByIdQuery,
+                ResponseTypes.instanceOf(ScheduleDetailResponse.class)).join();
+        if (scheduleDetailResponse == null) {
+            response.put("code", 700);
+            response.put("message", "Schedule does not exist");
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        GetOrdersQuery getOrdersQuery = GetOrdersQuery.builder().build();
+        List<OrderResponse> orderResponseList = queryGateway.query(getOrdersQuery, ResponseTypes.multipleInstancesOf(OrderResponse.class)).join();
+        LocalTime startHour = scheduleDetailResponse.getStartWorkHour();
+        LocalTime endHour = scheduleDetailResponse.getEndWorkHour();
+        LocalDate workDate = scheduleDetailResponse.getWorkDate();
+
+        List<OrderResponse> result = new ArrayList<>();
+
+        for (OrderResponse orderResponse : orderResponseList) {
+            ZonedDateTime processTime = orderResponse.getCreatedAt();
+            if (processTime.getDayOfMonth() == workDate.getDayOfMonth()
+                    && processTime.isAfter(ChronoZonedDateTime.from(startHour))
+                    && processTime.isBefore(ChronoZonedDateTime.from(endHour))) {
+                result.add(orderResponse);
+            }
+        }
+
+        response.put("code", 0);
+        response.put("message", "get orders by schedule successfully");
+        response.put("data", result);
+
+        return ResponseEntity.ok(response);
+    }
+
+    public ResponseEntity<?> getOrderHistoryByDMY(int year, int month, int day, String filter) {
+        Map<String, Object> response = new LinkedHashMap<>();
+
+        GetOrdersByYearQuery getOrdersByYearQuery = GetOrdersByYearQuery.builder()
+                .year(year)
+                .build();
+        List<OrderResponse> orderResponseList = queryGateway.query(getOrdersByYearQuery, ResponseTypes.multipleInstancesOf(OrderResponse.class)).join();
+
+        if (filter.equals("year")) {
+            response.put("code", 0);
+            response.put("message", "Filter orders by year successfully");
+            response.put("data", orderResponseList);
+            return ResponseEntity.ok(response);
+        }
+
+        List<OrderResponse> result = new ArrayList<>();
+
+        for (OrderResponse orderResponse : orderResponseList) {
+            ZonedDateTime processTime = orderResponse.getCreatedAt();
+            if (filter.equals("day") && processTime.getDayOfMonth() == day && processTime.getMonthValue() == month) {
+                result.add(orderResponse);
+            } else if (filter.equals("month") && processTime.getMonthValue() == month) {
+                result.add(orderResponse);
+            }
+        }
+
+        response.put("code", 0);
+        response.put("message", "Filter order by " + filter + " successfully");
+        response.put("data", result);
+
+        return ResponseEntity.ok(response);
     }
 }

@@ -4,16 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89a18001-5f1e-4cd5-bd47-59be2fec2b84" name="Changes" comment="update jwt">
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/model/ScheduleDetailResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/queries/GetScheduleDetailByIdQuery.java" afterDir="false" />
+    <list default="true" id="89a18001-5f1e-4cd5-bd47-59be2fec2b84" name="Changes" comment="fix bug inside order service">
+      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/projection/ScheduleProjection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/dlowji/simple/config/CorsConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common-service/src/main/java/com/dlowji/simple/model/ScheduleDetailResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common-service/src/main/java/com/dlowji/simple/queries/GetScheduleDetailByIdQuery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/queries/GetOrdersByYearQuery.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/service/AuthService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/aggregate/OrderAggregate.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/aggregate/OrderAggregate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/OrderDetailResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/OrderDetailResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/OrderResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/OrderResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/controller/OrderQueryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/controller/OrderQueryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/projection/OrderProjection.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/projection/OrderProjection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/model/ScheduleDetailResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/queries/GetScheduleDetailByIdQuery.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/java/com/dlowji/simple/ApiGatewayApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/dlowji/simple/ApiGatewayApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/java/com/dlowji/simple/config/ApiGatewayConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/dlowji/simple/config/ApiGatewayConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/service/OrderQueryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/service/OrderQueryService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -208,7 +209,8 @@
       <workItem from="1678328434234" duration="5780000" />
       <workItem from="1678354531142" duration="20095000" />
       <workItem from="1678415931938" duration="14959000" />
-      <workItem from="1678513581326" duration="1820000" />
+      <workItem from="1678513581326" duration="9291000" />
+      <workItem from="1678529324220" duration="2566000" />
     </task>
     <task id="LOCAL-00001" summary="config pom file of parent folder">
       <created>1676885189780</created>
@@ -343,7 +345,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678442401492</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="fix bug inside order service">
+      <created>1678518421950</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1678518421950</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -392,6 +401,7 @@
     <MESSAGE value="add validator for request model" />
     <MESSAGE value="implement /getme api&#10;add schedule when login &#10;update schedule when logout&#10;not test" />
     <MESSAGE value="update jwt" />
-    <option name="LAST_COMMIT_MESSAGE" value="update jwt" />
+    <MESSAGE value="fix bug inside order service" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix bug inside order service" />
   </component>
 </project>
