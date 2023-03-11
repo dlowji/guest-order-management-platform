@@ -15,7 +15,7 @@ import java.time.ZonedDateTime;
 @NoArgsConstructor
 public class OrderResponse {
     private String orderId;
-    private String userId;
+    private String accountId;
     private String tableId;
     private OrderStatus orderStatus;
     private BigDecimal grandTotal;

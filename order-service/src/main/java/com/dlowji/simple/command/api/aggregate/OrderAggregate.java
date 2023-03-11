@@ -36,7 +36,7 @@ public class OrderAggregate {
         OrderCreatedEvent orderCreatedEvent = OrderCreatedEvent.builder()
                 .orderId(createOrderCommand.getOrderId())
                 .tableId(createOrderCommand.getTableID())
-                .userId(createOrderCommand.getUserId())
+                .accountId(createOrderCommand.getAccountId())
                 .orderStatus(createOrderCommand.getOrderStatus())
                 .build();
         AggregateLifecycle.apply(orderCreatedEvent);
@@ -65,7 +65,7 @@ public class OrderAggregate {
     @EventSourcingHandler
     public void on(OrderCreatedEvent orderCreatedEvent) {
         this.orderId = orderCreatedEvent.getOrderId();
-        this.userId = orderCreatedEvent.getUserId();
+        this.userId = orderCreatedEvent.getAccountId();
         this.tableId = orderCreatedEvent.getTableId();
         this.selectedDish = new ArrayList<>();
         this.orderStatus = orderCreatedEvent.getOrderStatus();

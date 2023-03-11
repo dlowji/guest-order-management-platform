@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -17,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 public class OrderDetailResponse {
     private String orderId;
-    private String userId;
+    private String accountId;
     private List<OrderLineItemResponse> orderLineItemResponseList;
     private OrderStatus orderStatus;
     //total price of the order items
