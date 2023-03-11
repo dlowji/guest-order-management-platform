@@ -1,8 +1,8 @@
 import type { AxiosInstance } from 'axios';
 import http from './http';
-import axios from 'axios';
 import { TUser } from '@customTypes/index';
-import { setTokenService } from '@utils/localStorage';
+import { IResponseLogin } from '@interfaces/auth';
+import Role from '@constants/ERole';
 
 class AuthApi {
 	private url: string;
@@ -10,30 +10,67 @@ class AuthApi {
 
 	constructor() {
 		this.url = `/accounts/auth`;
-		this.request = axios.create({
-			baseURL: `http://localhost:8081`,
-			timeout: 10000,
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		});
+		this.request = http;
 	}
 
-	public async login(username: string, password: string): Promise<string> {
-		const response = await this.request.post<string>(`/login`, { username, password });
-		if (response.data) {
-			setTokenService(response.data);
+	public async login(
+		username: string,
+		password: string,
+	): Promise<{
+		data: string | Record<string, string>;
+		status: number;
+		message: string;
+	}> {
+		try {
+			const response = await this.request.post<IResponseLogin>(`${this.url}/login`, {
+				username,
+				password,
+			});
+			console.log('🚀 ~ AuthApi ~ login ~ response:', response);
+			if (response.data.code === 0) {
+				const { access_token } = response.data;
+				return { data: access_token, status: response.status, message: 'Login successfully' };
+			}
+
+			return {
+				status: response.status,
+				message: response.data.message,
+				data: response.data.errors as Record<string, string>,
+			};
+		} catch (error) {
+			console.log('🚀 ~ AuthApi ~ login ~ error:', error);
+			return Promise.reject(error);
 		}
-		return response.data;
 	}
 
-	public async getMe(token: string | null): Promise<TUser> {
-		const response = await this.request.get<TUser>(`/me`, {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		});
-		return response.data;
+	// public async getMe(token: string | null): Promise<TUser> {
+	// 	const response = await this.request.get<TUser>(`/me`, {
+	// 		headers: {
+	// 			Authorization: `Bearer ${token}`,
+	// 		},
+	// 	});
+	// 	return response.data;
+	// }
+
+	public async getMe(): Promise<Partial<TUser>> {
+		const response = await this.request.get<{
+			data: {
+				accountId: string;
+				username: string;
+				employeeId: string;
+				roleName: string;
+			};
+			code: number;
+			message: string;
+		}>(`/accounts/getme`);
+		console.log('🚀 ~ AuthApi ~ getMe ~ response', response);
+
+		return {
+			...response.data.data,
+			accountId: response.data.data.accountId,
+			id: response.data.data.employeeId,
+			roleName: response.data.data.roleName as Role,
+		};
 	}
 }
 

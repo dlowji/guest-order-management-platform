@@ -25,8 +25,8 @@ public class OrderQueryController {
         return orderQueryService.getOrderDetail(id);
     }
 
-    @GetMapping("/hisotry/{scheduleId}")
-    public ResponseEntity<?> getOrderHistoryBySchedule(@PathVariable String scheduleId) {
-        return orderQueryService.getOrderHistoryBySchedule(scheduleId);
-    }
+//    @GetMapping("/hisotry/{scheduleId}")
+//    public ResponseEntity<?> getOrderHistoryBySchedule(@PathVariable String scheduleId) {
+//        return orderQueryService.getOrderHistoryBySchedule(scheduleId);
+//    }
 }

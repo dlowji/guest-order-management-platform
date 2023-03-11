@@ -13,5 +13,5 @@ public class AccountResponse {
     private String accountId;
     private String username;
     private String employeeId;
-    private String roleId;
+    private String roleName;
 }

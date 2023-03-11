@@ -56,7 +56,7 @@ public class AccountProjection {
                 .accountId(account.getAccountId())
                 .username(account.getUsername())
                 .employeeId(account.getEmployee().getEmployeeId())
-                .roleId(account.getEmployee().getRole().getRoleId())
+                .roleName(account.getEmployee().getRole().getRoleName())
                 .build();
     }
 }

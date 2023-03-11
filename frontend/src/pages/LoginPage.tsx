@@ -6,18 +6,21 @@ import { FieldValues, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useToggleValue from '@hooks/useToggleValue';
-import Checkbox from '@components/input/Checkbox';
-import { Link } from 'react-router-dom';
 import IconEyeToggle from '@components/icon/IconEyeToggle';
 import Button from '@components/button/Button';
-import CircleLoading from '@components/loading/CircleLoading';
+import authApi from '@api/auth';
+import { toast } from 'react-toastify';
+import { setTokenService } from '@utils/localStorage';
+import { useAuth } from '@stores/useAuth';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 interface ILoginPageProps {}
 
 const schema = yup.object().shape({
-	email: yup.string().email().required(),
+	username: yup.string().required(),
 	password: yup.string().required(),
-	remember: yup.boolean(),
+	// remember: yup.boolean(),
 });
 
 const LoginPage: React.FunctionComponent<ILoginPageProps> = () => {
@@ -25,26 +28,59 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = () => {
 		handleSubmit,
 		control,
 		formState: { isSubmitting, isValid },
+		setError,
 	} = useForm({
 		resolver: yupResolver(schema),
 		mode: 'onSubmit',
 	});
 	const { value: showPassword, handleToggleValue: handleTogglePassword } = useToggleValue();
-	const handleSignIn = (values: FieldValues) => {
+	const setUser = useAuth((store) => store.setUser);
+	const navigate = useNavigate();
+
+	const { refetch } = useQuery(['authUser'], () => authApi.getMe(), {
+		enabled: false,
+		select: (data) => data,
+		retry: 1,
+		onSuccess: (data) => {
+			setUser(data);
+		},
+	});
+
+	const handleSignIn = async (values: FieldValues) => {
 		if (isSubmitting || !isValid) return;
-		console.log(values);
+
+		const { username, password } = values;
+		try {
+			const { data, message, status } = await authApi.login(username, password);
+			if (status === 200) {
+				setTokenService(data as string);
+				refetch();
+				navigate('/table');
+			} else {
+				const errors = data as Record<string, string>;
+				Object.keys(errors).forEach((key) => {
+					setError(key as keyof FieldValues, {
+						type: 'manual',
+						message: errors[key],
+					});
+				});
+				toast.error(message);
+			}
+		} catch (error) {
+			toast.error("Can't login. Please try again later");
+		}
 	};
 
 	return (
 		<form onSubmit={handleSubmit(handleSignIn)}>
 			<FormGroup>
-				<Label htmlFor="email">Email</Label>
+				<Label htmlFor="Username">Username</Label>
 				<Input
-					name="email"
-					id="email"
+					name="username"
+					id="username"
 					control={control}
 					type="text"
-					placeholder="Email your address here"
+					placeholder="Username your address here"
 				/>
 			</FormGroup>
 
