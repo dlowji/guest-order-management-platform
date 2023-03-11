@@ -25,7 +25,6 @@ public class ScheduleAggregate {
     public ScheduleAggregate() {
 
     }
-
     @CommandHandler
     public void handle(CreateScheduleCommand scheduleCommand) {
         ScheduleCreatedEvent scheduleCreatedEvent = ScheduleCreatedEvent.builder()

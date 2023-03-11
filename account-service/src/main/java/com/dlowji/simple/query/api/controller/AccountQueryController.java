@@ -67,8 +67,9 @@ public class AccountQueryController {
         System.out.println(authorizationHeader);
         Map<String, Object> response = new LinkedHashMap<>();
         try {
-            jwtUtil.validateToken(authorizationHeader);
-            Claims claims = jwtUtil.getClaims(authorizationHeader);
+            String token = authorizationHeader.substring(7);
+            jwtUtil.validateToken(token);
+            Claims claims = jwtUtil.getClaims(token);
             response.put("code", 0);
             response.put("message", "Get me successfully");
             response.put("data", claims);
