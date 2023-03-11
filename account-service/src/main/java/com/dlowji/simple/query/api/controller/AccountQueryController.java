@@ -3,6 +3,7 @@ package com.dlowji.simple.query.api.controller;
 import com.dlowji.simple.command.api.model.AccountResponse;
 import com.dlowji.simple.command.api.util.JwtUtil;
 import com.dlowji.simple.query.api.queries.GetAccountByIdQuery;
+import com.dlowji.simple.query.api.queries.GetAccountByUsernameQuery;
 import com.dlowji.simple.query.api.queries.GetAccountsQuery;
 import io.jsonwebtoken.Claims;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
@@ -70,9 +71,21 @@ public class AccountQueryController {
             String token = authorizationHeader.substring(7);
             jwtUtil.validateToken(token);
             Claims claims = jwtUtil.getClaims(token);
+            String username = claims.getSubject();
+            GetAccountByUsernameQuery getAccountByUsernameQuery = GetAccountByUsernameQuery.builder()
+                    .username(username)
+                    .build();
+            AccountResponse accountResponse = queryGateway.query(getAccountByUsernameQuery, ResponseTypes.instanceOf(AccountResponse.class)).join();
+
+            if (accountResponse == null) {
+                response.put("code", 800);
+                response.put("message", "something wrong getme");
+                return ResponseEntity.internalServerError().body(response);
+            }
+
             response.put("code", 0);
             response.put("message", "Get me successfully");
-            response.put("data", claims);
+            response.put("data", accountResponse);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             response.put("code", 530);

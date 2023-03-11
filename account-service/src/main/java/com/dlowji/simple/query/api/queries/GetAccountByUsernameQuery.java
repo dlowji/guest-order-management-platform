@@ -1,4 +1,4 @@
-package com.dlowji.simple.command.api.model;
+package com.dlowji.simple.query.api.queries;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AccountResponse {
-    private String accountId;
+public class GetAccountByUsernameQuery {
     private String username;
-    private String employeeId;
-    private String roleId;
 }
