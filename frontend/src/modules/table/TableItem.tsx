@@ -3,6 +3,10 @@ import * as React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
+import { useAuth } from '@stores/useAuth';
+import { useMutation } from '@tanstack/react-query';
+import tableApi from '@api/table';
+import orderApi from '@api/order';
 interface ITableItem {
 	seats: number;
 	title: string;
@@ -16,11 +20,17 @@ interface ITableItemProps {
 }
 
 const TableItem: React.FunctionComponent<ITableItemProps> = ({
-	item: { seats = 2, title = 'Table 1', status = 'FREE', id, updatedAt = Date.now() },
+	item: { seats = 2, title = 'Table 1', status = 'FREE', id: tableId, updatedAt = Date.now() },
 }) => {
 	if (seats % 2 !== 0) seats += 1;
-	const employeeId = `85e91e71-7ec2-454e-b0bd-f7cbeb5b588b`;
-	const orderId = `8141e7c7-d663-47bc-b3b0-dd0beae5136b`;
+	const currentUser = useAuth((store) => store.user);
+	const employeeId = currentUser?.accountId;
+
+	if (!employeeId) {
+		toast.error('You are not logged in');
+		return null;
+	}
+
 	const statusColor = React.useMemo(() => {
 		if (status === 'FREE') return 'table-item-free';
 		if (status === 'OCCUPIED') return 'table-item-dineIn';
@@ -29,9 +39,21 @@ const TableItem: React.FunctionComponent<ITableItemProps> = ({
 	}, [status]);
 	const navigate = useNavigate();
 
-	const fakeUserID = `85e91e71-7ec2-454e-b0bd-f7cbeb5b588b`;
+	const { mutate: createOrder } = useMutation({
+		mutationFn: () => orderApi.placeTableOrder(tableId, employeeId),
+		onSuccess: (data) => {
+			if (data.code === 200) {
+				navigate(`/menu/order/${data.orderId}`);
+			} else {
+				toast.error(data.message);
+			}
+		},
+		onError: () => {
+			toast.error("Can't place order");
+		},
+	});
 
-	const handleChooseTable = async (id: string) => {
+	const handleChooseTable = async (tableId: string) => {
 		if (status === 'FREE') {
 			Swal.fire({
 				title: 'Choose table',
@@ -44,7 +66,7 @@ const TableItem: React.FunctionComponent<ITableItemProps> = ({
 				showCancelButton: true,
 			}).then(async (result) => {
 				if (result.isConfirmed) {
-					// navigate(`/menu/order/${id}`);
+					createOrder();
 				}
 			});
 		}
@@ -59,7 +81,7 @@ const TableItem: React.FunctionComponent<ITableItemProps> = ({
 	};
 	return (
 		<Link
-			onClick={() => handleChooseTable(id)}
+			onClick={() => handleChooseTable(tableId)}
 			className={`cursor-pointer hover:opacity-90 hover:scale-95 transition-all duration-300 ease-out table-item table-item-${seats} ${statusColor} `}
 			to={''}
 			style={{

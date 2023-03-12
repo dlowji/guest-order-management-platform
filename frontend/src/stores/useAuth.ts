@@ -8,8 +8,13 @@ interface IUserState {
 }
 
 export const useAuth = create<IUserState>()(
-	devtools((set) => ({
-		user: null,
-		setUser: (user: TUser) => set({ user }),
-	})),
+	devtools(
+		(set) => ({
+			user: null,
+			setUser: (user: TUser) => set({ user }),
+		}),
+		{
+			name: 'Auth store',
+		},
+	),
 );

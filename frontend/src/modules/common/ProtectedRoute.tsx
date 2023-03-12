@@ -20,11 +20,12 @@ const ProtectedRoute: React.FunctionComponent<IProtectedRouteProps> = ({ allowed
 		isFetching,
 		data: user,
 	} = useQuery({
-		queryKey: ['user', token],
-		queryFn: () => authApi.getMe(token),
+		queryKey: ['authUser', token],
+		queryFn: () => authApi.getMe(),
 		enabled: !!token,
 		retry: 1,
 		onSuccess: (data: TUser) => {
+			console.log('🚀 ~ data:', data);
 			setUser(data);
 		},
 		onError: (error) => {
@@ -41,7 +42,7 @@ const ProtectedRoute: React.FunctionComponent<IProtectedRouteProps> = ({ allowed
 			</div>
 		);
 	}
-	return user && allowedRoles.includes(user?.role as Role) ? (
+	return user && allowedRoles.includes(user?.roleName as Role) ? (
 		<Outlet />
 	) : (
 		<Navigate to="/login" replace />
