@@ -8,11 +8,12 @@ export type TUser = {
 	password: string;
 	fullName: string;
 	email: string;
-	gender: number;
-	salary: number;
-	dob: string;
-	address: string;
+	// gender: number;
+	// salary: number;
+	// dob: string;
+	// address: string;
+	// phone: string;
 	roleId?: string;
-	role?: Role;
-	phone: string;
+	roleName?: Role;
+	accountId?: string;
 };

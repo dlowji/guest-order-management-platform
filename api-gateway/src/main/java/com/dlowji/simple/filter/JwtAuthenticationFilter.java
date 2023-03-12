@@ -59,7 +59,6 @@ public class JwtAuthenticationFilter implements GatewayFilter {
             }
 
             final String token = request.getHeaders().getOrEmpty("Authorization").get(0).substring(7);
-
             try {
                 jwtUtil.validateToken(token);
             } catch (JwtTokenMalformedException | JwtTokenMissingException e) {
