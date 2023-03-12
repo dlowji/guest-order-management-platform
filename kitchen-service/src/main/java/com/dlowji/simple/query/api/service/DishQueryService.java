@@ -1,6 +1,8 @@
 package com.dlowji.simple.query.api.service;
 
+import com.dlowji.simple.command.api.model.CategoryResponse;
 import com.dlowji.simple.command.api.model.DishResponse;
+import com.dlowji.simple.query.api.queries.GetCategoriesQuery;
 import com.dlowji.simple.query.api.queries.GetDishByIdQuery;
 import com.dlowji.simple.query.api.queries.GetDishesByCategoryQuery;
 import com.dlowji.simple.query.api.queries.GetDishesQuery;
@@ -73,6 +75,24 @@ public class DishQueryService {
         } catch (Exception e) {
             response.put("code", 500);
             response.put("message", "Error get dish by id: " + e.getMessage());
+            return ResponseEntity.internalServerError().body(response);
+        }
+
+    }
+
+    public ResponseEntity<?> getAllCategories() {
+        Map<String, Object> response = new LinkedHashMap<>();
+
+        GetCategoriesQuery getCategoriesQuery = GetCategoriesQuery.builder().build();
+        try {
+            List<CategoryResponse> categoryResponseList = queryGateway.query(getCategoriesQuery, ResponseTypes.multipleInstancesOf(CategoryResponse.class)).join();
+            response.put("code", 0);
+            response.put("message", "Get all categories successfully");
+            response.put("data", categoryResponseList);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("code", "505");
+            response.put("message", "Error getting all categories: " + e.getMessage());
             return ResponseEntity.internalServerError().body(response);
         }
 
