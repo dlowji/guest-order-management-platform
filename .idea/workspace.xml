@@ -4,14 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89a18001-5f1e-4cd5-bd47-59be2fec2b84" name="Changes" comment="update getme api and fix schedule">
+    <list default="true" id="89a18001-5f1e-4cd5-bd47-59be2fec2b84" name="Changes" comment="update create order">
+      <change afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/model/CategoryResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/query/api/queries/GetCategoriesQuery.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/model/AccountResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/model/AccountResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/projection/AccountProjection.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/projection/AccountProjection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kitchen-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/events/OrderEventsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/events/OrderEventsHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/java/com/dlowji/simple/filter/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/dlowji/simple/filter/JwtAuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/query/api/controller/KitchenQueryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/query/api/controller/KitchenQueryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/query/api/projection/KitchenProjection.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/query/api/projection/KitchenProjection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/query/api/service/DishQueryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/query/api/service/DishQueryService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,9 +164,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.KitchenServiceApplication" />
-        <item itemvalue="Spring Boot.OrderServiceApplication" />
         <item itemvalue="Spring Boot.ApiGatewayApplication" />
         <item itemvalue="Spring Boot.AccountServiceApplication" />
+        <item itemvalue="Spring Boot.OrderServiceApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -214,7 +214,12 @@
       <workItem from="1678415931938" duration="14959000" />
       <workItem from="1678513581326" duration="9291000" />
       <workItem from="1678529324220" duration="2566000" />
-      <workItem from="1678539266506" duration="6945000" />
+      <workItem from="1678539266506" duration="8430000" />
+      <workItem from="1678613682706" duration="212000" />
+      <workItem from="1678616202261" duration="689000" />
+      <workItem from="1678617020838" duration="151000" />
+      <workItem from="1678617558844" duration="259000" />
+      <workItem from="1678617877284" duration="3491000" />
     </task>
     <task id="LOCAL-00001" summary="config pom file of parent folder">
       <created>1676885189780</created>
@@ -377,7 +382,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678547863597</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="update create order">
+      <created>1678552102151</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1678552102151</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -405,7 +417,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="config pom file of parent folder" />
     <MESSAGE value="implement order service" />
     <MESSAGE value="implement kitchen-service, account-service, common-service&#10;can create employee and account in account-service" />
     <MESSAGE value="implement saga pattern to create account" />
@@ -430,6 +441,7 @@
     <MESSAGE value="implement get order history" />
     <MESSAGE value="fix bug" />
     <MESSAGE value="update getme api and fix schedule" />
-    <option name="LAST_COMMIT_MESSAGE" value="update getme api and fix schedule" />
+    <MESSAGE value="update create order" />
+    <option name="LAST_COMMIT_MESSAGE" value="update create order" />
   </component>
 </project>
