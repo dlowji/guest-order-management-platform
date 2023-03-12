@@ -54,7 +54,6 @@ const MenuRightContent: React.FunctionComponent<IMenuRightContentProps> = ({
 	hasPayment = false,
 }) => {
 	const { orderItems, id: table, isActive = false, onToggle } = useOutletContext<ContextMenuItem>();
-	console.log(isActive);
 
 	return (
 		<>

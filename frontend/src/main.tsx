@@ -13,7 +13,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import MenuRightContent from '@modules/common/MenuRightContent';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import OrderCart from '@modules/menu/OrderCart';
+import ProtectedRoute from '@modules/common/ProtectedRoute';
+import Role from '@constants/ERole';
 
 const MainLayout = lazy(() =>
 	import('@layouts/MainLayout').then((module) => ({ default: module.default })),
@@ -47,13 +48,15 @@ const router = createBrowserRouter(
 	createRoutesFromElements(
 		<>
 			<Route element={<MainLayout />}>
-				<Route path="/" element={<DashboardPage />} />
-				<Route path="/table" element={<TablePage />} />
-				<Route path="/menu" element={<MenuPage />}>
-					<Route path="/menu/order/:id" element={<MenuRightContent></MenuRightContent>} />
-				</Route>
-				<Route path="/order" element={<OrderPage />}>
-					<Route path="/order/:id" element={<MenuRightContent></MenuRightContent>} />
+				<Route element={<ProtectedRoute allowedRoles={[Role.ADMIN, Role.EMPLOYEE, Role.CHEF]} />}>
+					<Route path="/" element={<DashboardPage />} />
+					<Route path="/table" element={<TablePage />} />
+					<Route path="/menu" element={<MenuPage />}>
+						<Route path="/menu/order/:id" element={<MenuRightContent></MenuRightContent>} />
+					</Route>
+					<Route path="/order" element={<OrderPage />}>
+						<Route path="/order/:id" element={<MenuRightContent></MenuRightContent>} />
+					</Route>
 				</Route>
 			</Route>
 			<Route
