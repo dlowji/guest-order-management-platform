@@ -4,14 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89a18001-5f1e-4cd5-bd47-59be2fec2b84" name="Changes" comment="update create order">
-      <change afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/model/CategoryResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/query/api/queries/GetCategoriesQuery.java" afterDir="false" />
+    <list default="true" id="89a18001-5f1e-4cd5-bd47-59be2fec2b84" name="Changes" comment="implement error response in kitchen and order service">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/java/com/dlowji/simple/filter/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/dlowji/simple/filter/JwtAuthenticationFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/query/api/controller/KitchenQueryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/query/api/controller/KitchenQueryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/query/api/projection/KitchenProjection.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/query/api/projection/KitchenProjection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/query/api/service/DishQueryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/query/api/service/DishQueryService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -219,7 +213,7 @@
       <workItem from="1678616202261" duration="689000" />
       <workItem from="1678617020838" duration="151000" />
       <workItem from="1678617558844" duration="259000" />
-      <workItem from="1678617877284" duration="3491000" />
+      <workItem from="1678617877284" duration="4542000" />
     </task>
     <task id="LOCAL-00001" summary="config pom file of parent folder">
       <created>1676885189780</created>
@@ -389,7 +383,28 @@
       <option name="project" value="LOCAL" />
       <updated>1678552102151</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="update jwt response">
+      <created>1678622666435</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1678622666435</updated>
+    </task>
+    <task id="LOCAL-00026" summary="implement get all category">
+      <created>1678622694072</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1678622694072</updated>
+    </task>
+    <task id="LOCAL-00027" summary="implement error response in kitchen and order service">
+      <created>1678623318592</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1678623318592</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -417,9 +432,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="implement order service" />
-    <MESSAGE value="implement kitchen-service, account-service, common-service&#10;can create employee and account in account-service" />
-    <MESSAGE value="implement saga pattern to create account" />
     <MESSAGE value="implement kitchen service" />
     <MESSAGE value="implement api gateway" />
     <MESSAGE value="implement endpoint for GET tables, GET orders - haven't test yet" />
@@ -442,6 +454,9 @@
     <MESSAGE value="fix bug" />
     <MESSAGE value="update getme api and fix schedule" />
     <MESSAGE value="update create order" />
-    <option name="LAST_COMMIT_MESSAGE" value="update create order" />
+    <MESSAGE value="update jwt response" />
+    <MESSAGE value="implement get all category" />
+    <MESSAGE value="implement error response in kitchen and order service" />
+    <option name="LAST_COMMIT_MESSAGE" value="implement error response in kitchen and order service" />
   </component>
 </project>
