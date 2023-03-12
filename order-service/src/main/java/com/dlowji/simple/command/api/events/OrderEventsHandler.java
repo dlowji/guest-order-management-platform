@@ -25,20 +25,27 @@ public class OrderEventsHandler {
     private final ITableRepository tableRepository;
     @EventHandler
     public void on(OrderCreatedEvent orderCreatedEvent) {
-        Order order = Order.builder()
-                .orderId(orderCreatedEvent.getOrderId())
-                .accountId(orderCreatedEvent.getAccountId())
-                .tableId(orderCreatedEvent.getTableId())
-                .orderStatus(orderCreatedEvent.getOrderStatus())
-                .subTotal(BigDecimal.valueOf(0))
-                .itemDiscount(BigDecimal.valueOf(0))
-                .tax(BigDecimal.valueOf(0))
-                .total(BigDecimal.valueOf(0))
-                .promoCode("")
-                .discount(BigDecimal.valueOf(0))
-                .grandTotal(BigDecimal.valueOf(0))
-                .build();
-        orderRepository.save(order);
+        String tableId = orderCreatedEvent.getTableId();
+        Optional<SeveredTable> existTable = tableRepository.findById(tableId);
+        if (existTable.isPresent()) {
+            SeveredTable table = existTable.get();
+            table.setTableStatus(TableStatus.OCCUPIED);
+            Order order = Order.builder()
+                    .orderId(orderCreatedEvent.getOrderId())
+                    .accountId(orderCreatedEvent.getAccountId())
+                    .tableId(orderCreatedEvent.getTableId())
+                    .orderStatus(orderCreatedEvent.getOrderStatus())
+                    .subTotal(BigDecimal.valueOf(0))
+                    .itemDiscount(BigDecimal.valueOf(0))
+                    .tax(BigDecimal.valueOf(0))
+                    .total(BigDecimal.valueOf(0))
+                    .promoCode("")
+                    .discount(BigDecimal.valueOf(0))
+                    .grandTotal(BigDecimal.valueOf(0))
+                    .build();
+            tableRepository.save(table);
+            orderRepository.save(order);
+        }
     }
 
     @EventHandler
@@ -50,7 +57,6 @@ public class OrderEventsHandler {
             Optional<SeveredTable> existTable = tableRepository.findById(tableId);
             if (existTable.isPresent()) {
                 SeveredTable table = existTable.get();
-                table.setTableStatus(TableStatus.OCCUPIED);
                 order.setOrderStatus(OrderStatus.IN_PROCESSING);
                 List<CustomOrderLineItemRequest> customOrderLineItemRequests = orderPlacedEvent.getCustomOrderLineItemRequests();
                 BigDecimal subTotal = order.getSubTotal();
