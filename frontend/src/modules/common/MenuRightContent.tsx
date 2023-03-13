@@ -6,7 +6,6 @@ import MenuOrder from '@modules/menu/MenuOrder';
 import { useMenuItemsOrder } from '@stores/useMenuItemsOrder';
 import { Link, useOutletContext } from 'react-router-dom';
 import { IMenuOrderItem } from '@interfaces/index';
-import { useBearStore } from '@stores/useBearStore';
 
 interface IMenuRightContentProps {
 	hasPayment?: boolean;
@@ -44,8 +43,7 @@ const handleUnitTable = (tableName: string | number) => {
 };
 
 type ContextMenuItem = {
-	id: number | string;
-	orderItems: IMenuOrderItem[];
+	id: string;
 	isActive: boolean;
 	onToggle: () => void;
 };
@@ -53,8 +51,8 @@ type ContextMenuItem = {
 const MenuRightContent: React.FunctionComponent<IMenuRightContentProps> = ({
 	hasPayment = false,
 }) => {
-	const { orderItems, id: table, isActive = false, onToggle } = useOutletContext<ContextMenuItem>();
-
+	const { id: table, isActive = false, onToggle } = useOutletContext<ContextMenuItem>();
+	const orderItems = useMenuItemsOrder((state) => state.menuItemsOrder);
 	return (
 		<>
 			<button
@@ -70,11 +68,11 @@ const MenuRightContent: React.FunctionComponent<IMenuRightContentProps> = ({
 							<div className="menu-order-header">
 								<div className="menu-order-header-item">
 									<h4>Current Order</h4>
-									<span>{handleUnitTable(table)}</span>
+									<span>{`#${table.slice(-4)}`}</span>
 								</div>
 								<div className="menu-order-header-item">
 									<h4>Table</h4>
-									<span>{`T${table}`}</span>
+									<span>{`Table 123`}</span>
 								</div>
 							</div>
 							<div className="menu-order-list">

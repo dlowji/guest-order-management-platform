@@ -1,5 +1,6 @@
 import type { AxiosInstance } from 'axios';
 import http from './http';
+import { IOrderDetails, TOrder } from '@customTypes/index';
 
 class OrderApi {
 	private url: string;
@@ -39,6 +40,58 @@ class OrderApi {
 			return {
 				code: 400,
 				message: "Can't place order",
+			};
+		}
+	}
+
+	public async getAll() {
+		try {
+			const response = await this.request.get<{
+				code: number;
+				message: string;
+				data: TOrder[];
+			}>(`${this.url}`);
+			if (response.data.code === 0) {
+				return {
+					code: 200,
+					data: response.data.data,
+				};
+			} else {
+				return {
+					code: 400,
+					message: "Can't get all orders",
+				};
+			}
+		} catch (error) {
+			return {
+				code: 400,
+				message: "Can't get all orders",
+			};
+		}
+	}
+
+	public async getById(id: string) {
+		try {
+			const response = await this.request.get<{
+				code: number;
+				message: string;
+				data: IOrderDetails;
+			}>(`${this.url}/${id}`);
+			if (response.data.code === 0) {
+				return {
+					code: 200,
+					data: response.data.data,
+				};
+			} else {
+				return {
+					code: 400,
+					message: "Can't get order",
+				};
+			}
+		} catch (error) {
+			return {
+				code: 400,
+				message: "Can't get order",
 			};
 		}
 	}

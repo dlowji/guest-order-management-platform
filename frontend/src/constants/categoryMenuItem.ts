@@ -13,9 +13,9 @@ export const categoriesItem = [
 	},
 	{
 		id: 2,
-		name: 'Burger',
+		name: 'Hamburger',
 		icon: 'fas fa-hamburger',
-		link: '?q=burger',
+		link: '?q=hamburger',
 	},
 	{
 		id: 3,

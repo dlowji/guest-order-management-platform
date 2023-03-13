@@ -15,11 +15,7 @@ interface IProtectedRouteProps {
 const ProtectedRoute: React.FunctionComponent<IProtectedRouteProps> = ({ allowedRoles }) => {
 	const token = getTokenService();
 	const setUser = useAuth((state) => state.setUser);
-	const {
-		isLoading,
-		isFetching,
-		data: user,
-	} = useQuery({
+	const { isFetching, data: user } = useQuery({
 		queryKey: ['authUser', token],
 		queryFn: () => authApi.getMe(),
 		enabled: !!token,
@@ -33,19 +29,19 @@ const ProtectedRoute: React.FunctionComponent<IProtectedRouteProps> = ({ allowed
 		},
 	});
 
-	const loading = isLoading || isFetching;
-
-	if (loading) {
+	if (isFetching) {
 		return (
 			<div className="flex items-center justify-center w-full">
 				<CircleLoading color="#ff7200"></CircleLoading>
 			</div>
 		);
 	}
-	return user && allowedRoles.includes(user?.roleName as Role) ? (
+	console.log(allowedRoles.includes(user?.roleName as Role));
+
+	return allowedRoles.includes(user?.roleName as Role) ? (
 		<Outlet />
 	) : (
-		<Navigate to="/login" replace />
+		<Navigate to="/login" replace={true} />
 	);
 };
 

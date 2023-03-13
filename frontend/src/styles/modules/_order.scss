@@ -10,8 +10,6 @@
 
 	&-list {
 		flex: 1;
-		overflow-y: auto;
-		height: 600px;
 		display: flex;
 		flex-direction: column;
 		gap: 20px;
@@ -76,7 +74,8 @@
 			color: $grayf7;
 			border-radius: 20px;
 		}
-		&.dineIn {
+		&.in-processing,
+		&.created {
 			&.active {
 				border: 1px solid $dineInTable;
 				box-shadow: rgba($dineInTable, 0.2) 0px 8px 24px;
@@ -86,7 +85,7 @@
 			}
 		}
 
-		&.free {
+		&.completed {
 			&.active {
 				border: 1px solid $freeTable;
 				box-shadow: rgba($freeTable, 0.2) 0px 8px 24px;
@@ -96,13 +95,13 @@
 			}
 		}
 
-		&.ordered {
+		&.canceled {
 			&.active {
-				border: 1px solid $orderedTable;
-				box-shadow: rgba($orderedTable, 0.2) 0px 8px 24px;
+				border: 1px solid $canceledTable;
+				box-shadow: rgba($canceledTable, 0.2) 0px 8px 24px;
 			}
 			& .order-item-status {
-				background-color: $orderedTable;
+				background-color: $canceledTable;
 			}
 		}
 	}

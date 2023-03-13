@@ -15,6 +15,8 @@ class TableApi {
 		const config = status ? { params: { status } } : {};
 
 		const response = await this.request.get<ITableResponse[]>(`${this.url}`, config);
+		console.log(response);
+
 		return response.data;
 	}
 }

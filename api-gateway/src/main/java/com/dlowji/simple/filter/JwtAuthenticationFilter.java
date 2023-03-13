@@ -64,9 +64,9 @@ public class JwtAuthenticationFilter implements GatewayFilter {
             } catch (JwtTokenMalformedException | JwtTokenMissingException e) {
                 ServerHttpResponse response = exchange.getResponse();
                 Map<String, Object> responseMap = new LinkedHashMap<>();
-                responseMap.put("code", 400);
+                responseMap.put("code", 401);
                 responseMap.put("message", "Invalid token");
-                response.setStatusCode(HttpStatus.BAD_REQUEST);
+                response.setStatusCode(HttpStatus.UNAUTHORIZED);
                 response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
                 try {
                     DataBuffer buffer = response.bufferFactory().wrap(objectMapper.writeValueAsBytes(responseMap));

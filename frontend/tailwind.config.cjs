@@ -39,6 +39,7 @@ module.exports = {
 				dineInTable: '#ffc245',
 				freeTable: '#54ca92',
 				orderedTable: '#ec7905',
+				canceledTable: '#ff5c5c',
 				grayeb: '#ebebeb',
 				error: '#EB5757',
 				darkbg: '#13131A',

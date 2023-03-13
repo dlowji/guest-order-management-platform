@@ -1,20 +1,26 @@
-import useToggleValue from '@hooks/useToggleValue';
+import { useMenuItemsOrder } from '@stores/useMenuItemsOrder';
 import { formatCurrency } from '@utils/formatCurrency';
 import * as React from 'react';
 
 interface IOrderCartProps {
 	children: React.ReactNode;
 	onToggle: () => void;
-	totalItem: number;
-	totalMoney: number;
 }
 
-const OrderCart: React.FunctionComponent<IOrderCartProps> = ({
-	children,
-	onToggle,
-	totalItem = 0,
-	totalMoney = 0,
-}) => {
+const OrderCart: React.FunctionComponent<IOrderCartProps> = ({ children, onToggle }) => {
+	const orderItems = useMenuItemsOrder((state) => state.menuItemsOrder);
+	const totalItems = React.useMemo(() => {
+		return orderItems.reduce((acc, item) => {
+			return acc + item.quantity;
+		}, 0);
+	}, [orderItems]);
+
+	const totalMoney = React.useMemo(() => {
+		return orderItems.reduce((acc, item) => {
+			return acc + item.price * item.quantity;
+		}, 0);
+	}, [orderItems]);
+
 	return (
 		<>
 			<button
@@ -25,7 +31,7 @@ const OrderCart: React.FunctionComponent<IOrderCartProps> = ({
 					<div className="relative">
 						<i className="text-2xl text-gray-500 fas fa-shopping-cart w-10 h-10"></i>
 						<span className="absolute -top-2 right-0 bg-red-500 rounded-full text-white text-xs font-bold w-5 h-5 flex items-center justify-center">
-							{totalItem}
+							{totalItems}
 						</span>
 					</div>
 					<span>

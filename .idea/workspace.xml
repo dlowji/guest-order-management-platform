@@ -4,8 +4,39 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89a18001-5f1e-4cd5-bd47-59be2fec2b84" name="Changes" comment="implement error response in kitchen and order service">
+    <list default="true" id="89a18001-5f1e-4cd5-bd47-59be2fec2b84" name="Changes" comment="update dish price validator">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/java/com/dlowji/simple/filter/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/dlowji/simple/filter/JwtAuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/api/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/api/auth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/api/order.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/api/order.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/api/table.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/api/table.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/dropdown/DropdownList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/dropdown/DropdownList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/constants/categoryMenuItem.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/constants/categoryMenuItem.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/constants/categoryOrderItem.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/constants/categoryOrderItem.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/layouts/AuthenticationLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/layouts/AuthenticationLayout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/common/MenuRightContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/common/MenuRightContent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/common/ProtectedRoute.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/common/ProtectedRoute.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/common/SubMenuSidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/common/SubMenuSidebar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/dashboard/DashboardSidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/dashboard/DashboardSidebar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/menu/MenuItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/menu/MenuItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/menu/MenuLeftContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/menu/MenuLeftContent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/menu/MenuLeftHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/menu/MenuLeftHeader.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/menu/OrderCart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/menu/OrderCart.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/order/OrderItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/order/OrderItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/order/OrderMain.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/order/OrderMain.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/table/TableItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/table/TableItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/table/TableMain.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/table/TableMain.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/LoginPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/LoginPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/MenuPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/MenuPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/useAuth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/useAuth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/useBearStore.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/useMenuItems.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/useMenuItems.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/styles/bases/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles/bases/_variables.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/styles/modules/_order.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles/modules/_order.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/types/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/types/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/tailwind.config.cjs" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/tailwind.config.cjs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,32 +86,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "jdk.selected.JAVA_MODULE": "17",
-    "last_opened_file_path": "D:/soa/microservice-midterm/account-service/src/main/java/com/dlowji/simple",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "yarn",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "spring.configuration.checksum": "e84b7d6fd08688c7b45a4066f89f8fb6",
-    "ts.external.directory.path": "D:\\SOA\\microservice-midterm\\frontend\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/soa/microservice-midterm/account-service/src/main/java/com/dlowji/simple&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;e84b7d6fd08688c7b45a4066f89f8fb6&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\SOA\\microservice-midterm\\frontend\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -159,8 +190,8 @@
       <list>
         <item itemvalue="Spring Boot.KitchenServiceApplication" />
         <item itemvalue="Spring Boot.ApiGatewayApplication" />
-        <item itemvalue="Spring Boot.AccountServiceApplication" />
         <item itemvalue="Spring Boot.OrderServiceApplication" />
+        <item itemvalue="Spring Boot.AccountServiceApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -208,12 +239,7 @@
       <workItem from="1678415931938" duration="14959000" />
       <workItem from="1678513581326" duration="9291000" />
       <workItem from="1678529324220" duration="2566000" />
-      <workItem from="1678539266506" duration="8430000" />
-      <workItem from="1678613682706" duration="212000" />
-      <workItem from="1678616202261" duration="689000" />
-      <workItem from="1678617020838" duration="151000" />
-      <workItem from="1678617558844" duration="259000" />
-      <workItem from="1678617877284" duration="4542000" />
+      <workItem from="1678539266506" duration="6945000" />
     </task>
     <task id="LOCAL-00001" summary="config pom file of parent folder">
       <created>1676885189780</created>
@@ -376,35 +402,7 @@
       <option name="project" value="LOCAL" />
       <updated>1678547863597</updated>
     </task>
-    <task id="LOCAL-00024" summary="update create order">
-      <created>1678552102151</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1678552102151</updated>
-    </task>
-    <task id="LOCAL-00025" summary="update jwt response">
-      <created>1678622666435</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1678622666435</updated>
-    </task>
-    <task id="LOCAL-00026" summary="implement get all category">
-      <created>1678622694072</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1678622694072</updated>
-    </task>
-    <task id="LOCAL-00027" summary="implement error response in kitchen and order service">
-      <created>1678623318592</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1678623318592</updated>
-    </task>
-    <option name="localTasksCounter" value="28" />
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -432,6 +430,10 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="config pom file of parent folder" />
+    <MESSAGE value="implement order service" />
+    <MESSAGE value="implement kitchen-service, account-service, common-service&#10;can create employee and account in account-service" />
+    <MESSAGE value="implement saga pattern to create account" />
     <MESSAGE value="implement kitchen service" />
     <MESSAGE value="implement api gateway" />
     <MESSAGE value="implement endpoint for GET tables, GET orders - haven't test yet" />
@@ -453,10 +455,6 @@
     <MESSAGE value="implement get order history" />
     <MESSAGE value="fix bug" />
     <MESSAGE value="update getme api and fix schedule" />
-    <MESSAGE value="update create order" />
-    <MESSAGE value="update jwt response" />
-    <MESSAGE value="implement get all category" />
-    <MESSAGE value="implement error response in kitchen and order service" />
-    <option name="LAST_COMMIT_MESSAGE" value="implement error response in kitchen and order service" />
+    <option name="LAST_COMMIT_MESSAGE" value="update getme api and fix schedule" />
   </component>
 </project>
