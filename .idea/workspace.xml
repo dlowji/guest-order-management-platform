@@ -4,8 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89a18001-5f1e-4cd5-bd47-59be2fec2b84" name="Changes" comment="implement error response in kitchen and order service">
+    <list default="true" id="89a18001-5f1e-4cd5-bd47-59be2fec2b84" name="Changes" comment="update">
+      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/queries/GetLatestScheduleByEmployeeQuery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common-service/src/main/java/com/dlowji/simple/model/DishResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common-service/src/main/java/com/dlowji/simple/queries/GetDishByIdQuery.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/controller/AccountCommandController.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/controller/AccountCommandController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/data/IScheduleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/data/IScheduleRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/service/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/controller/AccountQueryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/controller/AccountQueryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/projection/ScheduleProjection.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/projection/ScheduleProjection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/java/com/dlowji/simple/filter/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/dlowji/simple/filter/JwtAuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/controller/KitchenCommandController.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/controller/KitchenCommandController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/data/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/data/Category.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/model/CategoryRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/model/CategoryRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/model/CategoryResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/model/CategoryResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/query/api/controller/KitchenQueryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/query/api/controller/KitchenQueryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/query/api/projection/KitchenProjection.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/query/api/projection/KitchenProjection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/query/api/service/DishQueryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/query/api/service/DishQueryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/events/OrderEventsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/events/OrderEventsHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/OrderDetailResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/OrderDetailResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/OrderLineItemRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/OrderLineItemRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/OrderLineItemResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/OrderLineItemResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/OrderResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/OrderResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/services/OrderCommandService.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/services/OrderCommandService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/controller/OrderQueryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/controller/OrderQueryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/projection/OrderProjection.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/projection/OrderProjection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/service/OrderQueryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/service/OrderQueryService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,32 +80,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "jdk.selected.JAVA_MODULE": "17",
-    "last_opened_file_path": "D:/soa/microservice-midterm/account-service/src/main/java/com/dlowji/simple",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "yarn",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "spring.configuration.checksum": "e84b7d6fd08688c7b45a4066f89f8fb6",
-    "ts.external.directory.path": "D:\\SOA\\microservice-midterm\\frontend\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/soa/microservice-midterm/account-service/src/main/java/com/dlowji/simple&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;e84b7d6fd08688c7b45a4066f89f8fb6&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\SOA\\microservice-midterm\\frontend\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -157,10 +182,10 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Spring Boot.KitchenServiceApplication" />
         <item itemvalue="Spring Boot.ApiGatewayApplication" />
-        <item itemvalue="Spring Boot.AccountServiceApplication" />
         <item itemvalue="Spring Boot.OrderServiceApplication" />
+        <item itemvalue="Spring Boot.AccountServiceApplication" />
+        <item itemvalue="Spring Boot.KitchenServiceApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -214,6 +239,10 @@
       <workItem from="1678617020838" duration="151000" />
       <workItem from="1678617558844" duration="259000" />
       <workItem from="1678617877284" duration="4542000" />
+      <workItem from="1678688594632" duration="26000" />
+      <workItem from="1678690279916" duration="44000" />
+      <workItem from="1678691066487" duration="2840000" />
+      <workItem from="1678711589882" duration="12004000" />
     </task>
     <task id="LOCAL-00001" summary="config pom file of parent folder">
       <created>1676885189780</created>
@@ -432,7 +461,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="implement kitchen service" />
     <MESSAGE value="implement api gateway" />
     <MESSAGE value="implement endpoint for GET tables, GET orders - haven't test yet" />
     <MESSAGE value="implement endpoint for GET menu - haven't test yet" />
@@ -457,6 +485,7 @@
     <MESSAGE value="update jwt response" />
     <MESSAGE value="implement get all category" />
     <MESSAGE value="implement error response in kitchen and order service" />
-    <option name="LAST_COMMIT_MESSAGE" value="implement error response in kitchen and order service" />
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
   </component>
 </project>

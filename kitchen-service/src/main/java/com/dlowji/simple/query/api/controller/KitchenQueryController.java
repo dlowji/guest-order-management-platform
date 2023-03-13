@@ -17,7 +17,7 @@ public class KitchenQueryController {
 
     @GetMapping("/menu")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> getAllDishes(@RequestParam(name = "ca", required = false) String categoryName) {
+    public ResponseEntity<?> getAllDishes(@RequestParam(name = "q", required = false) String categoryName) {
 
         if (!StringUtils.isBlankString(categoryName)) {
             return dishQueryService.getDishesByCategory(categoryName);

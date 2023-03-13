@@ -60,6 +60,8 @@ public class KitchenProjection {
         return CategoryResponse.builder()
                 .categoryId(category.getCategoryId())
                 .categoryName(category.getCategoryName())
+                .icon(category.getIcon())
+                .link(category.getLink())
                 .build();
     }
 

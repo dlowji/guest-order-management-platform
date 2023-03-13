@@ -18,4 +18,10 @@ public class CategoryRequest {
     @NotNull(message = "Please enter category name")
     @NotEmpty(message = "Please enter a valid category name")
     private String categoryName;
+    @NotNull(message = "Please enter category icon")
+    @NotEmpty(message = "Please enter a valid category icon")
+    private String icon;
+    @NotNull(message = "Please enter category link")
+    @NotEmpty(message = "Please enter a valid category link")
+    private String link;
 }

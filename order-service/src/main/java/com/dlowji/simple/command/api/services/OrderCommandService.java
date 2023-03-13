@@ -114,6 +114,7 @@ public class OrderCommandService {
                         .dishId(dishResponse.getDishId())
                         .quantity(orderLineItemRequest.getQuantity())
                         .price(price)
+                        .note(orderLineItemRequest.getNote())
                         .build();
                 customOrderLineItemRequests.add(customOrderLineItemRequest);
             }
@@ -124,10 +125,10 @@ public class OrderCommandService {
                 .customOrderLineItemRequests(customOrderLineItemRequests)
                 .build();
         try {
-            String orderId2 = commandGateway.sendAndWait(placeOrderCommand);
+            commandGateway.sendAndWait(placeOrderCommand);
             response.put("code", 0);
             response.put("message", "Place order successfully");
-            response.put("orderId", orderId2);
+            response.put("orderId", orderId);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             response.put("code", 500);

@@ -65,7 +65,10 @@ public class AccountQueryController {
 
     @GetMapping("/getme")
     public ResponseEntity<?> getMe(@RequestHeader(value = "Authorization") String authorizationHeader) {
-        System.out.println(authorizationHeader);
+        return getMeService(authorizationHeader);
+    }
+
+    public ResponseEntity<?> getMeService(String authorizationHeader) {
         Map<String, Object> response = new LinkedHashMap<>();
         try {
             String token = authorizationHeader.substring(7);

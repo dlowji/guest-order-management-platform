@@ -25,8 +25,12 @@ public class OrderQueryController {
         return orderQueryService.getOrderDetail(id);
     }
 
-//    @GetMapping("/hisotry/{scheduleId}")
-//    public ResponseEntity<?> getOrderHistoryBySchedule(@PathVariable String scheduleId) {
-//        return orderQueryService.getOrderHistoryBySchedule(scheduleId);
-//    }
+    @GetMapping("/items/{id}")
+    public ResponseEntity<?> getItemListByOrderId(@PathVariable String id) {
+        return orderQueryService.getItemListByOrderId(id);
+    }
+    @GetMapping("/history")
+    public ResponseEntity<?> getOrderHistoryBySchedule(@RequestHeader(value = "Authorization") String authorizationHeader) {
+        return orderQueryService.getOrderHistoryBySchedule(authorizationHeader);
+    }
 }

@@ -34,6 +34,8 @@ public class KitchenCommandController {
         Category category = Category.builder()
                 .categoryId(categoryRequest.getCategoryId())
                 .categoryName(categoryRequest.getCategoryName())
+                .icon(categoryRequest.getIcon())
+                .link(categoryRequest.getLink())
                 .build();
 
         try {
