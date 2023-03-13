@@ -17,6 +17,8 @@ import java.util.List;
 public class OrderDetailResponse {
     private String orderId;
     private String accountId;
+    private String tableName;
+    private Integer capacity;
     private List<OrderLineItemResponse> orderLineItemResponseList;
     private OrderStatus orderStatus;
     //total price of the order items

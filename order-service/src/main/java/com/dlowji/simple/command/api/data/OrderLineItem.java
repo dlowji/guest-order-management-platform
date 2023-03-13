@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @EqualsAndHashCode(callSuper = true)
 @Builder
@@ -22,4 +21,5 @@ public class OrderLineItem extends TimeStamp {
     private String dishId;
     private Integer quantity;
     private BigDecimal price;
+    private String note;
 }

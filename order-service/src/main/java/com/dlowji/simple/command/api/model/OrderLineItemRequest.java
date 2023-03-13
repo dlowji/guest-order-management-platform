@@ -16,4 +16,8 @@ public class OrderLineItemRequest {
     @NotNull(message = "Please enter quantity of ordered dish")
     @NotEmpty(message = "Please enter a valid quantity of ordered dish")
     private Integer quantity;
+
+    @NotNull(message = "Please enter note")
+    @NotEmpty(message = "Please enter valid not")
+    private String note;
 }

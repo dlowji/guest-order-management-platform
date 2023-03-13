@@ -15,4 +15,6 @@ public class Category extends TimeStamp {
     @Id
     private String categoryId;
     private String categoryName;
+    private String icon;
+    private String link;
 }

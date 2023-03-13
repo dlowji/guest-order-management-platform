@@ -95,6 +95,5 @@ public class DishQueryService {
             response.put("message", "Error getting all categories: " + e.getMessage());
             return ResponseEntity.internalServerError().body(response);
         }
-
     }
 }

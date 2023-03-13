@@ -8,10 +8,15 @@ import com.dlowji.simple.command.api.data.IAccountRepository;
 import com.dlowji.simple.command.api.data.IRoleRepository;
 import com.dlowji.simple.command.api.data.IScheduleRepository;
 import com.dlowji.simple.command.api.model.AccountLoginRequest;
-import com.dlowji.simple.command.api.model.AccountLogoutRequest;
 import com.dlowji.simple.command.api.model.AccountRegisterRequest;
+import com.dlowji.simple.command.api.model.AccountResponse;
 import com.dlowji.simple.command.api.util.JwtUtil;
+import com.dlowji.simple.model.ScheduleDetailResponse;
+import com.dlowji.simple.query.api.queries.GetAccountByUsernameQuery;
+import com.dlowji.simple.query.api.queries.GetLatestScheduleByEmployeeQuery;
 import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.axonframework.messaging.responsetypes.ResponseTypes;
+import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -27,13 +32,15 @@ public class AuthService {
     private final IRoleRepository roleRepository;
     private final IScheduleRepository scheduleRepository;
     private final CommandGateway commandGateway;
+    private final QueryGateway queryGateway;
     private final JwtUtil jwtUtil;
 
-    public AuthService(IAccountRepository accountRepository, IRoleRepository roleRepository, IScheduleRepository scheduleRepository, CommandGateway commandGateway, JwtUtil jwtUtil) {
+    public AuthService(IAccountRepository accountRepository, IRoleRepository roleRepository, IScheduleRepository scheduleRepository, CommandGateway commandGateway, QueryGateway queryGateway, JwtUtil jwtUtil) {
         this.accountRepository = accountRepository;
         this.roleRepository = roleRepository;
         this.scheduleRepository = scheduleRepository;
         this.commandGateway = commandGateway;
+        this.queryGateway = queryGateway;
         this.jwtUtil = jwtUtil;
     }
 
@@ -140,22 +147,20 @@ public class AuthService {
         }
     }
 
-    public ResponseEntity<?> logout(AccountLogoutRequest accountLogoutRequest) {
+    public ResponseEntity<?> logout(String authorizationHeader) {
         Map<String, Object> response = new LinkedHashMap<>();
-        String accountId = accountLogoutRequest.getAccountId();
-        if (!accountRepository.existsById(accountId)) {
+        String accountUsername = jwtUtil.getClaims(authorizationHeader.substring(7)).getSubject();
+        GetAccountByUsernameQuery getAccountByUsernameQuery = GetAccountByUsernameQuery.builder()
+                .username(accountUsername)
+                .build();
+        AccountResponse accountResponse = queryGateway.query(getAccountByUsernameQuery, ResponseTypes.instanceOf(AccountResponse.class)).join();
+        if (accountResponse == null) {
             response.put("code", 100);
             response.put("message", "Account not exist");
             return ResponseEntity.badRequest().body(response);
         }
-        String scheduleId = accountLogoutRequest.getScheduleId();
-        if (!scheduleRepository.existsById(scheduleId)) {
-            response.put("code", 100);
-            response.put("message", "Schedule not exist");
-            return ResponseEntity.badRequest().body(response);
-        }
 
-        boolean result = updateSchedule(scheduleId);
+        boolean result = updateSchedule(accountResponse.getEmployeeId());
 
         if (result) {
             response.put("code", 0);
@@ -168,9 +173,18 @@ public class AuthService {
         return ResponseEntity.internalServerError().body(response);
     }
 
-    private boolean updateSchedule(String scheduleId) {
-        LocalTime currentTime = LocalTime.now();
+    private boolean updateSchedule(String employeeId) {
+        GetLatestScheduleByEmployeeQuery getLatestScheduleByEmployeeQuery = GetLatestScheduleByEmployeeQuery.builder()
+                .employeeId(employeeId)
+                .build();
+        ScheduleDetailResponse scheduleDetailResponse = queryGateway.query(getLatestScheduleByEmployeeQuery, ResponseTypes.instanceOf(ScheduleDetailResponse.class)).join();
 
+        if (scheduleDetailResponse == null) {
+            return false;
+        }
+
+        String scheduleId = scheduleDetailResponse.getScheduleId();
+        LocalTime currentTime = LocalTime.now();
         UpdateScheduleCommand updateScheduleCommand = UpdateScheduleCommand.builder()
                 .scheduleId(scheduleId)
                 .endWorkHour(currentTime)

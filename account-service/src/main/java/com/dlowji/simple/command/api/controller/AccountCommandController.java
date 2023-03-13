@@ -3,16 +3,12 @@ package com.dlowji.simple.command.api.controller;
 import com.dlowji.simple.command.api.data.IRoleRepository;
 import com.dlowji.simple.command.api.data.Role;
 import com.dlowji.simple.command.api.model.AccountLoginRequest;
-import com.dlowji.simple.command.api.model.AccountLogoutRequest;
 import com.dlowji.simple.command.api.model.AccountRegisterRequest;
 import com.dlowji.simple.command.api.model.RoleRequest;
 import com.dlowji.simple.command.api.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/accounts")
@@ -52,7 +48,8 @@ public class AccountCommandController {
     }
 
     @PostMapping("/auth/logout")
-    public ResponseEntity<?> logout(@Valid @RequestBody AccountLogoutRequest accountLogoutRequest) {
-        return authService.logout(accountLogoutRequest);
+    public ResponseEntity<?> logout(@RequestHeader(value = "Authorization") String authorizationHeader) {
+        final String token = authorizationHeader.substring(7);
+        return authService.logout(token);
     }
 }
