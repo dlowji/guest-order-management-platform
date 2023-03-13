@@ -54,7 +54,6 @@ const tableItem = [
 const TableMain: React.FunctionComponent<ITableMainProps> = (props) => {
 	const queryString: { q?: string } = useQueryString();
 	const status = queryString.q ? queryString.q : '';
-
 	const { error, data, isFetching } = useQuery({
 		queryKey: ['table', status],
 		queryFn: () => {

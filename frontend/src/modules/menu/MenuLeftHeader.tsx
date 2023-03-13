@@ -7,12 +7,12 @@ interface IMenuLeftHeaderProps {}
 const MenuLeftHeader: React.FunctionComponent<IMenuLeftHeaderProps> = (props) => {
 	return (
 		<div className="menu-left-header">
-			<div className="menu-left-search">
+			{/* <div className="menu-left-search">
 				<input type="text" placeholder="Search for a menu" />
 				<div className="menu-left-header-icon">
 					<i className="fas fa-search"></i>
 				</div>
-			</div>
+			</div> */}
 			<CategoriesHeader categories={categoriesItem}></CategoriesHeader>
 		</div>
 	);

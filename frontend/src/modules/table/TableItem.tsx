@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 import { useAuth } from '@stores/useAuth';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import tableApi from '@api/table';
 import orderApi from '@api/order';
 interface ITableItem {
@@ -25,7 +25,7 @@ const TableItem: React.FunctionComponent<ITableItemProps> = ({
 	if (seats % 2 !== 0) seats += 1;
 	const currentUser = useAuth((store) => store.user);
 	const employeeId = currentUser?.accountId;
-
+	const [orderId, setOrderId] = React.useState<string | null>(null);
 	if (!employeeId) {
 		toast.error('You are not logged in');
 		return null;
@@ -38,11 +38,12 @@ const TableItem: React.FunctionComponent<ITableItemProps> = ({
 		return '';
 	}, [status]);
 	const navigate = useNavigate();
-
+	const queryClient = useQueryClient();
 	const { mutate: createOrder } = useMutation({
 		mutationFn: () => orderApi.placeTableOrder(tableId, employeeId),
 		onSuccess: (data) => {
 			if (data.code === 200) {
+				setOrderId(data.orderId as string);
 				navigate(`/menu/order/${data.orderId}`);
 			} else {
 				toast.error(data.message);
@@ -55,6 +56,7 @@ const TableItem: React.FunctionComponent<ITableItemProps> = ({
 
 	const handleChooseTable = async (tableId: string) => {
 		if (status === 'FREE') {
+			queryClient.invalidateQueries(['table', '']);
 			Swal.fire({
 				title: 'Choose table',
 				text: `Do you want to choose this ${title}?`,
@@ -76,7 +78,8 @@ const TableItem: React.FunctionComponent<ITableItemProps> = ({
 		}
 
 		if (status === 'OCCUPIED') {
-			toast.error('This table is occupied, please choose another table');
+			if (orderId) navigate(`/menu/order/${orderId}`);
+			toast.error('This order is already in progress. Please choose another order');
 		}
 	};
 	return (
@@ -101,7 +104,12 @@ const TableItem: React.FunctionComponent<ITableItemProps> = ({
 				<div className="table-content__title">{title}</div>
 				<div className="table-content__status">{status}</div>
 				{status === 'CHECK_IN' ||
-					(status === 'OCCUPIED' && <div className="table-content__timeIn"></div>)}
+					(status === 'OCCUPIED' && (
+						<div className="table-content__timeIn flex items-baseline gap-2">
+							<i className="fa fa-clock"></i>
+							<span>{new Date(updatedAt).toLocaleTimeString()}</span>
+						</div>
+					))}
 			</div>
 			{Array.from({ length: seats / 2 }).map((_, index) => (
 				<div

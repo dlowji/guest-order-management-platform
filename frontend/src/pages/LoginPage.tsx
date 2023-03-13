@@ -14,6 +14,7 @@ import { setTokenService } from '@utils/localStorage';
 import { useAuth } from '@stores/useAuth';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import { TUser } from '@customTypes/index';
 
 interface ILoginPageProps {}
 
@@ -42,7 +43,7 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = () => {
 		select: (data) => data,
 		retry: 1,
 		onSuccess: (data) => {
-			setUser(data);
+			setUser(data as TUser);
 		},
 	});
 

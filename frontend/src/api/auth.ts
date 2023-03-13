@@ -72,6 +72,10 @@ class AuthApi {
 			roleName: response.data.data.roleName as Role,
 		};
 	}
+
+	// public async logout(): Promise<void> {
+
+	// }
 }
 
 const authApi = new AuthApi();

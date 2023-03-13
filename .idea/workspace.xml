@@ -4,33 +4,39 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89a18001-5f1e-4cd5-bd47-59be2fec2b84" name="Changes" comment="update">
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/queries/GetLatestScheduleByEmployeeQuery.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common-service/src/main/java/com/dlowji/simple/model/DishResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common-service/src/main/java/com/dlowji/simple/queries/GetDishByIdQuery.java" afterDir="false" />
+    <list default="true" id="89a18001-5f1e-4cd5-bd47-59be2fec2b84" name="Changes" comment="update dish price validator">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/controller/AccountCommandController.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/controller/AccountCommandController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/data/IScheduleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/data/IScheduleRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/command/api/service/AuthService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/controller/AccountQueryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/controller/AccountQueryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/projection/ScheduleProjection.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/dlowji/simple/query/api/projection/ScheduleProjection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api-gateway/src/main/java/com/dlowji/simple/filter/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/dlowji/simple/filter/JwtAuthenticationFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/controller/KitchenCommandController.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/controller/KitchenCommandController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/data/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/data/Category.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/model/CategoryRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/model/CategoryRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/model/CategoryResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/model/CategoryResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/query/api/controller/KitchenQueryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/query/api/controller/KitchenQueryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/query/api/projection/KitchenProjection.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/query/api/projection/KitchenProjection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/query/api/service/DishQueryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/query/api/service/DishQueryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/events/OrderEventsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/events/OrderEventsHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/OrderDetailResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/OrderDetailResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/OrderLineItemRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/OrderLineItemRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/OrderLineItemResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/OrderLineItemResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/OrderResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/OrderResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/services/OrderCommandService.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/services/OrderCommandService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/controller/OrderQueryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/controller/OrderQueryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/projection/OrderProjection.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/projection/OrderProjection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/service/OrderQueryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/service/OrderQueryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/api/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/api/auth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/api/order.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/api/order.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/api/table.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/api/table.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/dropdown/DropdownList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/dropdown/DropdownList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/constants/categoryMenuItem.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/constants/categoryMenuItem.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/constants/categoryOrderItem.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/constants/categoryOrderItem.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/layouts/AuthenticationLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/layouts/AuthenticationLayout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/common/MenuRightContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/common/MenuRightContent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/common/ProtectedRoute.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/common/ProtectedRoute.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/common/SubMenuSidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/common/SubMenuSidebar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/dashboard/DashboardSidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/dashboard/DashboardSidebar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/menu/MenuItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/menu/MenuItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/menu/MenuLeftContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/menu/MenuLeftContent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/menu/MenuLeftHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/menu/MenuLeftHeader.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/menu/OrderCart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/menu/OrderCart.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/order/OrderItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/order/OrderItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/order/OrderMain.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/order/OrderMain.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/table/TableItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/table/TableItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/table/TableMain.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/table/TableMain.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/LoginPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/LoginPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/MenuPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/MenuPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/useAuth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/useAuth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/useBearStore.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/useMenuItems.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/useMenuItems.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/styles/bases/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles/bases/_variables.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/styles/modules/_order.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles/modules/_order.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/types/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/types/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/tailwind.config.cjs" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/tailwind.config.cjs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -182,10 +188,10 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.KitchenServiceApplication" />
         <item itemvalue="Spring Boot.ApiGatewayApplication" />
         <item itemvalue="Spring Boot.OrderServiceApplication" />
         <item itemvalue="Spring Boot.AccountServiceApplication" />
-        <item itemvalue="Spring Boot.KitchenServiceApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -233,16 +239,7 @@
       <workItem from="1678415931938" duration="14959000" />
       <workItem from="1678513581326" duration="9291000" />
       <workItem from="1678529324220" duration="2566000" />
-      <workItem from="1678539266506" duration="8430000" />
-      <workItem from="1678613682706" duration="212000" />
-      <workItem from="1678616202261" duration="689000" />
-      <workItem from="1678617020838" duration="151000" />
-      <workItem from="1678617558844" duration="259000" />
-      <workItem from="1678617877284" duration="4542000" />
-      <workItem from="1678688594632" duration="26000" />
-      <workItem from="1678690279916" duration="44000" />
-      <workItem from="1678691066487" duration="2840000" />
-      <workItem from="1678711589882" duration="12004000" />
+      <workItem from="1678539266506" duration="6945000" />
     </task>
     <task id="LOCAL-00001" summary="config pom file of parent folder">
       <created>1676885189780</created>
@@ -405,35 +402,7 @@
       <option name="project" value="LOCAL" />
       <updated>1678547863597</updated>
     </task>
-    <task id="LOCAL-00024" summary="update create order">
-      <created>1678552102151</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1678552102151</updated>
-    </task>
-    <task id="LOCAL-00025" summary="update jwt response">
-      <created>1678622666435</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1678622666435</updated>
-    </task>
-    <task id="LOCAL-00026" summary="implement get all category">
-      <created>1678622694072</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1678622694072</updated>
-    </task>
-    <task id="LOCAL-00027" summary="implement error response in kitchen and order service">
-      <created>1678623318592</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1678623318592</updated>
-    </task>
-    <option name="localTasksCounter" value="28" />
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -461,6 +430,11 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="config pom file of parent folder" />
+    <MESSAGE value="implement order service" />
+    <MESSAGE value="implement kitchen-service, account-service, common-service&#10;can create employee and account in account-service" />
+    <MESSAGE value="implement saga pattern to create account" />
+    <MESSAGE value="implement kitchen service" />
     <MESSAGE value="implement api gateway" />
     <MESSAGE value="implement endpoint for GET tables, GET orders - haven't test yet" />
     <MESSAGE value="implement endpoint for GET menu - haven't test yet" />
@@ -481,11 +455,6 @@
     <MESSAGE value="implement get order history" />
     <MESSAGE value="fix bug" />
     <MESSAGE value="update getme api and fix schedule" />
-    <MESSAGE value="update create order" />
-    <MESSAGE value="update jwt response" />
-    <MESSAGE value="implement get all category" />
-    <MESSAGE value="implement error response in kitchen and order service" />
-    <MESSAGE value="update" />
-    <option name="LAST_COMMIT_MESSAGE" value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update getme api and fix schedule" />
   </component>
 </project>
