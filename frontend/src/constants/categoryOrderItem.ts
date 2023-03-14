@@ -1,22 +1,22 @@
 export const orderCategoryItems = [
 	{
-		id: 1,
+		id: '#',
 		name: 'All',
-		link: '/order',
+		link: '#',
 	},
 	{
-		id: 2,
-		name: 'Pending',
-		link: '/order?q=pending',
-	},
-	{
-		id: 3,
+		id: 'processing',
 		name: 'Processing',
-		link: '/order?q=processing',
+		link: '?q=processing',
 	},
 	{
-		id: 4,
+		id: 'completed',
 		name: 'Completed',
-		link: '/order?q=completed',
+		link: '?q=completed',
+	},
+	{
+		id: 'cancelled',
+		name: 'Cancelled',
+		link: '?q=cancelled',
 	},
 ];

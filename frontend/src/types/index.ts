@@ -1,6 +1,8 @@
 import Role from '@constants/ERole';
+import { IMenuOrderItem } from '@interfaces/index';
 
 export type TStatusTable = 'FREE' | 'OCCUPIED' | 'CHECK_IN';
+export type TStatusOrder = 'CREATED' | 'IN_PROCESSING' | 'CANCELED' | 'COMPLETED';
 
 export type TUser = {
 	id: string;
@@ -17,3 +19,34 @@ export type TUser = {
 	roleName?: Role;
 	accountId?: string;
 };
+
+export type TDish = {
+	dishId: string;
+	title: string;
+	image: string;
+	price: number;
+	summary: string;
+	dishStatus: string;
+	categoryName: string;
+	createdAt: string;
+	updatedAt: string;
+};
+
+export type TOrder = {
+	orderId: string;
+	accountId: string;
+	tableId: string;
+	orderStatus: TStatusOrder;
+	grandTotal: number;
+	createdAt: string;
+	updatedAt: string;
+};
+
+export interface IOrderDetails extends TOrder {
+	orderLineItemResponseList: IMenuOrderItem[];
+	subTotal: number;
+	itemDiscount: number;
+	tax: number;
+	promoCode: number;
+	discount: number;
+}

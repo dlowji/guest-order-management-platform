@@ -1,5 +1,5 @@
 import Role from '@constants/ERole';
-import { DropdownProvider, useDropdown } from '@context/useDropdown';
+import { DropdownProvider } from '@context/useDropdown';
 import SubMenuSidebar from '@modules/common/SubMenuSidebar';
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
@@ -40,7 +40,7 @@ const items = [
 		href: '/history',
 		icon: 'fa-solid fa-clock',
 		isActive: false,
-		permissions: [Role.ADMIN, Role.EMPLOYEE],
+		permissions: [Role.ADMIN],
 	},
 	{
 		name: 'Report',

@@ -4,39 +4,42 @@ import { Outlet, useParams } from 'react-router-dom';
 import { useMenuItemsOrder } from '@stores/useMenuItemsOrder';
 import OrderCart from '@modules/menu/OrderCart';
 import useToggleValue from '@hooks/useToggleValue';
+import { useQuery } from '@tanstack/react-query';
+import orderApi from '@api/order';
 
 interface IMenuPageProps {}
 
 const MenuPage: React.FunctionComponent<IMenuPageProps> = () => {
 	const { id } = useParams<{ id: string }>();
-	const orderItems = useMenuItemsOrder((state) => state.menuItemsOrder);
+	const setOrderItems = useMenuItemsOrder((state) => state.setMenuItemsOrder);
 
-	const totalItems = React.useCallback(() => {
-		return orderItems.reduce((acc, item) => {
-			return acc + item.quantity;
-		}, 0);
-	}, [orderItems]);
-
-	const totalMoney = React.useCallback(() => {
-		return orderItems.reduce((acc, item) => {
-			return acc + item.price * item.quantity;
-		}, 0);
-	}, [orderItems]);
+	const removeAllOrderItems = useMenuItemsOrder((state) => state.removeAll);
 
 	const { value, handleToggleValue } = useToggleValue();
 
 	if (id) {
+		const { data: orderDetail } = useQuery({
+			queryKey: ['orderDetail', id],
+			queryFn: () => {
+				return orderApi.getById(id);
+			},
+			onSuccess: (data) => {
+				console.log(data?.data?.orderLineItemResponseList);
+				removeAllOrderItems();
+				if (data?.data?.orderLineItemResponseList !== undefined) {
+					data.data.orderLineItemResponseList.forEach((item) => {
+						setOrderItems(item);
+					});
+				}
+			},
+		});
+
 		return (
 			<div className="menu">
 				<MenuLeftContent></MenuLeftContent>
-				<OrderCart
-					totalItem={totalItems()}
-					totalMoney={totalMoney()}
-					onToggle={() => handleToggleValue()}
-				>
+				<OrderCart onToggle={() => handleToggleValue()}>
 					<Outlet
 						context={{
-							orderItems,
 							id,
 							isActive: value,
 							onToggle: () => handleToggleValue(),
@@ -52,7 +55,6 @@ const MenuPage: React.FunctionComponent<IMenuPageProps> = () => {
 			<MenuLeftContent></MenuLeftContent>
 			<Outlet
 				context={{
-					orderItems: [],
 					id: null,
 					isActive: value,
 					onToggle: () => handleToggleValue(),

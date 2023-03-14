@@ -12,7 +12,7 @@ const DropdownList: React.FunctionComponent<IDropdownListProps> = ({ children, c
 		<>
 			{show && (
 				<div
-					className={`absolute top-full right-0 w-full bg-white shadow-sm z-10 border border-solid border-gray-300 rounded-[10px] ${classNameBody} w-[200px]`}
+					className={`absolute top-full right-0 bg-white shadow-sm z-10 border border-solid border-gray-300 rounded-[10px] ${classNameBody} w-[200px] overflow-hidden`}
 				>
 					{children}
 				</div>

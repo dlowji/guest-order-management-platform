@@ -54,9 +54,7 @@ const router = createBrowserRouter(
 					<Route path="/menu" element={<MenuPage />}>
 						<Route path="/menu/order/:id" element={<MenuRightContent></MenuRightContent>} />
 					</Route>
-					<Route path="/order" element={<OrderPage />}>
-						<Route path="/order/:id" element={<MenuRightContent></MenuRightContent>} />
-					</Route>
+					<Route path="/order" element={<OrderPage />}></Route>
 				</Route>
 			</Route>
 			<Route

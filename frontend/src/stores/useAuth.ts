@@ -3,7 +3,7 @@ import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
 interface IUserState {
-	user: TUser | null;
+	user: Partial<TUser> | null;
 	setUser: (user: TUser) => void;
 }
 

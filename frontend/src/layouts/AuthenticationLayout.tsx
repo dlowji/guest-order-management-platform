@@ -1,6 +1,7 @@
 import authApi from '@api/auth';
 import CircleLoading from '@components/loading/CircleLoading';
 import { TUser } from '@customTypes/index';
+import LoadingCenter from '@modules/common/LoadingCenter';
 import { useAuth } from '@stores/useAuth';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getTokenService } from '@utils/localStorage';
@@ -19,7 +20,7 @@ const AuthenticationLayout: React.FunctionComponent<IAuthenticationLayoutProps> 
 	const token = getTokenService();
 	const setUser = useAuth((state) => state.setUser);
 	const navigate = useNavigate();
-	const { isLoading, isFetching } = useQuery({
+	const { isFetching } = useQuery({
 		queryKey: ['authUser', token],
 		queryFn: () => authApi.getMe(),
 		enabled: !!token,
@@ -34,14 +35,8 @@ const AuthenticationLayout: React.FunctionComponent<IAuthenticationLayoutProps> 
 		},
 	});
 
-	const loading = isLoading || isFetching;
-
-	if (loading) {
-		return (
-			<div className="flex items-center justify-center w-full">
-				<CircleLoading color="#ff7200"></CircleLoading>
-			</div>
-		);
+	if (isFetching) {
+		return <LoadingCenter></LoadingCenter>;
 	}
 
 	return (

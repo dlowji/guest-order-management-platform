@@ -1,6 +1,6 @@
 import { IMenuItem } from '@interfaces/index';
-import { useBearStore } from '@stores/useBearStore';
 import { useMenuItemsOrder } from '@stores/useMenuItemsOrder';
+import { formatCurrency } from '@utils/formatCurrency';
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -55,7 +55,7 @@ const MenuItem: React.FunctionComponent<IMenuItemProps> = ({
 			</div>
 			<div className="flex flex-col mt-auto items-center gap-[10px]">
 				<div className="menu-item-price">
-					<h4>{price}</h4>
+					<h4>{formatCurrency(price)}</h4>
 				</div>
 				<div className="menu-item-status">
 					<span>{status}</span>
