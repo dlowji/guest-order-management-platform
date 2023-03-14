@@ -1,19 +1,21 @@
 package com.dlowji.simple.command.api.commands;
 
+import com.dlowji.simple.command.api.model.CustomOrderLineItemRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
-import java.time.LocalTime;
+import java.util.List;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateScheduleCommand {
+public class UpdatePlacedOrderCommand {
     @TargetAggregateIdentifier
-    private String scheduleId;
-    private LocalTime endWorkHour;
+    private String orderId;
+    private List<CustomOrderLineItemRequest> customOrderLineItemRequests;
 }
+

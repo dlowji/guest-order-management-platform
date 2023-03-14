@@ -41,6 +41,9 @@ public class ScheduleEventsHandler {
     public void on(ScheduleUpdatedEvent scheduleUpdatedEvent) {
         String scheduleId = scheduleUpdatedEvent.getScheduleId();
         Optional<Schedule> existSchedule = scheduleRepository.findById(scheduleId);
+        System.out.println("update schedule");
+        System.out.println(existSchedule.isPresent());
+        System.out.println(scheduleUpdatedEvent.getEndWorkHour());
         if (existSchedule.isPresent()) {
             Schedule schedule = existSchedule.get();
             schedule.setEndWorkHour(scheduleUpdatedEvent.getEndWorkHour());

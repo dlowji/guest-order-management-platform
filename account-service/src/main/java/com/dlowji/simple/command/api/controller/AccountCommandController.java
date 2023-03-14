@@ -49,7 +49,6 @@ public class AccountCommandController {
 
     @PostMapping("/auth/logout")
     public ResponseEntity<?> logout(@RequestHeader(value = "Authorization") String authorizationHeader) {
-        final String token = authorizationHeader.substring(7);
-        return authService.logout(token);
+        return authService.logout(authorizationHeader);
     }
 }
