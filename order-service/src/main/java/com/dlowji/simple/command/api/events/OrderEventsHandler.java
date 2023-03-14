@@ -69,10 +69,12 @@ public class OrderEventsHandler {
                             .quantity(customOrderLineItemRequest.getQuantity())
                             .price(customOrderLineItemRequest.getPrice())
                             .orderId(order.getOrderId())
+                            .note(customOrderLineItemRequest.getNote())
                             .build();
                     orderLineItemRepository.save(orderLineItem);
                     if (customOrderLineItemRequest.getPrice() != null) {
-                        subTotal = subTotal.add(customOrderLineItemRequest.getPrice());
+                        BigDecimal result = customOrderLineItemRequest.getPrice().multiply(BigDecimal.valueOf(customOrderLineItemRequest.getQuantity()));
+                        subTotal = subTotal.add(result);
                     }
                 }
                 BigDecimal total = subTotal.add(tax);

@@ -12,4 +12,6 @@ import lombok.NoArgsConstructor;
 public class CategoryResponse {
     private String categoryId;
     private String categoryName;
+    private String icon;
+    private String link;
 }

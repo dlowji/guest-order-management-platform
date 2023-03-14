@@ -15,4 +15,5 @@ public class CustomOrderLineItemRequest {
     private String dishId;
     private Integer quantity;
     private BigDecimal price;
+    private String note;
 }

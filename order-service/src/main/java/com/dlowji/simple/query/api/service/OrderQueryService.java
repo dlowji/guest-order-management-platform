@@ -96,10 +96,10 @@ public class OrderQueryService {
         }
     }
 
-    public ResponseEntity<?> getOrderHistoryBySchedule(String scheduleId) {
+    public ResponseEntity<?> getOrderHistoryBySchedule(String authorizationHeader) {
         Map<String, Object> response = new LinkedHashMap<>();
         GetScheduleDetailByIdQuery getScheduleDetailByIdQuery = GetScheduleDetailByIdQuery.builder()
-                .scheduleId(scheduleId)
+                .scheduleId(authorizationHeader)
                 .build();
 
         ScheduleDetailResponse scheduleDetailResponse = queryGateway.query(getScheduleDetailByIdQuery,
@@ -165,5 +165,23 @@ public class OrderQueryService {
         response.put("data", result);
 
         return ResponseEntity.ok(response);
+    }
+
+    public ResponseEntity<?> getItemListByOrderId(String orderId) {
+        GetOrderDetailByIdQuery getOrderDetailByIdQuery = GetOrderDetailByIdQuery.builder()
+                .orderId(orderId)
+                .build();
+        Map<String, Object> response = new LinkedHashMap<>();
+        try {
+            OrderDetailResponse orderDetailResponse = queryGateway.query(getOrderDetailByIdQuery, ResponseTypes.instanceOf(OrderDetailResponse.class)).join();
+            response.put("code", 0);
+            response.put("message", "Get item list by order id successfully");
+            response.put("data", orderDetailResponse.getOrderLineItemResponseList());
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("code", 500);
+            response.put("message", "Error getting item list by order id: " + e.getMessage());
+            return ResponseEntity.internalServerError().body(response);
+        }
     }
 }

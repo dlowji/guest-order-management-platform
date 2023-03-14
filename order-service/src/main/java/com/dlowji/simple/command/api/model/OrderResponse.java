@@ -16,7 +16,8 @@ import java.time.ZonedDateTime;
 public class OrderResponse {
     private String orderId;
     private String accountId;
-    private String tableId;
+    private String tableName;
+    private Integer capacity;
     private OrderStatus orderStatus;
     private BigDecimal grandTotal;
     private ZonedDateTime createdAt;

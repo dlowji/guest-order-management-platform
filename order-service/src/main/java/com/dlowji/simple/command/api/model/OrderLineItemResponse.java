@@ -13,6 +13,9 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class OrderLineItemResponse {
     private String dishId;
-    private Integer quantity;
+    private String title;
     private BigDecimal price;
+    private Integer quantity;
+    private String note;
+    private String image;
 }
