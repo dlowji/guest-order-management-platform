@@ -1,13 +1,12 @@
-import { IMenuOrderItem } from '@interfaces/index';
+import { useMenuItemsOrder } from '@stores/useMenuItemsOrder';
+import { formatCurrency } from '@utils/formatCurrency';
 import * as React from 'react';
 
-interface IMenuOrderCalculateProps {
-	orderItems: IMenuOrderItem[];
-}
+interface IMenuOrderCalculateProps {}
 
-const MenuOrderCalculate: React.FunctionComponent<IMenuOrderCalculateProps> = ({
-	orderItems = [],
-}) => {
+const MenuOrderCalculate: React.FunctionComponent<IMenuOrderCalculateProps> = () => {
+	const orderItems = useMenuItemsOrder((state) => state.menuItemsOrder);
+
 	const totalPrice = React.useMemo(() => {
 		return orderItems.reduce((acc, item) => {
 			return acc + item.price * item.quantity;
@@ -17,13 +16,13 @@ const MenuOrderCalculate: React.FunctionComponent<IMenuOrderCalculateProps> = ({
 	return (
 		<div className="menu-order-top">
 			<div className="menu-order-top-calculate">
-				{orderItems.map((item) => {
+				{orderItems.map((item, index) => {
 					return (
-						<div className="menu-order-top-calculate-item" key={item.id}>
+						<div className="menu-order-top-calculate-item" key={`${item.dishId}${index}`}>
 							<h4>
-								{item.name} {item.quantity ? `x${item.quantity}` : ``}
+								{item.title} {item.quantity ? `x${item.quantity}` : ``}
 							</h4>
-							<span>${item.price}</span>
+							<span>{formatCurrency(item.price)}</span>
 						</div>
 					);
 				})}
@@ -31,7 +30,7 @@ const MenuOrderCalculate: React.FunctionComponent<IMenuOrderCalculateProps> = ({
 			{totalPrice ? (
 				<div className="menu-order-top-total">
 					<h4>Total</h4>
-					<span>${totalPrice}</span>
+					<span>{formatCurrency(totalPrice)}</span>
 				</div>
 			) : null}
 		</div>

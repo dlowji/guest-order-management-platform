@@ -130,12 +130,12 @@ Besides, chefs can control dishes were ordered by guests, especially ensure the 
         {
             "dishId": "909fda08-41cc-4163-b06f-bce3e5f69ccc",
             "quantity": 3,
-            "price": 1200
+            "note": ""
         },
         {
             "dishId": "909fda08-41cc-4163-b06f-bce3e5f69cec",
             "quantity": 5,
-            "price": 2300
+            "note": ""
         }
     ]
 }

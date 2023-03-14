@@ -37,11 +37,12 @@ const MenuItem: React.FunctionComponent<IMenuItemProps> = ({
 			return;
 		}
 		addToCart({
-			id,
-			image,
-			name: title,
-			price,
+			dishId: id,
 			quantity: 1,
+			price,
+			image,
+			note: '',
+			title,
 		});
 	};
 

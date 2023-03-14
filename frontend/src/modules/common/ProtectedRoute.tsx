@@ -21,7 +21,6 @@ const ProtectedRoute: React.FunctionComponent<IProtectedRouteProps> = ({ allowed
 		enabled: !!token,
 		retry: 1,
 		onSuccess: (data: TUser) => {
-			console.log('🚀 ~ data:', data);
 			setUser(data);
 		},
 		onError: (error) => {
@@ -36,7 +35,6 @@ const ProtectedRoute: React.FunctionComponent<IProtectedRouteProps> = ({ allowed
 			</div>
 		);
 	}
-	console.log(allowedRoles.includes(user?.roleName as Role));
 
 	return allowedRoles.includes(user?.roleName as Role) ? (
 		<Outlet />

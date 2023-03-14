@@ -1,65 +1,63 @@
 import MenuLeftContent from '@modules/menu/MenuLeftContent';
 import * as React from 'react';
 import { Outlet, useParams } from 'react-router-dom';
-import { useMenuItemsOrder } from '@stores/useMenuItemsOrder';
 import OrderCart from '@modules/menu/OrderCart';
 import useToggleValue from '@hooks/useToggleValue';
 import { useQuery } from '@tanstack/react-query';
 import orderApi from '@api/order';
+import LoadingCenter from '@modules/common/LoadingCenter';
+import { useMenuItemsOrder } from '@stores/useMenuItemsOrder';
 
 interface IMenuPageProps {}
 
 const MenuPage: React.FunctionComponent<IMenuPageProps> = () => {
 	const { id } = useParams<{ id: string }>();
 	const setOrderItems = useMenuItemsOrder((state) => state.setMenuItemsOrder);
-
-	const removeAllOrderItems = useMenuItemsOrder((state) => state.removeAll);
-
 	const { value, handleToggleValue } = useToggleValue();
 
-	if (id) {
-		const { data: orderDetail } = useQuery({
-			queryKey: ['orderDetail', id],
-			queryFn: () => {
-				return orderApi.getById(id);
-			},
-			onSuccess: (data) => {
-				console.log(data?.data?.orderLineItemResponseList);
-				removeAllOrderItems();
-				if (data?.data?.orderLineItemResponseList !== undefined) {
-					data.data.orderLineItemResponseList.forEach((item) => {
-						setOrderItems(item);
+	const { data: orderDetail, isFetching } = useQuery({
+		queryKey: ['orderDetail', id],
+		queryFn: () => {
+			return orderApi.getById(id);
+		},
+		onSuccess: (data) => {
+			if (data?.data?.orderLineItemResponseList !== undefined) {
+				const orderItems = [...data.data.orderLineItemResponseList];
+				console.log('orderItems', orderItems);
+				if (orderItems.length > 0) {
+					orderItems.forEach((item) => {
+						setOrderItems({
+							dishId: item.dishId,
+							title: item.title,
+							price: item.price,
+							quantity: item.quantity,
+							image: item.image,
+							note: item.note,
+						});
 					});
 				}
-			},
-		});
+			}
+		},
+	});
 
-		return (
-			<div className="menu">
-				<MenuLeftContent></MenuLeftContent>
+	return (
+		<div className="menu">
+			<MenuLeftContent></MenuLeftContent>
+
+			{isFetching && <LoadingCenter />}
+
+			{id && (
 				<OrderCart onToggle={() => handleToggleValue()}>
 					<Outlet
 						context={{
 							id,
+							tableName: orderDetail?.data?.tableName,
 							isActive: value,
 							onToggle: () => handleToggleValue(),
 						}}
 					></Outlet>
 				</OrderCart>
-			</div>
-		);
-	}
-
-	return (
-		<div className="menu">
-			<MenuLeftContent></MenuLeftContent>
-			<Outlet
-				context={{
-					id: null,
-					isActive: value,
-					onToggle: () => handleToggleValue(),
-				}}
-			></Outlet>
+			)}
 		</div>
 	);
 };

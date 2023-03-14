@@ -1,4 +1,3 @@
-import TableContentOrder from '@modules/table/TableContentOrder';
 import TableMain from '@modules/table/TableMain';
 import * as React from 'react';
 
