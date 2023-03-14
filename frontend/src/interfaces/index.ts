@@ -1,6 +1,6 @@
 export interface IMenuOrderItem {
-	id: string | number;
-	name: string;
+	dishId: string | number;
+	title: string;
 	price: number;
 	quantity: number;
 	note?: string;

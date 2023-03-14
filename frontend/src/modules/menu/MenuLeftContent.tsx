@@ -8,7 +8,6 @@ import { useQuery } from '@tanstack/react-query';
 import kitchenApi from '@api/kitchen';
 import CircleLoading from '@components/loading/CircleLoading';
 import { TDish } from '@customTypes/index';
-import { useSearchParams } from 'react-router-dom';
 import { useQueryString } from '@utils/queryString';
 
 interface IMenuLeftContentProps {

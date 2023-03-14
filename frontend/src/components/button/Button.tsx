@@ -25,7 +25,8 @@ const Button: React.FunctionComponent<IButtonProps> = ({
 	const child = isLoading ? icon : children;
 
 	if (variant === 'secondary') {
-		className += 'bg-gray-200 text-gray-700 hover:bg-gray-300 focus:bg-gray-300 active:bg-gray-400';
+		className +=
+			' bg-gray-200 text-gray-700 hover:bg-gray-300 focus:bg-gray-300 active:bg-gray-400';
 	}
 
 	if (href) {

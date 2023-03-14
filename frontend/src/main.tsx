@@ -15,6 +15,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import ProtectedRoute from '@modules/common/ProtectedRoute';
 import Role from '@constants/ERole';
+import CheckoutPage from '@pages/CheckoutPage';
 
 const MainLayout = lazy(() =>
 	import('@layouts/MainLayout').then((module) => ({ default: module.default })),
@@ -56,6 +57,9 @@ const router = createBrowserRouter(
 					</Route>
 					<Route path="/order" element={<OrderPage />}></Route>
 				</Route>
+			</Route>
+			<Route element={<ProtectedRoute allowedRoles={[Role.ADMIN, Role.EMPLOYEE]} />}>
+				<Route path="/checkout/:orderId" element={<CheckoutPage />}></Route>
 			</Route>
 			<Route
 				element={

@@ -1,18 +1,30 @@
 import { IMenuOrderItem } from '@interfaces/index';
 import { useMenuItemsOrder } from '@stores/useMenuItemsOrder';
+import { useQueryClient } from '@tanstack/react-query';
+import { formatCurrency } from '@utils/formatCurrency';
 import * as React from 'react';
+import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 interface IMenuOrderItemProps extends IMenuOrderItem {}
 
 const MenuOrderItem: React.FunctionComponent<IMenuOrderItemProps> = ({
-	id,
-	name,
+	dishId,
+	title,
 	price = 0,
 	quantity = 1,
 	note = 'nothing',
 	image,
 }) => {
+	const { id: orderId } = useParams<{ id: string }>();
+
+	if (!orderId)
+		return (
+			<div className="text-center">
+				<p className="text-2xl text-primaryff">Order id is not found</p>
+			</div>
+		);
+
 	const decrement = useMenuItemsOrder((state) => state.decrement);
 
 	const increment = useMenuItemsOrder((state) => state.increment);
@@ -21,11 +33,26 @@ const MenuOrderItem: React.FunctionComponent<IMenuOrderItemProps> = ({
 
 	const updateNoteItem = useMenuItemsOrder((state) => state.updateNote);
 	const handleDecrement = (id: string | number) => {
-		decrement(id);
+		decrement(id as string);
 	};
 
+	const queryClient = useQueryClient();
+
 	const handleIncrement = (id: string | number) => {
-		increment(id);
+		Swal.fire({
+			title: 'Are you sure?',
+			text: 'Do you want to add these items to your order?',
+			icon: 'question',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, add it!',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				Swal.fire('Added!', 'Your item has been added.', 'success');
+				queryClient.invalidateQueries(['orderDetail', id]);
+			}
+		});
 	};
 
 	const handleRemoveItem = (id: string | number) => {
@@ -39,7 +66,7 @@ const MenuOrderItem: React.FunctionComponent<IMenuOrderItemProps> = ({
 			confirmButtonText: 'Yes, remove it!',
 		}).then((result) => {
 			if (result.isConfirmed) {
-				removeItem(id);
+				removeItem(id as string);
 				Swal.fire('Deleted!', 'Your item has been removed.', 'success');
 			}
 		});
@@ -60,7 +87,7 @@ const MenuOrderItem: React.FunctionComponent<IMenuOrderItemProps> = ({
 		});
 
 		if (noteUpdate && noteUpdate !== 'nothing') {
-			updateNoteItem(id, noteUpdate);
+			updateNoteItem(id as string, noteUpdate);
 		}
 	};
 
@@ -71,29 +98,29 @@ const MenuOrderItem: React.FunctionComponent<IMenuOrderItemProps> = ({
 			</div>
 			<div className="menu-order-item-content">
 				<div className="menu-order-item-title">
-					<h4>{name}</h4>
+					<h4>{title}</h4>
 				</div>
 				<div className="menu-order-item-note">
 					<p>Note: {note}</p>
 				</div>
 				<div className="menu-order-item-price">
-					<h4>${price}</h4>
+					<h4>{formatCurrency(price)}</h4>
 				</div>
 				<div className="menu-order-item-btn">
 					<div className="menu-order-item-add">
-						<button className="menu-order-item-btn-minus" onClick={() => handleDecrement(id)}>
+						{/* <button className="menu-order-item-btn-minus" onClick={() => handleDecrement(dishId)}>
 							<i className="fas fa-minus"></i>
-						</button>
+						</button> */}
 						<span className="menu-order-item-quantity">{quantity}</span>
-						<button className="menu-order-item-btn-plus" onClick={() => handleIncrement(id)}>
+						<button className="menu-order-item-btn-plus" onClick={() => handleIncrement(dishId)}>
 							<i className="fas fa-plus"></i>
 						</button>
 					</div>
 					<div className="menu-order-item-edit">
-						<button className="menu-order-item-btn-edit" onClick={() => handleUpdateNote(id)}>
+						<button className="menu-order-item-btn-edit" onClick={() => handleUpdateNote(dishId)}>
 							<i className="fas fa-edit"></i>
 						</button>
-						<button className="menu-order-item-btn-delete" onClick={() => handleRemoveItem(id)}>
+						<button className="menu-order-item-btn-delete" onClick={() => handleRemoveItem(dishId)}>
 							<i className="fas fa-trash"></i>
 						</button>
 					</div>

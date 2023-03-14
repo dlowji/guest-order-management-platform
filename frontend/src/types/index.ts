@@ -35,7 +35,7 @@ export type TDish = {
 export type TOrder = {
 	orderId: string;
 	accountId: string;
-	tableId: string;
+	tableName: string;
 	orderStatus: TStatusOrder;
 	grandTotal: number;
 	createdAt: string;

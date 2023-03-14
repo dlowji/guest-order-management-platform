@@ -1,6 +1,7 @@
 import { useMenuItemsOrder } from '@stores/useMenuItemsOrder';
 import { formatCurrency } from '@utils/formatCurrency';
 import * as React from 'react';
+import { useParams } from 'react-router-dom';
 
 interface IOrderCartProps {
 	children: React.ReactNode;
@@ -8,18 +9,23 @@ interface IOrderCartProps {
 }
 
 const OrderCart: React.FunctionComponent<IOrderCartProps> = ({ children, onToggle }) => {
-	const orderItems = useMenuItemsOrder((state) => state.menuItemsOrder);
-	const totalItems = React.useMemo(() => {
-		return orderItems.reduce((acc, item) => {
-			return acc + item.quantity;
-		}, 0);
-	}, [orderItems]);
+	const { id: orderId } = useParams<{ id: string }>();
 
-	const totalMoney = React.useMemo(() => {
-		return orderItems.reduce((acc, item) => {
-			return acc + item.price * item.quantity;
-		}, 0);
-	}, [orderItems]);
+	const orderItems = useMenuItemsOrder((state) => state.menuItemsOrder);
+
+	const totalItems =
+		React.useMemo(() => {
+			return orderItems.reduce((acc, item) => {
+				return acc + item.quantity;
+			}, 0);
+		}, [orderItems, orderId]) || 0;
+
+	const totalMoney =
+		React.useMemo(() => {
+			return orderItems.reduce((acc, item) => {
+				return acc + item.price * item.quantity;
+			}, 0);
+		}, [orderItems, orderId]) || 0;
 
 	return (
 		<>
