@@ -38,6 +38,7 @@ public class ScheduleAggregate {
         AggregateLifecycle.apply(scheduleCreatedEvent);
     }
 
+    @CommandHandler
     public void handle(UpdateScheduleCommand updateScheduleCommand) {
         ScheduleUpdatedEvent scheduleUpdatedEvent = ScheduleUpdatedEvent.builder()
                 .scheduleId(updateScheduleCommand.getScheduleId())

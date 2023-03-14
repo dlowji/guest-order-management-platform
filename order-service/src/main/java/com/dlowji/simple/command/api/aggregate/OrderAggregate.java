@@ -3,10 +3,12 @@ package com.dlowji.simple.command.api.aggregate;
 import com.dlowji.simple.command.api.commands.CancelOrderCommand;
 import com.dlowji.simple.command.api.commands.CreateOrderCommand;
 import com.dlowji.simple.command.api.commands.PlaceOrderCommand;
+import com.dlowji.simple.command.api.commands.UpdatePlacedOrderCommand;
 import com.dlowji.simple.command.api.enums.OrderStatus;
 import com.dlowji.simple.command.api.events.OrderCanceledEvent;
 import com.dlowji.simple.command.api.events.OrderCreatedEvent;
 import com.dlowji.simple.command.api.events.OrderPlacedEvent;
+import com.dlowji.simple.command.api.events.PlacedOrderUpdatedEvent;
 import com.dlowji.simple.command.api.model.CustomOrderLineItemRequest;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
@@ -62,6 +64,16 @@ public class OrderAggregate {
         AggregateLifecycle.apply(orderPlacedEvent);
     }
 
+    @CommandHandler
+    public void handle(UpdatePlacedOrderCommand updatePlacedOrderCommand) {
+        PlacedOrderUpdatedEvent placedOrderUpdatedEvent = PlacedOrderUpdatedEvent.builder()
+                .orderId(updatePlacedOrderCommand.getOrderId())
+                .customOrderLineItemRequestList(updatePlacedOrderCommand.getCustomOrderLineItemRequests())
+                .build();
+
+        AggregateLifecycle.apply(placedOrderUpdatedEvent);
+    }
+
     @EventSourcingHandler
     public void on(OrderCreatedEvent orderCreatedEvent) {
         this.orderId = orderCreatedEvent.getOrderId();
@@ -84,5 +96,11 @@ public class OrderAggregate {
     public void on(OrderCanceledEvent orderCanceledEvent) {
         this.orderId = orderCanceledEvent.getOrderId();
         this.orderStatus = OrderStatus.CANCELED;
+    }
+
+    @EventSourcingHandler
+    public void on(PlacedOrderUpdatedEvent placedOrderUpdatedEvent) {
+        this.orderId = placedOrderUpdatedEvent.getOrderId();
+        this.selectedDish = placedOrderUpdatedEvent.getCustomOrderLineItemRequestList();
     }
 }

@@ -88,6 +88,57 @@ public class OrderEventsHandler {
         }
     }
 
+    @EventHandler
+    public void on(PlacedOrderUpdatedEvent placedOrderUpdatedEvent) {
+        Optional<Order> existOrder = orderRepository.findById(placedOrderUpdatedEvent.getOrderId());
+        if (existOrder.isPresent()) {
+            Order order = existOrder.get();
+            List<OrderLineItem> orderLineItemList = order.getOrderLineItemList();
+            List<CustomOrderLineItemRequest> customOrderLineItemRequests = placedOrderUpdatedEvent.getCustomOrderLineItemRequestList();
+            BigDecimal subTotal = order.getSubTotal();
+            BigDecimal itemDiscount = order.getItemDiscount();
+            BigDecimal discount = order.getDiscount();
+            BigDecimal tax = order.getTax();
+
+            for (CustomOrderLineItemRequest customOrderLineItemRequest : customOrderLineItemRequests) {
+                String dishId = customOrderLineItemRequest.getDishId();
+                int newQuantity = customOrderLineItemRequest.getQuantity();
+                int oldQuantity = 0;
+                //new dish
+                if (orderLineItemList.stream().anyMatch(orderLineItem -> orderLineItem.getDishId().equals(dishId))) {
+                    OrderLineItem orderLineItem = orderLineItemList.stream()
+                            .filter(orderLineItem1 -> orderLineItem1.getDishId().equals(dishId))
+                            .findFirst()
+                            .orElse(null);
+                    if (orderLineItem != null) {
+                        oldQuantity = orderLineItem.getQuantity();
+                    }
+                }
+                if (newQuantity - oldQuantity == 0) {
+                    continue;
+                }
+                OrderLineItem orderLineItem = OrderLineItem.builder()
+                        .dishId(customOrderLineItemRequest.getDishId())
+                        .quantity(newQuantity - oldQuantity)
+                        .price(customOrderLineItemRequest.getPrice())
+                        .orderId(order.getOrderId())
+                        .note(customOrderLineItemRequest.getNote())
+                        .build();
+                orderLineItemRepository.save(orderLineItem);
+                if (customOrderLineItemRequest.getPrice() != null) {
+                    BigDecimal result = customOrderLineItemRequest.getPrice().multiply(BigDecimal.valueOf(newQuantity-oldQuantity));
+                    subTotal = subTotal.add(result);
+                }
+            }
+            BigDecimal total = subTotal.add(tax);
+            BigDecimal grandTotal = total.subtract(itemDiscount).subtract(discount);
+            order.setSubTotal(subTotal);
+            order.setTotal(total);
+            order.setGrandTotal(grandTotal);
+            orderRepository.save(order);
+        }
+    }
+
     @ExceptionHandler
     public void handle(Exception exception) throws Exception {
         throw exception;

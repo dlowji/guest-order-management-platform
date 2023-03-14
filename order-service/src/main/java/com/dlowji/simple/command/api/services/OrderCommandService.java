@@ -2,6 +2,7 @@ package com.dlowji.simple.command.api.services;
 
 import com.dlowji.simple.command.api.commands.CreateOrderCommand;
 import com.dlowji.simple.command.api.commands.PlaceOrderCommand;
+import com.dlowji.simple.command.api.commands.UpdatePlacedOrderCommand;
 import com.dlowji.simple.command.api.data.IOrderRepository;
 import com.dlowji.simple.command.api.data.ITableRepository;
 import com.dlowji.simple.command.api.data.Order;
@@ -126,6 +127,58 @@ public class OrderCommandService {
                 .build();
         try {
             commandGateway.sendAndWait(placeOrderCommand);
+            response.put("code", 0);
+            response.put("message", "Place order successfully");
+            response.put("orderId", orderId);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("code", 500);
+            response.put("message", "Error place order " + e.getMessage());
+            return ResponseEntity.internalServerError().body(response);
+        }
+    }
+
+    public ResponseEntity<?> updatePlacedOrder(UpdatePlacedOrderRequest updatePlacedOrderRequest) {
+        String orderId = updatePlacedOrderRequest.getOrderId();
+        Optional<Order> existOrder = orderRepository.findById(orderId);
+        Map<String, Object> response = new LinkedHashMap<>();
+        if (existOrder.isEmpty()) {
+            response.put("code", 501);
+            response.put("message", "Order is not exist");
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        List<OrderLineItemRequest> orderLineItemRequestList = updatePlacedOrderRequest.getOrderLineItemRequestList();
+        List<CustomOrderLineItemRequest> customOrderLineItemRequests = new ArrayList<>();
+
+        for (OrderLineItemRequest orderLineItemRequest : orderLineItemRequestList) {
+            String dishId = orderLineItemRequest.getDishId();
+            GetDishByIdQuery getDishByIdQuery = GetDishByIdQuery.builder()
+                    .dishId(dishId)
+                    .build();
+            DishResponse dishResponse = queryGateway.query(getDishByIdQuery, ResponseTypes.instanceOf(DishResponse.class)).join();
+            System.out.println(dishResponse);
+            if (null == dishResponse) {
+                response.put("code", 500);
+                response.put("message", "Dish does not exist");
+                return ResponseEntity.badRequest().body(response);
+            } else {
+                BigDecimal price = dishResponse.getPrice();
+                CustomOrderLineItemRequest customOrderLineItemRequest = CustomOrderLineItemRequest.builder()
+                        .dishId(dishResponse.getDishId())
+                        .quantity(orderLineItemRequest.getQuantity())
+                        .price(price)
+                        .note(orderLineItemRequest.getNote())
+                        .build();
+                customOrderLineItemRequests.add(customOrderLineItemRequest);
+            }
+        }
+        UpdatePlacedOrderCommand updatePlacedOrderCommand = UpdatePlacedOrderCommand.builder()
+                .orderId(orderId)
+                .customOrderLineItemRequests(customOrderLineItemRequests)
+                .build();
+        try {
+            commandGateway.sendAndWait(updatePlacedOrderCommand);
             response.put("code", 0);
             response.put("message", "Place order successfully");
             response.put("orderId", orderId);
