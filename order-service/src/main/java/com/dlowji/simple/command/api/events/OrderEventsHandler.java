@@ -106,15 +106,14 @@ public class OrderEventsHandler {
                 int oldQuantity = 0;
                 //new dish
                 if (orderLineItemList.stream().anyMatch(orderLineItem -> orderLineItem.getDishId().equals(dishId))) {
-                    OrderLineItem orderLineItem = orderLineItemList.stream()
+                    List<OrderLineItem> orderLineItemList1 = orderLineItemList.stream()
                             .filter(orderLineItem1 -> orderLineItem1.getDishId().equals(dishId))
-                            .findFirst()
-                            .orElse(null);
-                    if (orderLineItem != null) {
-                        oldQuantity = orderLineItem.getQuantity();
+                            .toList();
+                    if (orderLineItemList1.size() != 0) {
+                        oldQuantity = orderLineItemList1.stream().mapToInt(OrderLineItem::getQuantity).sum();
                     }
                 }
-                if (newQuantity - oldQuantity == 0) {
+                if (newQuantity - oldQuantity <= 0) {
                     continue;
                 }
                 OrderLineItem orderLineItem = OrderLineItem.builder()
