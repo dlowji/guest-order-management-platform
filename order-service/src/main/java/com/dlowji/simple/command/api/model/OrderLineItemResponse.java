@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderLineItemResponse {
+    private Long orderLineItemId;
     private String dishId;
     private String title;
     private BigDecimal price;

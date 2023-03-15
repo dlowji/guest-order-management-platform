@@ -68,7 +68,7 @@ public class OrderAggregate {
     public void handle(UpdatePlacedOrderCommand updatePlacedOrderCommand) {
         PlacedOrderUpdatedEvent placedOrderUpdatedEvent = PlacedOrderUpdatedEvent.builder()
                 .orderId(updatePlacedOrderCommand.getOrderId())
-                .customOrderLineItemRequestList(updatePlacedOrderCommand.getCustomOrderLineItemRequests())
+                .updateOrderLineItemRequestList(updatePlacedOrderCommand.getUpdateOrderLineItemRequestList())
                 .build();
 
         AggregateLifecycle.apply(placedOrderUpdatedEvent);
@@ -101,6 +101,5 @@ public class OrderAggregate {
     @EventSourcingHandler
     public void on(PlacedOrderUpdatedEvent placedOrderUpdatedEvent) {
         this.orderId = placedOrderUpdatedEvent.getOrderId();
-        this.selectedDish = placedOrderUpdatedEvent.getCustomOrderLineItemRequestList();
     }
 }

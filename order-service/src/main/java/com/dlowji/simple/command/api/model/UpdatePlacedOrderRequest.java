@@ -14,5 +14,5 @@ public class UpdatePlacedOrderRequest {
     private String orderId;
     @Valid
     @NotNull(message = "list of order line item must not be null")
-    List<OrderLineItemRequest> orderLineItemRequestList;
+    List<UpdateOrderLineItemRequest> updateOrderLineItemRequests;
 }
