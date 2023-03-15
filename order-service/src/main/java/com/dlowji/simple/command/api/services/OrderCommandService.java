@@ -3,10 +3,7 @@ package com.dlowji.simple.command.api.services;
 import com.dlowji.simple.command.api.commands.CreateOrderCommand;
 import com.dlowji.simple.command.api.commands.PlaceOrderCommand;
 import com.dlowji.simple.command.api.commands.UpdatePlacedOrderCommand;
-import com.dlowji.simple.command.api.data.IOrderRepository;
-import com.dlowji.simple.command.api.data.ITableRepository;
-import com.dlowji.simple.command.api.data.Order;
-import com.dlowji.simple.command.api.data.SeveredTable;
+import com.dlowji.simple.command.api.data.*;
 import com.dlowji.simple.command.api.enums.OrderStatus;
 import com.dlowji.simple.command.api.enums.TableStatus;
 import com.dlowji.simple.command.api.model.*;
@@ -25,13 +22,14 @@ import java.util.*;
 public class OrderCommandService {
     private final CommandGateway commandGateway;
     private final IOrderRepository orderRepository;
-
+    private final IOrderLineItemRepository orderLineItemRepository;
     private final ITableRepository tableRepository;
     private final QueryGateway queryGateway;
 
-    public OrderCommandService(CommandGateway commandGateway, IOrderRepository orderRepository, ITableRepository tableRepository, QueryGateway queryGateway) {
+    public OrderCommandService(CommandGateway commandGateway, IOrderRepository orderRepository, IOrderLineItemRepository orderLineItemRepository, ITableRepository tableRepository, QueryGateway queryGateway) {
         this.commandGateway = commandGateway;
         this.orderRepository = orderRepository;
+        this.orderLineItemRepository = orderLineItemRepository;
         this.tableRepository = tableRepository;
         this.queryGateway = queryGateway;
     }
@@ -148,44 +146,51 @@ public class OrderCommandService {
             return ResponseEntity.badRequest().body(response);
         }
 
-        List<OrderLineItemRequest> orderLineItemRequestList = updatePlacedOrderRequest.getOrderLineItemRequestList();
-        List<CustomOrderLineItemRequest> customOrderLineItemRequests = new ArrayList<>();
-
-        for (OrderLineItemRequest orderLineItemRequest : orderLineItemRequestList) {
-            String dishId = orderLineItemRequest.getDishId();
-            GetDishByIdQuery getDishByIdQuery = GetDishByIdQuery.builder()
-                    .dishId(dishId)
-                    .build();
-            DishResponse dishResponse = queryGateway.query(getDishByIdQuery, ResponseTypes.instanceOf(DishResponse.class)).join();
-            System.out.println(dishResponse);
-            if (null == dishResponse) {
+        List<UpdateOrderLineItemRequest> updateOrderLineItemRequestList = updatePlacedOrderRequest.getUpdateOrderLineItemRequests();
+        boolean change = false;
+        for (UpdateOrderLineItemRequest updateOrderLineItemRequest : updateOrderLineItemRequestList) {
+            Long orderLineItemId = updateOrderLineItemRequest.getOrderLineItemId();
+            if (!orderLineItemRepository.existsById(orderLineItemId)) {
                 response.put("code", 500);
-                response.put("message", "Dish does not exist");
+                response.put("message", "Order line item does not exist");
                 return ResponseEntity.badRequest().body(response);
             } else {
-                BigDecimal price = dishResponse.getPrice();
-                CustomOrderLineItemRequest customOrderLineItemRequest = CustomOrderLineItemRequest.builder()
-                        .dishId(dishResponse.getDishId())
-                        .quantity(orderLineItemRequest.getQuantity())
-                        .price(price)
-                        .note(orderLineItemRequest.getNote())
-                        .build();
-                customOrderLineItemRequests.add(customOrderLineItemRequest);
+                OrderLineItem orderLineItem = orderLineItemRepository.findById(orderLineItemId).get();
+                int newQuantity = updateOrderLineItemRequest.getQuantity();
+                int oldQuantity = orderLineItem.getQuantity();
+                String updateNote = updateOrderLineItemRequest.getNote();
+                if (newQuantity < oldQuantity) {
+                    response.put("code", 500);
+                    response.put("message", "Invalid quantity");
+                    return ResponseEntity.badRequest().body(response);
+                }
+                if (newQuantity == oldQuantity && !Objects.equals(updateNote, orderLineItem.getNote())) {
+                    updateOrderLineItemRequest.setUpdateNote(true);
+                    change = true;
+                } else if (newQuantity > oldQuantity && Objects.equals(updateNote, orderLineItem.getNote())) {
+                    updateOrderLineItemRequest.setUpdateQuantity(true);
+                    change = true;
+                }
             }
+        }
+        if (!change) {
+            response.put("code", 500);
+            response.put("message", "Nothing to change or invalid change");
+            return ResponseEntity.badRequest().body(response);
         }
         UpdatePlacedOrderCommand updatePlacedOrderCommand = UpdatePlacedOrderCommand.builder()
                 .orderId(orderId)
-                .customOrderLineItemRequests(customOrderLineItemRequests)
+                .updateOrderLineItemRequestList(updateOrderLineItemRequestList)
                 .build();
         try {
             commandGateway.sendAndWait(updatePlacedOrderCommand);
             response.put("code", 0);
-            response.put("message", "Place order successfully");
+            response.put("message", "Update placed order successfully");
             response.put("orderId", orderId);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             response.put("code", 500);
-            response.put("message", "Error place order " + e.getMessage());
+            response.put("message", "Error update placed order " + e.getMessage());
             return ResponseEntity.internalServerError().body(response);
         }
     }

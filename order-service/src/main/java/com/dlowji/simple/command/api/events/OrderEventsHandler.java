@@ -4,6 +4,7 @@ import com.dlowji.simple.command.api.data.*;
 import com.dlowji.simple.command.api.enums.OrderStatus;
 import com.dlowji.simple.command.api.enums.TableStatus;
 import com.dlowji.simple.command.api.model.CustomOrderLineItemRequest;
+import com.dlowji.simple.command.api.model.UpdateOrderLineItemRequest;
 import lombok.RequiredArgsConstructor;
 import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventHandler;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -94,47 +96,43 @@ public class OrderEventsHandler {
         if (existOrder.isPresent()) {
             Order order = existOrder.get();
             List<OrderLineItem> orderLineItemList = order.getOrderLineItemList();
-            List<CustomOrderLineItemRequest> customOrderLineItemRequests = placedOrderUpdatedEvent.getCustomOrderLineItemRequestList();
+            List<UpdateOrderLineItemRequest> updateOrderLineItemRequestList = placedOrderUpdatedEvent.getUpdateOrderLineItemRequestList();
             BigDecimal subTotal = order.getSubTotal();
             BigDecimal itemDiscount = order.getItemDiscount();
             BigDecimal discount = order.getDiscount();
             BigDecimal tax = order.getTax();
 
-            for (CustomOrderLineItemRequest customOrderLineItemRequest : customOrderLineItemRequests) {
-                String dishId = customOrderLineItemRequest.getDishId();
-                int newQuantity = customOrderLineItemRequest.getQuantity();
-                int oldQuantity = 0;
-                //new dish
-                if (orderLineItemList.stream().anyMatch(orderLineItem -> orderLineItem.getDishId().equals(dishId))) {
-                    List<OrderLineItem> orderLineItemList1 = orderLineItemList.stream()
-                            .filter(orderLineItem1 -> orderLineItem1.getDishId().equals(dishId))
-                            .toList();
-                    if (orderLineItemList1.size() != 0) {
-                        oldQuantity = orderLineItemList1.stream().mapToInt(OrderLineItem::getQuantity).sum();
+            for (UpdateOrderLineItemRequest updateOrderLineItemRequest : updateOrderLineItemRequestList) {
+                Long orderLineItemId = updateOrderLineItemRequest.getOrderLineItemId();
+                OrderLineItem existOrderLineItem = orderLineItemList.stream().filter(orderLineItem -> Objects.equals(orderLineItem.getId(), orderLineItemId))
+                        .findFirst()
+                        .orElse(null);
+                if (existOrderLineItem != null) {
+                    if (updateOrderLineItemRequest.isUpdateNote()) {
+                        String updateNote = updateOrderLineItemRequest.getNote();
+                        existOrderLineItem.setNote(updateNote);
+                        orderLineItemRepository.save(existOrderLineItem);
+                    } else if (updateOrderLineItemRequest.isUpdateQuantity()) {
+                        int newQuantity = updateOrderLineItemRequest.getQuantity();
+                        int oldQuantity = existOrderLineItem.getQuantity();
+                        int updateQuantity = Math.abs(newQuantity - oldQuantity);
+                        existOrderLineItem.setQuantity(updateQuantity + oldQuantity);
+                        BigDecimal result = existOrderLineItem.getPrice().multiply(BigDecimal.valueOf(updateQuantity));
+                        subTotal = subTotal.add(result);
+                        BigDecimal total = subTotal.add(tax);
+                        BigDecimal grandTotal = total.subtract(itemDiscount).subtract(discount);
+                        order.setSubTotal(subTotal);
+                        order.setTotal(total);
+                        order.setGrandTotal(grandTotal);
+                        try {
+                            orderLineItemRepository.save(existOrderLineItem);
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                        }
+                        orderRepository.save(order);
                     }
                 }
-                if (newQuantity - oldQuantity <= 0) {
-                    continue;
-                }
-                OrderLineItem orderLineItem = OrderLineItem.builder()
-                        .dishId(customOrderLineItemRequest.getDishId())
-                        .quantity(newQuantity - oldQuantity)
-                        .price(customOrderLineItemRequest.getPrice())
-                        .orderId(order.getOrderId())
-                        .note(customOrderLineItemRequest.getNote())
-                        .build();
-                orderLineItemRepository.save(orderLineItem);
-                if (customOrderLineItemRequest.getPrice() != null) {
-                    BigDecimal result = customOrderLineItemRequest.getPrice().multiply(BigDecimal.valueOf(newQuantity-oldQuantity));
-                    subTotal = subTotal.add(result);
-                }
             }
-            BigDecimal total = subTotal.add(tax);
-            BigDecimal grandTotal = total.subtract(itemDiscount).subtract(discount);
-            order.setSubTotal(subTotal);
-            order.setTotal(total);
-            order.setGrandTotal(grandTotal);
-            orderRepository.save(order);
         }
     }
 

@@ -82,6 +82,7 @@ public class OrderProjection {
                 .build();
         DishResponse dishResponse = queryGateway.query(getDishByIdQuery, ResponseTypes.instanceOf(DishResponse.class)).join();
         return OrderLineItemResponse.builder()
+                .orderLineItemId(orderLineItem.getId())
                 .dishId(orderLineItem.getDishId())
                 .title(dishResponse.getTitle())
                 .quantity(orderLineItem.getQuantity())

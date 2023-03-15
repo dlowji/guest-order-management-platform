@@ -1,6 +1,6 @@
 package com.dlowji.simple.command.api.commands;
 
-import com.dlowji.simple.command.api.model.CustomOrderLineItemRequest;
+import com.dlowji.simple.command.api.model.UpdateOrderLineItemRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +16,6 @@ import java.util.List;
 public class UpdatePlacedOrderCommand {
     @TargetAggregateIdentifier
     private String orderId;
-    private List<CustomOrderLineItemRequest> customOrderLineItemRequests;
+    private List<UpdateOrderLineItemRequest> updateOrderLineItemRequestList;
 }
 

@@ -1,6 +1,6 @@
 package com.dlowji.simple.command.api.events;
 
-import com.dlowji.simple.command.api.model.CustomOrderLineItemRequest;
+import com.dlowji.simple.command.api.model.UpdateOrderLineItemRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,5 +14,5 @@ import java.util.List;
 @NoArgsConstructor
 public class PlacedOrderUpdatedEvent {
     private String orderId;
-    List<CustomOrderLineItemRequest> customOrderLineItemRequestList;
+    List<UpdateOrderLineItemRequest> updateOrderLineItemRequestList;
 }
