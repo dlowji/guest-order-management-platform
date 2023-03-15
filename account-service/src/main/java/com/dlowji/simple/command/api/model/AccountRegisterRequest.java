@@ -1,10 +1,7 @@
 package com.dlowji.simple.command.api.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -38,6 +35,7 @@ public class AccountRegisterRequest {
     @NotNull
     private boolean gender;
     @NotNull
+    @Min(value = 1000, message = "Salary must be greater than 1000, are you exploiting the surplus value of worker??")
     private BigDecimal salary;
 
     @NotNull(message = "Please enter your birthday")
