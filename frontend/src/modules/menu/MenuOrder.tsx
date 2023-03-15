@@ -67,7 +67,7 @@ const MenuOrder: React.FunctionComponent<IMenuOrderProps> = () => {
 		}).then((result) => {
 			if (result.isConfirmed) {
 				Swal.fire('Checked out!', 'Your order has been checked out.', 'success');
-				navigate(`/checkout/${id}`);
+				navigate(`/checkout/${id}/step-one`);
 			}
 		});
 	};

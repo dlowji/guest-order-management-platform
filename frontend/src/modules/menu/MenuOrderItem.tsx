@@ -25,34 +25,36 @@ const MenuOrderItem: React.FunctionComponent<IMenuOrderItemProps> = ({
 			</div>
 		);
 
-	const decrement = useMenuItemsOrder((state) => state.decrement);
-
-	const increment = useMenuItemsOrder((state) => state.increment);
-
 	const removeItem = useMenuItemsOrder((state) => state.removeItem);
-
-	const updateNoteItem = useMenuItemsOrder((state) => state.updateNote);
-	const handleDecrement = (id: string | number) => {
-		decrement(id as string);
-	};
 
 	const queryClient = useQueryClient();
 
-	const handleIncrement = (id: string | number) => {
-		Swal.fire({
-			title: 'Are you sure?',
-			text: 'Do you want to add these items to your order?',
-			icon: 'question',
+	const handleIncrement = async (id: string | number) => {
+		const { value: newQuantity } = await Swal.fire({
+			title: 'Quantity',
+			input: 'number',
+			inputValue: quantity,
 			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Yes, add it!',
-		}).then((result) => {
-			if (result.isConfirmed) {
-				Swal.fire('Added!', 'Your item has been added.', 'success');
-				queryClient.invalidateQueries(['orderDetail', id]);
-			}
+			inputValidator: (value) => {
+				if (!value) {
+					return 'You need to write something!';
+				}
+
+				if (!Number.isInteger(Number(value))) {
+					return 'Quantity must be a number';
+				}
+
+				if (+value < quantity) {
+					return 'Quantity must be greater than current quantity';
+				}
+				return '';
+			},
 		});
+
+		if (newQuantity && newQuantity !== quantity) {
+			queryClient.invalidateQueries(['orderDetail', orderId]);
+			Swal.fire('Updated!', 'Your item has been updated.', 'success');
+		}
 	};
 
 	const handleRemoveItem = (id: string | number) => {
@@ -87,7 +89,7 @@ const MenuOrderItem: React.FunctionComponent<IMenuOrderItemProps> = ({
 		});
 
 		if (noteUpdate && noteUpdate !== 'nothing') {
-			updateNoteItem(id as string, noteUpdate);
+			// updateNoteItem(id as string, noteUpdate);
 		}
 	};
 
