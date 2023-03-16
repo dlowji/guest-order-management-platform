@@ -4,6 +4,7 @@ import com.dlowji.simple.command.api.commands.CreateOrderCommand;
 import com.dlowji.simple.command.api.commands.PlaceOrderCommand;
 import com.dlowji.simple.command.api.commands.UpdatePlacedOrderCommand;
 import com.dlowji.simple.command.api.data.*;
+import com.dlowji.simple.command.api.enums.OrderLineItemStatus;
 import com.dlowji.simple.command.api.enums.OrderStatus;
 import com.dlowji.simple.command.api.enums.TableStatus;
 import com.dlowji.simple.command.api.model.*;
@@ -102,7 +103,6 @@ public class OrderCommandService {
                     .dishId(dishId)
                     .build();
             DishResponse dishResponse = queryGateway.query(getDishByIdQuery, ResponseTypes.instanceOf(DishResponse.class)).join();
-            System.out.println(dishResponse);
             if (null == dishResponse) {
                 response.put("code", 500);
                 response.put("message", "Dish does not exist");
@@ -149,44 +149,75 @@ public class OrderCommandService {
         List<UpdateOrderLineItemRequest> updateOrderLineItemRequestList = updatePlacedOrderRequest.getUpdateOrderLineItemRequests();
         boolean change = false;
         for (UpdateOrderLineItemRequest updateOrderLineItemRequest : updateOrderLineItemRequestList) {
-            Long orderLineItemId = updateOrderLineItemRequest.getOrderLineItemId();
-            if (!orderLineItemRepository.existsById(orderLineItemId)) {
-                response.put("code", 500);
-                response.put("message", "Order line item does not exist");
-                return ResponseEntity.badRequest().body(response);
-            } else {
-                OrderLineItem orderLineItem = orderLineItemRepository.findById(orderLineItemId).get();
-                int newQuantity = updateOrderLineItemRequest.getQuantity();
-                int oldQuantity = orderLineItem.getQuantity();
-                String updateNote = updateOrderLineItemRequest.getNote();
-                if (newQuantity < oldQuantity) {
+            Long orderLineItemId = -1L;
+            //update
+            if (updateOrderLineItemRequest.getOrderLineItemId() != null) {
+                orderLineItemId = updateOrderLineItemRequest.getOrderLineItemId();
+                if (!orderLineItemRepository.existsById(orderLineItemId)) {
                     response.put("code", 500);
-                    response.put("message", "Invalid quantity");
+                    response.put("message", "Order line item does not exist");
                     return ResponseEntity.badRequest().body(response);
+                } else {
+                    OrderLineItem orderLineItem = orderLineItemRepository.findById(orderLineItemId).get();
+                    updateOrderLineItemRequest.setPrice(orderLineItem.getPrice());
+                    int newQuantity = updateOrderLineItemRequest.getQuantity();
+                    String newNote = updateOrderLineItemRequest.getNote();
+
+                    int oldQuantity = orderLineItem.getQuantity();
+                    String oldNote = orderLineItem.getNote();
+                    if (newQuantity < oldQuantity) {
+                        response.put("code", 500);
+                        response.put("message", "Invalid quantity");
+                        return ResponseEntity.badRequest().body(response);
+                    }
+                    if (newQuantity > oldQuantity) {
+                        updateOrderLineItemRequest.setUpdateQuantity(true);
+                        change = true;
+                    }
+                    if (!Objects.equals(newNote, oldNote)) {
+                        updateOrderLineItemRequest.setUpdateNote(true);
+                        change = true;
+                    }
+                    if (!updateOrderLineItemRequest.isUpdateQuantity() && updateOrderLineItemRequest.isUpdateNote() && orderLineItem.getOrderLineItemStatus() != OrderLineItemStatus.UN_COOK) {
+                        response.put("code", 500);
+                        response.put("message", "Cannot update note of order line item which is preparing or prepared");
+                        return ResponseEntity.badRequest().body(response);
+                    }
                 }
-                if (newQuantity == oldQuantity && !Objects.equals(updateNote, orderLineItem.getNote())) {
-                    updateOrderLineItemRequest.setUpdateNote(true);
-                    change = true;
-                } else if (newQuantity > oldQuantity && Objects.equals(updateNote, orderLineItem.getNote())) {
-                    updateOrderLineItemRequest.setUpdateQuantity(true);
+            } else {
+                String dishId = updateOrderLineItemRequest.getDishId();
+                GetDishByIdQuery getDishByIdQuery = GetDishByIdQuery.builder()
+                        .dishId(dishId)
+                        .build();
+                DishResponse dishResponse = queryGateway.query(getDishByIdQuery, ResponseTypes.instanceOf(DishResponse.class)).join();
+                if (null == dishResponse) {
+                    response.put("code", 500);
+                    response.put("message", "Dish does not exist");
+                    return ResponseEntity.badRequest().body(response);
+                } else {
+                    BigDecimal price = dishResponse.getPrice();
+                    updateOrderLineItemRequest.setPrice(price);
+                    updateOrderLineItemRequest.setCreate(true);
                     change = true;
                 }
             }
         }
+
         if (!change) {
             response.put("code", 500);
-            response.put("message", "Nothing to change or invalid change");
+            response.put("message", "Nothing to change or create");
             return ResponseEntity.badRequest().body(response);
         }
+
         UpdatePlacedOrderCommand updatePlacedOrderCommand = UpdatePlacedOrderCommand.builder()
                 .orderId(orderId)
                 .updateOrderLineItemRequestList(updateOrderLineItemRequestList)
                 .build();
         try {
-            commandGateway.sendAndWait(updatePlacedOrderCommand);
+            String orderId2 = commandGateway.sendAndWait(updatePlacedOrderCommand);
             response.put("code", 0);
             response.put("message", "Update placed order successfully");
-            response.put("orderId", orderId);
+            response.put("orderId", orderId2);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             response.put("code", 500);

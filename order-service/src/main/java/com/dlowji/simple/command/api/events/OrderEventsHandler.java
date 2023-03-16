@@ -1,6 +1,7 @@
 package com.dlowji.simple.command.api.events;
 
 import com.dlowji.simple.command.api.data.*;
+import com.dlowji.simple.command.api.enums.OrderLineItemStatus;
 import com.dlowji.simple.command.api.enums.OrderStatus;
 import com.dlowji.simple.command.api.enums.TableStatus;
 import com.dlowji.simple.command.api.model.CustomOrderLineItemRequest;
@@ -95,6 +96,7 @@ public class OrderEventsHandler {
         Optional<Order> existOrder = orderRepository.findById(placedOrderUpdatedEvent.getOrderId());
         if (existOrder.isPresent()) {
             Order order = existOrder.get();
+            order.setOrderStatus(OrderStatus.IN_PROCESSING);
             List<OrderLineItem> orderLineItemList = order.getOrderLineItemList();
             List<UpdateOrderLineItemRequest> updateOrderLineItemRequestList = placedOrderUpdatedEvent.getUpdateOrderLineItemRequestList();
             BigDecimal subTotal = order.getSubTotal();
@@ -103,32 +105,78 @@ public class OrderEventsHandler {
             BigDecimal tax = order.getTax();
 
             for (UpdateOrderLineItemRequest updateOrderLineItemRequest : updateOrderLineItemRequestList) {
-                Long orderLineItemId = updateOrderLineItemRequest.getOrderLineItemId();
-                OrderLineItem existOrderLineItem = orderLineItemList.stream().filter(orderLineItem -> Objects.equals(orderLineItem.getId(), orderLineItemId))
-                        .findFirst()
-                        .orElse(null);
-                if (existOrderLineItem != null) {
-                    if (updateOrderLineItemRequest.isUpdateNote()) {
-                        String updateNote = updateOrderLineItemRequest.getNote();
-                        existOrderLineItem.setNote(updateNote);
-                        orderLineItemRepository.save(existOrderLineItem);
-                    } else if (updateOrderLineItemRequest.isUpdateQuantity()) {
+                if (updateOrderLineItemRequest.isCreate()) {
+                    String newNote = updateOrderLineItemRequest.getNote();
+                    OrderLineItem orderLineItem = OrderLineItem.builder()
+                            .dishId(updateOrderLineItemRequest.getDishId())
+                            .quantity(updateOrderLineItemRequest.getQuantity())
+                            .price(updateOrderLineItemRequest.getPrice())
+                            .orderId(order.getOrderId())
+                            .note(newNote)
+                            .orderLineItemStatus(OrderLineItemStatus.UN_COOK)
+                            .build();
+                    BigDecimal result = orderLineItem.getPrice().multiply(BigDecimal.valueOf(updateOrderLineItemRequest.getQuantity()));
+                    subTotal = subTotal.add(result);
+                    BigDecimal total = subTotal.add(tax);
+                    BigDecimal grandTotal = total.subtract(itemDiscount).subtract(discount);
+                    order.setSubTotal(subTotal);
+                    order.setTotal(total);
+                    order.setGrandTotal(grandTotal);
+                    orderLineItemRepository.save(orderLineItem);
+                    orderRepository.save(order);
+                } else {
+                    Long orderLineItemId = updateOrderLineItemRequest.getOrderLineItemId();
+                    OrderLineItem existOrderLineItem = orderLineItemList.stream().filter(orderLineItem -> Objects.equals(orderLineItem.getId(), orderLineItemId))
+                            .findFirst()
+                            .orElse(null);
+                    if (existOrderLineItem != null) {
                         int newQuantity = updateOrderLineItemRequest.getQuantity();
                         int oldQuantity = existOrderLineItem.getQuantity();
-                        int updateQuantity = Math.abs(newQuantity - oldQuantity);
-                        existOrderLineItem.setQuantity(updateQuantity + oldQuantity);
-                        BigDecimal result = existOrderLineItem.getPrice().multiply(BigDecimal.valueOf(updateQuantity));
+                        int moreQuantity = newQuantity - oldQuantity;
+                        String newNote = updateOrderLineItemRequest.getNote();
+                        if (updateOrderLineItemRequest.isUpdateNote() && updateOrderLineItemRequest.isUpdateQuantity()) {
+                            if (existOrderLineItem.getOrderLineItemStatus() == OrderLineItemStatus.UN_COOK) {
+                                String oldNote = existOrderLineItem.getNote();
+                                if (!oldNote.equals(newNote)) {
+                                    existOrderLineItem.setNote(oldNote + " " + moreQuantity + " " + newNote);
+                                }
+                                existOrderLineItem.setQuantity(oldQuantity + moreQuantity);
+                            } else {
+                                OrderLineItem orderLineItem = OrderLineItem.builder()
+                                        .dishId(updateOrderLineItemRequest.getDishId())
+                                        .quantity(moreQuantity)
+                                        .price(existOrderLineItem.getPrice())
+                                        .orderId(order.getOrderId())
+                                        .note(newNote)
+                                        .orderLineItemStatus(OrderLineItemStatus.UN_COOK)
+                                        .build();
+                                orderLineItemRepository.save(orderLineItem);
+                            }
+                        } else if (updateOrderLineItemRequest.isUpdateQuantity()) {
+                            if (existOrderLineItem.getOrderLineItemStatus() == OrderLineItemStatus.UN_COOK) {
+                                existOrderLineItem.setQuantity(oldQuantity + moreQuantity);
+                            } else {
+                                OrderLineItem orderLineItem = OrderLineItem.builder()
+                                        .dishId(updateOrderLineItemRequest.getDishId())
+                                        .quantity(moreQuantity)
+                                        .price(existOrderLineItem.getPrice())
+                                        .orderId(order.getOrderId())
+                                        .note(newNote)
+                                        .orderLineItemStatus(OrderLineItemStatus.UN_COOK)
+                                        .build();
+                                orderLineItemRepository.save(orderLineItem);
+                            }
+                        } else if (updateOrderLineItemRequest.isUpdateNote()) {
+                            existOrderLineItem.setNote(newNote);
+                        }
+                        BigDecimal result = existOrderLineItem.getPrice().multiply(BigDecimal.valueOf(moreQuantity));
                         subTotal = subTotal.add(result);
                         BigDecimal total = subTotal.add(tax);
                         BigDecimal grandTotal = total.subtract(itemDiscount).subtract(discount);
                         order.setSubTotal(subTotal);
                         order.setTotal(total);
                         order.setGrandTotal(grandTotal);
-                        try {
-                            orderLineItemRepository.save(existOrderLineItem);
-                        } catch (Exception e) {
-                            System.out.println(e.getMessage());
-                        }
+                        orderLineItemRepository.save(existOrderLineItem);
                         orderRepository.save(order);
                     }
                 }
