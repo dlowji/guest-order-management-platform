@@ -21,6 +21,7 @@ export type TUser = {
 };
 
 export type TDish = {
+	// orderLineItemId: number;
 	dishId: string;
 	title: string;
 	image: string;

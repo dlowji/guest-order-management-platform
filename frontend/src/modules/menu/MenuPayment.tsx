@@ -38,7 +38,7 @@ const MenuPayment: React.FunctionComponent<IMenuPaymentProps> = ({ orderItems = 
 		const purchase_units = orderItems.map((item) => {
 			return {
 				description: item.note,
-				reference_id: item.id.toString(),
+				reference_id: item.dishId.toString(),
 				amount: {
 					value: (item.price * item.quantity).toString(),
 					currency_code: 'USD',
@@ -73,7 +73,7 @@ const MenuPayment: React.FunctionComponent<IMenuPaymentProps> = ({ orderItems = 
 
 	return (
 		<div className="menu-order-payment">
-			<MenuOrderCalculate orderItems={orderItems}></MenuOrderCalculate>
+			<MenuOrderCalculate></MenuOrderCalculate>
 			<div className="menu-order-bottom">
 				<div className="menu-order-method">
 					{ORDER_METHODS.map((method) => {

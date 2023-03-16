@@ -27,11 +27,11 @@ const MenuItem: React.FunctionComponent<IMenuItemProps> = ({
 		icon += ' !text-red-500';
 	}
 
-	const addToCart = useMenuItemsOrder((state) => state.setMenuItemsOrder);
+	const addToCart = useMenuItemsOrder((state) => state.addToOrder);
 
 	const { id: idParams } = useParams<{ id: string }>();
 
-	const handleAddToCard = (id: string | number) => {
+	const handleAddToCard = () => {
 		if (!idParams) {
 			toast.error('Please choose a table first');
 			return;
@@ -62,7 +62,7 @@ const MenuItem: React.FunctionComponent<IMenuItemProps> = ({
 					<span>{status}</span>
 					{icon && <i className={icon}></i>}
 				</div>
-				<button className="menu-item-button" onClick={() => handleAddToCard(id)}>
+				<button className="menu-item-button" onClick={handleAddToCard}>
 					Add to cart
 				</button>
 			</div>

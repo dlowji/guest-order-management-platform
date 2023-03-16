@@ -5,6 +5,7 @@ import MenuOrderItem from '../menu/MenuOrderItem';
 import MenuOrder from '@modules/menu/MenuOrder';
 import { Link, useOutletContext } from 'react-router-dom';
 import { useMenuItemsOrder } from '@stores/useMenuItemsOrder';
+import formatOrderItems from '@utils/formatOrderItems';
 
 interface IMenuRightContentProps {
 	children?: React.ReactNode;
@@ -55,7 +56,7 @@ const MenuRightContent: React.FunctionComponent<IMenuRightContentProps> = () => 
 		tableName = '',
 	} = useOutletContext<ContextMenuItem>();
 
-	const orderItems = useMenuItemsOrder((state) => state.menuItemsOrder);
+	const orderItems = useMenuItemsOrder((state) => state.menuOrder.menuItemsOrder);
 
 	return (
 		<>

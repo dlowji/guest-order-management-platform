@@ -11,7 +11,7 @@ interface IOrderCartProps {
 const OrderCart: React.FunctionComponent<IOrderCartProps> = ({ children, onToggle }) => {
 	const { id: orderId } = useParams<{ id: string }>();
 
-	const orderItems = useMenuItemsOrder((state) => state.menuItemsOrder);
+	const orderItems = useMenuItemsOrder((state) => state.menuOrder.menuItemsOrder);
 
 	const totalItems =
 		React.useMemo(() => {

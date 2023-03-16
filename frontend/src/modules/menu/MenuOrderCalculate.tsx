@@ -5,7 +5,7 @@ import * as React from 'react';
 interface IMenuOrderCalculateProps {}
 
 const MenuOrderCalculate: React.FunctionComponent<IMenuOrderCalculateProps> = () => {
-	const orderItems = useMenuItemsOrder((state) => state.menuItemsOrder);
+	const orderItems = useMenuItemsOrder((state) => state.menuOrder.menuItemsOrder);
 
 	const totalPrice = React.useMemo(() => {
 		return orderItems.reduce((acc, item) => {
