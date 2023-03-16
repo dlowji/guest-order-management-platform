@@ -214,10 +214,10 @@ public class OrderCommandService {
                 .updateOrderLineItemRequestList(updateOrderLineItemRequestList)
                 .build();
         try {
-            String orderId2 = commandGateway.sendAndWait(updatePlacedOrderCommand);
+            commandGateway.sendAndWait(updatePlacedOrderCommand);
             response.put("code", 0);
             response.put("message", "Update placed order successfully");
-            response.put("orderId", orderId2);
+            response.put("orderId", orderId);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             response.put("code", 500);
