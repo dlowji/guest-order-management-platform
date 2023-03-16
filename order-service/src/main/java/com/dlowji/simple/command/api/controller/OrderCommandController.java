@@ -1,7 +1,6 @@
 package com.dlowji.simple.command.api.controller;
 
 import com.dlowji.simple.command.api.model.CreateOrderRequest;
-import com.dlowji.simple.command.api.model.PlaceOrderRequest;
 import com.dlowji.simple.command.api.model.UpdatePlacedOrderRequest;
 import com.dlowji.simple.command.api.services.OrderCommandService;
 import jakarta.validation.Valid;
@@ -24,12 +23,7 @@ public class OrderCommandController {
     }
 
     @PostMapping("/placed")
-    public ResponseEntity<?> placeOrder(@Valid @RequestBody PlaceOrderRequest placeOrderRequest) {
-        return orderCommandService.placeOrder(placeOrderRequest);
-    }
-
-    @PutMapping("/placed/update")
-    public ResponseEntity<?> updatePlacedOrder(@Valid @RequestBody UpdatePlacedOrderRequest updatePlacedOrderRequest) {
+    public ResponseEntity<?> placeOrder(@Valid @RequestBody UpdatePlacedOrderRequest updatePlacedOrderRequest) {
         return orderCommandService.updatePlacedOrder(updatePlacedOrderRequest);
     }
 }
