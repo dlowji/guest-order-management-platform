@@ -60,6 +60,7 @@ const router = createBrowserRouter(
 			</Route>
 			<Route element={<ProtectedRoute allowedRoles={[Role.ADMIN, Role.EMPLOYEE]} />}>
 				<Route path="/checkout/:orderId" element={<CheckoutPage />}></Route>
+				<Route path="/checkout/:orderId/:step" element={<CheckoutPage />}></Route>
 			</Route>
 			<Route
 				element={
