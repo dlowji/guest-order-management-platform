@@ -1,5 +1,7 @@
 package com.dlowji.simple.command.api.data;
 
+import com.dlowji.simple.command.api.converter.OrderLineItemStatusConverter;
+import com.dlowji.simple.command.api.enums.OrderLineItemStatus;
 import com.dlowji.simple.data.TimeStamp;
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,4 +24,7 @@ public class OrderLineItem extends TimeStamp {
     private Integer quantity;
     private BigDecimal price;
     private String note;
+    @Column(name = "ORDER_LINE_ITEM_STATUS")
+    @Convert(converter = OrderLineItemStatusConverter.class)
+    private OrderLineItemStatus orderLineItemStatus;
 }

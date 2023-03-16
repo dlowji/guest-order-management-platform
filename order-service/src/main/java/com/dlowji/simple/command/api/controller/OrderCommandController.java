@@ -6,10 +6,7 @@ import com.dlowji.simple.command.api.model.UpdatePlacedOrderRequest;
 import com.dlowji.simple.command.api.services.OrderCommandService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/orders")
@@ -31,7 +28,7 @@ public class OrderCommandController {
         return orderCommandService.placeOrder(placeOrderRequest);
     }
 
-    @PostMapping("/placed/update")
+    @PutMapping("/placed/update")
     public ResponseEntity<?> updatePlacedOrder(@Valid @RequestBody UpdatePlacedOrderRequest updatePlacedOrderRequest) {
         return orderCommandService.updatePlacedOrder(updatePlacedOrderRequest);
     }
