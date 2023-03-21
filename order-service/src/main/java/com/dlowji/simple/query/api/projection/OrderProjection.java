@@ -1,13 +1,8 @@
 package com.dlowji.simple.query.api.projection;
 
 import com.dlowji.simple.command.api.data.*;
-import com.dlowji.simple.command.api.model.DishResponse;
-import com.dlowji.simple.command.api.model.OrderDetailResponse;
-import com.dlowji.simple.command.api.model.OrderLineItemResponse;
-import com.dlowji.simple.command.api.model.OrderResponse;
-import com.dlowji.simple.query.api.queries.GetDishByIdQuery;
-import com.dlowji.simple.query.api.queries.GetOrderDetailByIdQuery;
-import com.dlowji.simple.query.api.queries.GetOrdersQuery;
+import com.dlowji.simple.command.api.model.*;
+import com.dlowji.simple.query.api.queries.*;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
 import org.axonframework.queryhandling.QueryHandler;
@@ -43,35 +38,48 @@ public class OrderProjection {
         return existOrder.map(this::mapToOrderDetailResponse).orElse(null);
     }
 
+    @QueryHandler
+    public List<OrderResponse> handle(GetOrdersByStatusQuery getOrdersByStatusQuery) {
+        List<Order> orders = orderRepository.findAllByOrderStatus(getOrdersByStatusQuery.getOrderStatus());
+        return orders.stream().map(this::mapToOrderResponse).toList();
+    }
+
     private OrderDetailResponse mapToOrderDetailResponse(Order order) {
         List<OrderLineItem> orderLineItemList = order.getOrderLineItemList();
         List<OrderLineItemResponse> orderLineItemResponseList = orderLineItemList.stream().map(this::mapToOrderLineItemResponse).toList();
         String tableId = order.getTableId();
         Optional<SeveredTable> existTable = tableRepository.findById(tableId);
         if (existTable.isPresent()) {
-            SeveredTable table = existTable.get();
-            OrderDetailResponse response = OrderDetailResponse.builder()
-                    .orderId(order.getOrderId())
-                    .accountId(order.getAccountId())
-                    .tableName(table.getCode())
-                    .capacity(table.getCapacity())
-                    .orderLineItemResponseList(new ArrayList<>())
-                    .orderStatus(order.getOrderStatus())
-                    .subTotal(order.getSubTotal())
-                    .itemDiscount(order.getItemDiscount())
-                    .tax(order.getTax())
-                    .total(order.getTotal())
-                    .promoCode(order.getPromoCode())
-                    .discount(order.getDiscount())
-                    .grandTotal(order.getGrandTotal())
-                    .createdAt(order.getCreatedAt())
-                    .updatedAt(order.getUpdatedAt())
+            String accountId = order.getAccountId();
+            GetAccountByIdQuery getAccountByIdQuery = GetAccountByIdQuery.builder()
+                    .accountId(accountId)
                     .build();
+            AccountResponse accountResponse = queryGateway.query(getAccountByIdQuery, ResponseTypes.instanceOf(AccountResponse.class)).join();
+            if (accountResponse != null) {
+                SeveredTable table = existTable.get();
+                OrderDetailResponse response = OrderDetailResponse.builder()
+                        .orderId(order.getOrderId())
+                        .accountName(accountResponse.getUsername())
+                        .tableName(table.getCode())
+                        .capacity(table.getCapacity())
+                        .orderLineItemResponseList(new ArrayList<>())
+                        .orderStatus(order.getOrderStatus())
+                        .lastProcessing(order.getLastProcessing())
+                        .subTotal(order.getSubTotal())
+                        .itemDiscount(order.getItemDiscount())
+                        .tax(order.getTax())
+                        .total(order.getTotal())
+                        .promoCode(order.getPromoCode())
+                        .discount(order.getDiscount())
+                        .grandTotal(order.getGrandTotal())
+                        .createdAt(order.getCreatedAt())
+                        .updatedAt(order.getUpdatedAt())
+                        .build();
 
-            orderLineItemResponseList.forEach(item -> response.getOrderLineItemResponseList().add(item));
-            return response;
+                orderLineItemResponseList.forEach(item -> response.getOrderLineItemResponseList().add(item));
+                return response;
+            }
         }
-
         return null;
     }
 
@@ -88,6 +96,7 @@ public class OrderProjection {
                 .quantity(orderLineItem.getQuantity())
                 .price(orderLineItem.getPrice())
                 .image(dishResponse.getImage())
+                .orderLineItemStatus(orderLineItem.getOrderLineItemStatus())
                 .note(orderLineItem.getNote())
                 .build();
     }
@@ -96,18 +105,33 @@ public class OrderProjection {
         String tableId = order.getTableId();
         Optional<SeveredTable> existTable = tableRepository.findById(tableId);
         if (existTable.isPresent()) {
-            SeveredTable table = existTable.get();
-            return OrderResponse.builder()
-                    .orderId(order.getOrderId())
-                    .accountId(order.getAccountId())
-                    .tableName(table.getCode())
-                    .capacity(table.getCapacity())
-                    .orderStatus(order.getOrderStatus())
-                    .grandTotal(order.getGrandTotal())
-                    .createdAt(order.getCreatedAt())
-                    .updatedAt(order.getUpdatedAt())
+            String accountId = order.getAccountId();
+            GetAccountByIdQuery getAccountByIdQuery = GetAccountByIdQuery.builder()
+                    .accountId(accountId)
                     .build();
+            AccountResponse accountResponse = queryGateway.query(getAccountByIdQuery, ResponseTypes.instanceOf(AccountResponse.class)).join();
+            if (accountResponse != null) {
+
+                SeveredTable table = existTable.get();
+                List<OrderLineItem> orderLineItemList = order.getOrderLineItemList();
+                List<OrderLineItemResponse> orderLineItemResponseList = orderLineItemList.stream().map(this::mapToOrderLineItemResponse).toList();
+                OrderResponse orderResponse = OrderResponse.builder()
+                        .orderId(order.getOrderId())
+                        .accountName(accountResponse.getUsername())
+                        .tableName(table.getCode())
+                        .capacity(table.getCapacity())
+                        .orderLineItemResponseList(new ArrayList<>())
+                        .orderStatus(order.getOrderStatus())
+                        .lastProcessing(order.getLastProcessing())
+                        .grandTotal(order.getGrandTotal())
+                        .createdAt(order.getCreatedAt())
+                        .updatedAt(order.getUpdatedAt())
+                        .build();
+                orderLineItemResponseList.forEach(orderLineItemResponse -> orderResponse.getOrderLineItemResponseList().add(orderLineItemResponse));
+                return orderResponse;
+            }
         }
+
         return null;
     }
 }

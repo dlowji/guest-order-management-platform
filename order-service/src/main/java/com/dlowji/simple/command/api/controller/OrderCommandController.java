@@ -1,6 +1,7 @@
 package com.dlowji.simple.command.api.controller;
 
 import com.dlowji.simple.command.api.model.CreateOrderRequest;
+import com.dlowji.simple.command.api.model.ProgressOrderRequest;
 import com.dlowji.simple.command.api.model.UpdatePlacedOrderRequest;
 import com.dlowji.simple.command.api.services.OrderCommandService;
 import jakarta.validation.Valid;
@@ -25,5 +26,10 @@ public class OrderCommandController {
     @PostMapping("/placed")
     public ResponseEntity<?> placeOrder(@Valid @RequestBody UpdatePlacedOrderRequest updatePlacedOrderRequest) {
         return orderCommandService.updatePlacedOrder(updatePlacedOrderRequest);
+    }
+
+    @PostMapping("/progress")
+    public ResponseEntity<?> progressOrder(@Valid @RequestBody ProgressOrderRequest progressOrderRequest) {
+        return orderCommandService.progressOrder(progressOrderRequest);
     }
 }

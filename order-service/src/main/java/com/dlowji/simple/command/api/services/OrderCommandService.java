@@ -2,6 +2,7 @@ package com.dlowji.simple.command.api.services;
 
 import com.dlowji.simple.command.api.commands.CreateOrderCommand;
 import com.dlowji.simple.command.api.commands.PlaceOrderCommand;
+import com.dlowji.simple.command.api.commands.ProgressOrderCommand;
 import com.dlowji.simple.command.api.commands.UpdatePlacedOrderCommand;
 import com.dlowji.simple.command.api.data.*;
 import com.dlowji.simple.command.api.enums.OrderLineItemStatus;
@@ -224,5 +225,24 @@ public class OrderCommandService {
             response.put("message", "Error update placed order " + e.getMessage());
             return ResponseEntity.internalServerError().body(response);
         }
+    }
+
+    public ResponseEntity<?> progressOrder(ProgressOrderRequest progressOrderRequest) {
+        Map<String, Object> response = new LinkedHashMap<>();
+        ProgressOrderCommand progressOrderCommand = ProgressOrderCommand.builder()
+                .orderId(progressOrderRequest.getOrderId())
+                .progressOrderLineItemRequestList(progressOrderRequest.getProgressOrderLineItemRequestList())
+                .build();
+        try {
+            commandGateway.send(progressOrderCommand);
+            response.put("code", 0);
+            response.put("message", "Send signal to begin process order successfully");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("code", 500);
+            response.put("message", "Error begin processing order " + e.getMessage());
+            return ResponseEntity.internalServerError().body(response);
+        }
+
     }
 }

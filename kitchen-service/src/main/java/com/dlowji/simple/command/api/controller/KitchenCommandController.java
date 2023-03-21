@@ -4,10 +4,12 @@ import com.dlowji.simple.command.api.data.Category;
 import com.dlowji.simple.command.api.data.ICategoryRepository;
 import com.dlowji.simple.command.api.model.CategoryRequest;
 import com.dlowji.simple.command.api.model.DishRequest;
+import com.dlowji.simple.command.api.model.MarkDoneOrderRequest;
 import com.dlowji.simple.command.api.service.KitchenCommandService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.CompletableFuture;
@@ -27,7 +29,12 @@ public class KitchenCommandController {
     @ResponseStatus(HttpStatus.CREATED)
     public CompletableFuture<String> createDish(@Valid @RequestBody DishRequest dishRequest) {
         return kitchenCommandService.createDish(dishRequest);
-}
+    }
+
+    @PostMapping("/mark-done")
+    public ResponseEntity<?> markDone(@Valid @RequestBody MarkDoneOrderRequest progressOrderRequest) {
+        return kitchenCommandService.markDone(progressOrderRequest);
+    }
 
     @PostMapping("/category")
     public String createCategory(@Valid @RequestBody CategoryRequest categoryRequest) {
