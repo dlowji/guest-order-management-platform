@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 interface IMenuOrderItemProps extends IMenuOrderItem {}
 
 const MenuOrderItem: React.FunctionComponent<IMenuOrderItemProps> = ({
+	orderLineItemId,
 	dishId,
 	title,
 	price = 0,
@@ -25,56 +26,42 @@ const MenuOrderItem: React.FunctionComponent<IMenuOrderItemProps> = ({
 			</div>
 		);
 
-	const removeItem = useMenuItemsOrder((state) => state.removeItem);
-
 	const queryClient = useQueryClient();
+	const increment = useMenuItemsOrder((state) => state.increment);
+	const updateNoteItem = useMenuItemsOrder((state) => state.updateNote);
 
-	const handleIncrement = async (id: string | number) => {
-		const { value: newQuantity } = await Swal.fire({
-			title: 'Quantity',
-			input: 'number',
-			inputValue: quantity,
-			showCancelButton: true,
-			inputValidator: (value) => {
-				if (!value) {
-					return 'You need to write something!';
-				}
+	const handleIncrement = async () => {
+		// const { value: newQuantity } = await Swal.fire({
+		// 	title: 'Quantity',
+		// 	input: 'number',
+		// 	inputValue: quantity,
+		// 	showCancelButton: true,
+		// 	inputValidator: (value) => {
+		// 		if (!value) {
+		// 			return 'You need to write something!';
+		// 		}
 
-				if (!Number.isInteger(Number(value))) {
-					return 'Quantity must be a number';
-				}
+		// 		if (!Number.isInteger(Number(value))) {
+		// 			return 'Quantity must be a number';
+		// 		}
 
-				if (+value < quantity) {
-					return 'Quantity must be greater than current quantity';
-				}
-				return '';
-			},
-		});
+		// 		if (+value < quantity) {
+		// 			return 'Quantity must be greater than current quantity';
+		// 		}
+		// 		return '';
+		// 	},
+		// });
 
-		if (newQuantity && newQuantity !== quantity) {
-			queryClient.invalidateQueries(['orderDetail', orderId]);
-			Swal.fire('Updated!', 'Your item has been updated.', 'success');
-		}
+		// if (newQuantity && newQuantity !== quantity) {
+		// 	// queryClient.invalidateQueries(['orderDetail', orderId]);
+
+		// 	Swal.fire('Updated!', 'Your item has been updated.', 'success');
+		// }
+
+		increment(dishId, orderLineItemId);
 	};
 
-	const handleRemoveItem = (id: string | number) => {
-		Swal.fire({
-			title: 'Are you sure?',
-			text: 'Your action will remove this item from your order!',
-			icon: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Yes, remove it!',
-		}).then((result) => {
-			if (result.isConfirmed) {
-				removeItem(id as string);
-				Swal.fire('Deleted!', 'Your item has been removed.', 'success');
-			}
-		});
-	};
-
-	const handleUpdateNote = async (id: string | number) => {
+	const handleUpdateNote = async () => {
 		const { value: noteUpdate } = await Swal.fire({
 			title: 'Update Note',
 			input: 'text',
@@ -89,7 +76,7 @@ const MenuOrderItem: React.FunctionComponent<IMenuOrderItemProps> = ({
 		});
 
 		if (noteUpdate && noteUpdate !== 'nothing') {
-			// updateNoteItem(id as string, noteUpdate);
+			updateNoteItem(dishId, noteUpdate, orderLineItemId);
 		}
 	};
 
@@ -114,17 +101,17 @@ const MenuOrderItem: React.FunctionComponent<IMenuOrderItemProps> = ({
 							<i className="fas fa-minus"></i>
 						</button> */}
 						<span className="menu-order-item-quantity">{quantity}</span>
-						<button className="menu-order-item-btn-plus" onClick={() => handleIncrement(dishId)}>
+						<button className="menu-order-item-btn-plus" onClick={handleIncrement}>
 							<i className="fas fa-plus"></i>
 						</button>
 					</div>
 					<div className="menu-order-item-edit">
-						<button className="menu-order-item-btn-edit" onClick={() => handleUpdateNote(dishId)}>
+						<button className="menu-order-item-btn-edit" onClick={handleUpdateNote}>
 							<i className="fas fa-edit"></i>
 						</button>
-						<button className="menu-order-item-btn-delete" onClick={() => handleRemoveItem(dishId)}>
+						{/* <button className="menu-order-item-btn-delete" onClick={() => handleRemoveItem(dishId)}>
 							<i className="fas fa-trash"></i>
-						</button>
+						</button> */}
 					</div>
 				</div>
 			</div>

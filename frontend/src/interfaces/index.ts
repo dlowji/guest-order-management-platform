@@ -1,5 +1,6 @@
 export interface IMenuOrderItem {
-	dishId: string | number;
+	orderLineItemId?: number;
+	dishId: string;
 	title: string;
 	price: number;
 	quantity: number;
@@ -8,7 +9,8 @@ export interface IMenuOrderItem {
 }
 
 export interface IMenuItem {
-	id: string | number;
+	orderLineItemId?: number;
+	id: string;
 	image: string;
 	title: string;
 	price: number;

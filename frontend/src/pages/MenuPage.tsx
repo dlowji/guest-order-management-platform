@@ -12,7 +12,7 @@ interface IMenuPageProps {}
 
 const MenuPage: React.FunctionComponent<IMenuPageProps> = () => {
 	const { id } = useParams<{ id: string }>();
-	const setOrderItems = useMenuItemsOrder((state) => state.setMenuItemsOrder);
+	const setOrderItems = useMenuItemsOrder((state) => state.setMenuOrder);
 	const { value, handleToggleValue } = useToggleValue();
 
 	const { data: orderDetail, isFetching } = useQuery({
@@ -25,15 +25,21 @@ const MenuPage: React.FunctionComponent<IMenuPageProps> = () => {
 				const orderItems = [...data.data.orderLineItemResponseList];
 				console.log('orderItems', orderItems);
 				if (orderItems.length > 0) {
-					orderItems.forEach((item) => {
-						setOrderItems({
+					const menuItemsOrder = orderItems.map((item) => {
+						return {
+							orderLineItemId: item.orderLineItemId,
 							dishId: item.dishId,
 							title: item.title,
 							price: item.price,
 							quantity: item.quantity,
 							image: item.image,
 							note: item.note,
-						});
+						};
+					});
+					setOrderItems({
+						orderId: id as string,
+						menuItemsOrder: [...menuItemsOrder],
+						method: 'POST',
 					});
 				}
 			}
