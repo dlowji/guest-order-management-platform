@@ -48,6 +48,25 @@ public class OrderQueryService {
             }
         }
 
+        String tableId = queryParams.get("tableId");
+        if (!StringUtils.isBlankString(tableId)) {
+            GetProcessingOrderByTableIdQuery getProcessingOrderByTableIdQuery = GetProcessingOrderByTableIdQuery
+                    .builder()
+                    .tableId(tableId)
+                    .build();
+            try {
+                OrderResponse orderResponse = queryGateway.query(getProcessingOrderByTableIdQuery, ResponseTypes.instanceOf(OrderResponse.class)).join();
+                response.put("code", 0);
+                response.put("message", "Get in processing order by table id successfully");
+                response.put("data", orderResponse);
+                return ResponseEntity.ok(response);
+            } catch (Exception e) {
+                response.put("code", 500);
+                response.put("message", "Error get in processing order by table id " + e.getMessage());
+                return ResponseEntity.internalServerError().body(response);
+            }
+        }
+
         String userId = queryParams.get("userId");
         if (!StringUtils.isBlankString(userId)) {
             GetOrdersByUserIdQuery getOrdersByUserIdQuery = GetOrdersByUserIdQuery.builder().userId(userId).build();
