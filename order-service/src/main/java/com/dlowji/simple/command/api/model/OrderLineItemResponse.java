@@ -1,5 +1,6 @@
 package com.dlowji.simple.command.api.model;
 
+import com.dlowji.simple.command.api.enums.OrderLineItemStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,4 +20,5 @@ public class OrderLineItemResponse {
     private Integer quantity;
     private String note;
     private String image;
+    private OrderLineItemStatus orderLineItemStatus;
 }

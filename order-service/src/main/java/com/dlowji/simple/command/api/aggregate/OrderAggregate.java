@@ -1,15 +1,11 @@
 package com.dlowji.simple.command.api.aggregate;
 
-import com.dlowji.simple.command.api.commands.CancelOrderCommand;
-import com.dlowji.simple.command.api.commands.CreateOrderCommand;
-import com.dlowji.simple.command.api.commands.PlaceOrderCommand;
-import com.dlowji.simple.command.api.commands.UpdatePlacedOrderCommand;
+import com.dlowji.simple.command.api.commands.*;
 import com.dlowji.simple.command.api.enums.OrderStatus;
-import com.dlowji.simple.command.api.events.OrderCanceledEvent;
-import com.dlowji.simple.command.api.events.OrderCreatedEvent;
-import com.dlowji.simple.command.api.events.OrderPlacedEvent;
-import com.dlowji.simple.command.api.events.PlacedOrderUpdatedEvent;
+import com.dlowji.simple.command.api.events.*;
 import com.dlowji.simple.command.api.model.CustomOrderLineItemRequest;
+import com.dlowji.simple.commands.MarkOrderLineItemDoneCommand;
+import com.dlowji.simple.events.OrderLineItemMarkedDoneEvent;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -44,6 +40,24 @@ public class OrderAggregate {
         AggregateLifecycle.apply(orderCreatedEvent);
     }
 
+    @CommandHandler
+    public void handle(MarkOrderLineItemDoneCommand markOrderLineItemDoneCommand) {
+        OrderLineItemMarkedDoneEvent markedDoneEvent = OrderLineItemMarkedDoneEvent.builder()
+                .orderId(markOrderLineItemDoneCommand.getOrderId())
+                .orderLineItemId(markOrderLineItemDoneCommand.getOrderLineItemId())
+                .build();
+        AggregateLifecycle.apply(markedDoneEvent);
+    }
+
+    @CommandHandler
+    public void handle(ProgressOrderCommand progressOrderCommand) {
+        OrderProgressedEvent orderProgressedEvent = OrderProgressedEvent.builder()
+                .orderId(progressOrderCommand.getOrderId())
+                .progressOrderLineItemRequestList(progressOrderCommand.getProgressOrderLineItemRequestList())
+                .build();
+
+        AggregateLifecycle.apply(orderProgressedEvent);
+    }
     @CommandHandler
     public void handle(CancelOrderCommand cancelOrderCommand) {
         OrderCanceledEvent orderCanceledEvent = OrderCanceledEvent.builder()
@@ -101,5 +115,15 @@ public class OrderAggregate {
     @EventSourcingHandler
     public void on(PlacedOrderUpdatedEvent placedOrderUpdatedEvent) {
         this.orderId = placedOrderUpdatedEvent.getOrderId();
+    }
+
+    @EventSourcingHandler
+    public void on(OrderLineItemMarkedDoneEvent orderLineItemMarkedDoneEvent) {
+        this.orderId = orderLineItemMarkedDoneEvent.getOrderId();
+    }
+
+    @EventSourcingHandler
+    public void on(OrderProgressedEvent orderProgressedEvent) {
+        this.orderId = orderProgressedEvent.getOrderId();
     }
 }

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -16,11 +17,12 @@ import java.util.List;
 @NoArgsConstructor
 public class OrderDetailResponse {
     private String orderId;
-    private String accountId;
+    private String accountName;
     private String tableName;
     private Integer capacity;
     private List<OrderLineItemResponse> orderLineItemResponseList;
     private OrderStatus orderStatus;
+    private LocalDateTime lastProcessing;
     //total price of the order items
     private BigDecimal subTotal;
     //total discount of the order items

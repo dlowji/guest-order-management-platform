@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class Order extends TimeStamp {
     @Column(name = "ORDER_STATUS")
     @Convert(converter = OrderStatusConverter.class)
     private OrderStatus orderStatus;
+    private LocalDateTime lastProcessing;
     //total price of the order items
     private BigDecimal subTotal;
     //total discount of the order items
