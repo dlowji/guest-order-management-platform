@@ -1,6 +1,7 @@
 package com.dlowji.simple.query.api.projection;
 
 import com.dlowji.simple.command.api.data.*;
+import com.dlowji.simple.command.api.enums.OrderStatus;
 import com.dlowji.simple.command.api.model.*;
 import com.dlowji.simple.query.api.queries.*;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
@@ -42,6 +43,13 @@ public class OrderProjection {
     public List<OrderResponse> handle(GetOrdersByStatusQuery getOrdersByStatusQuery) {
         List<Order> orders = orderRepository.findAllByOrderStatus(getOrdersByStatusQuery.getOrderStatus());
         return orders.stream().map(this::mapToOrderResponse).toList();
+    }
+
+    @QueryHandler
+    public OrderResponse handle(GetProcessingOrderByTableIdQuery getProcessingOrderByTableIdQuery) {
+        String tableId = getProcessingOrderByTableIdQuery.getTableId();
+        List<Order> orderList = orderRepository.findByTableId(tableId);
+        return mapToOrderResponse(orderList.stream().filter(order -> order.getOrderStatus()!= OrderStatus.COMPLETED).findFirst().get());
     }
 
     private OrderDetailResponse mapToOrderDetailResponse(Order order) {

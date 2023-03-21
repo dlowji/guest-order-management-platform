@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface IOrderRepository extends JpaRepository<Order, String> {
     List<Order> findAllByOrderStatus(OrderStatus orderStatus);
+
+    List<Order> findByTableId(String tableId);
 }
