@@ -45,13 +45,13 @@ class OrderApi {
 		}
 	}
 
-	public async getAll() {
+	public async getAll(status?: string) {
 		try {
 			const response = await this.request.get<{
 				code: number;
 				message: string;
 				data: TOrder[];
-			}>(`${this.url}`);
+			}>(status ? `${this.url}?status=${status}` : `${this.url}`);
 			if (response.data.code === 0) {
 				return {
 					code: 200,
@@ -104,6 +104,32 @@ class OrderApi {
 		}
 	}
 
+	public async getByTableId(tableId: string) {
+		try {
+			const response = await this.request.get<{
+				code: number;
+				message: string;
+				data: TOrder;
+			}>(`${this.url}?tableId=${tableId}`);
+			if (response.data.code === 0) {
+				return {
+					code: 200,
+					data: response.data.data,
+				};
+			} else {
+				return {
+					code: 400,
+					message: "Can't get order by table id",
+				};
+			}
+		} catch (error) {
+			return {
+				code: 400,
+				message: "Can't get order by table id",
+			};
+		}
+	}
+
 	public async updateOrderLineItems(
 		orderId: string | undefined,
 		items: IMenuOrderItem[] | undefined,
@@ -117,12 +143,13 @@ class OrderApi {
 		try {
 			const response = await this.request.post<{
 				code: number;
-				message: string;
 				orderId: string;
+				message?: string;
 			}>(`${this.url}/placed`, {
 				orderId,
-				orderLineItemRequestList: [...items],
+				updateOrderLineItemRequests: [...items],
 			});
+
 			if (response.data.code === 0) {
 				return {
 					code: 200,
@@ -131,13 +158,48 @@ class OrderApi {
 			} else {
 				return {
 					code: 400,
-					message: "Can't create order line items",
+					message: response.data.message || "Can't create order line items",
 				};
 			}
 		} catch (error) {
 			return {
 				code: 400,
 				message: "Can't create order line items",
+			};
+		}
+	}
+
+	public async progressOrder(orderId: string, items: IMenuOrderItem[]) {
+		if (!orderId) {
+			return {
+				code: 400,
+				message: "Can't progress order",
+			};
+		}
+		try {
+			const response = await this.request.post<{
+				code: number;
+				message?: string;
+			}>(`${this.url}/progress`, {
+				orderId,
+				progressOrderLineItemRequestList: [...items],
+			});
+
+			if (response.data.code === 0) {
+				return {
+					code: 200,
+					message: 'Order progressed successfully',
+				};
+			} else {
+				return {
+					code: 400,
+					message: response.data.message || "Can't progress order",
+				};
+			}
+		} catch (error) {
+			return {
+				code: 400,
+				message: "Can't progress order",
 			};
 		}
 	}

@@ -1,3 +1,5 @@
+import { OrderLineItemStatusResponse } from '@constants/orderLineItemStatus';
+
 export interface IMenuOrderItem {
 	orderLineItemId?: number;
 	dishId: string;
@@ -6,6 +8,7 @@ export interface IMenuOrderItem {
 	quantity: number;
 	note?: string;
 	image: string;
+	orderLineItemStatus: OrderLineItemStatusResponse;
 }
 
 export interface IMenuItem {

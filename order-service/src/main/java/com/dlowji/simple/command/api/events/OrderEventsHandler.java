@@ -31,8 +31,11 @@ public class OrderEventsHandler {
     private final ITableRepository tableRepository;
     @EventHandler
     public void on(OrderCreatedEvent orderCreatedEvent) {
+        System.out.println("inside event handle" + orderCreatedEvent);
         String tableId = orderCreatedEvent.getTableId();
+        System.out.println(orderCreatedEvent);
         Optional<SeveredTable> existTable = tableRepository.findById(tableId);
+        System.out.println(existTable.isPresent());
         if (existTable.isPresent()) {
             SeveredTable table = existTable.get();
             table.setTableStatus(TableStatus.OCCUPIED);
@@ -191,9 +194,13 @@ public class OrderEventsHandler {
         String orderId = orderProgressedEvent.getOrderId();
         List<ProgressOrderLineItemRequest> progressOrderLineItemRequestList = orderProgressedEvent.getProgressOrderLineItemRequestList();
         Optional<Order> existOrder = orderRepository.findById(orderId);
+        System.out.println(orderId);
+        System.out.println(existOrder);
         if (existOrder.isPresent()) {
             Order order = existOrder.get();
             List<OrderLineItem> orderLineItemList = order.getOrderLineItemList();
+            System.out.println(orderLineItemList);
+            System.out.println(progressOrderLineItemRequestList);
             for (ProgressOrderLineItemRequest progressOrderLineItemRequest : progressOrderLineItemRequestList) {
                 OrderLineItem orderLineItem = orderLineItemList.stream().filter(item -> Objects.equals(item.getId(), progressOrderLineItemRequest.getId()))
                         .findFirst()

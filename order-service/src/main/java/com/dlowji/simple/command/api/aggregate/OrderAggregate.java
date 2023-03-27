@@ -30,6 +30,7 @@ public class OrderAggregate {
 
     @CommandHandler
     public OrderAggregate(CreateOrderCommand createOrderCommand) {
+        System.out.println(createOrderCommand);
         //validation
         OrderCreatedEvent orderCreatedEvent = OrderCreatedEvent.builder()
                 .orderId(createOrderCommand.getOrderId())
@@ -90,6 +91,7 @@ public class OrderAggregate {
 
     @EventSourcingHandler
     public void on(OrderCreatedEvent orderCreatedEvent) {
+        System.out.println(orderCreatedEvent);
         this.orderId = orderCreatedEvent.getOrderId();
         this.userId = orderCreatedEvent.getAccountId();
         this.tableId = orderCreatedEvent.getTableId();

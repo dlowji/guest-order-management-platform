@@ -1,6 +1,7 @@
 import Role from '@constants/ERole';
 import { DropdownProvider } from '@context/useDropdown';
 import SubMenuSidebar from '@modules/common/SubMenuSidebar';
+import { useAuth } from '@stores/useAuth';
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -12,14 +13,14 @@ const items = [
 		href: '/',
 		icon: 'fa-solid fa-house',
 		isActive: false,
-		permissions: [Role.EMPLOYEE],
+		permissions: [Role.ADMIN],
 	},
 	{
 		name: 'Table',
 		href: '/table',
 		icon: 'fa-solid fa-table',
 		isActive: true,
-		permissions: [Role.EMPLOYEE],
+		permissions: [Role.ADMIN, Role.EMPLOYEE],
 	},
 	{
 		name: 'Menu',
@@ -31,9 +32,16 @@ const items = [
 	{
 		name: 'Order',
 		href: '/order',
-		icon: 'fa-solid fa-cart-shopping',
+		icon: 'fa-solid fa-shopping-cart',
 		isActive: true,
-		permissions: [Role.EMPLOYEE, Role.CHEF],
+		permissions: [Role.ADMIN, Role.EMPLOYEE],
+	},
+	{
+		name: 'Kitchen',
+		href: '/kitchen',
+		icon: 'fa-solid fa-utensils',
+		isActive: true,
+		permissions: [Role.CHEF],
 	},
 	{
 		name: 'History',
@@ -58,11 +66,20 @@ const DashboardSidebar: React.FunctionComponent<IDashboardSidebarProps> = () => 
 			toastId: id,
 		});
 	};
-	const currentRole = Role.EMPLOYEE;
+
+	const [currentRole, setCurrentRole] = React.useState<Role>(Role.EMPLOYEE);
 
 	const itemsFilter = React.useMemo(() => {
 		return items.filter((item) => item.permissions.includes(currentRole));
 	}, [currentRole]);
+
+	const user = useAuth((state) => state.user);
+
+	React.useEffect(() => {
+		if (user?.roleName) {
+			setCurrentRole(user.roleName);
+		}
+	}, [user?.roleName]);
 
 	return (
 		<div className="sidebar">

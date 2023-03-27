@@ -36,7 +36,7 @@ const AuthenticationLayout: React.FunctionComponent<IAuthenticationLayoutProps> 
 	});
 
 	if (isFetching) {
-		return <LoadingCenter></LoadingCenter>;
+		return <LoadingCenter className="mt-10"></LoadingCenter>;
 	}
 
 	return (

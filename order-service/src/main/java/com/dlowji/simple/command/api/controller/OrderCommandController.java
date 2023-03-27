@@ -30,6 +30,7 @@ public class OrderCommandController {
 
     @PostMapping("/progress")
     public ResponseEntity<?> progressOrder(@Valid @RequestBody ProgressOrderRequest progressOrderRequest) {
+        System.out.println(progressOrderRequest);
         return orderCommandService.progressOrder(progressOrderRequest);
     }
 }

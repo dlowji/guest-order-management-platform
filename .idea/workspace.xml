@@ -4,35 +4,42 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89a18001-5f1e-4cd5-bd47-59be2fec2b84" name="Changes" comment="fix controller">
-      <change afterPath="$PROJECT_DIR$/common-service/src/main/java/com/dlowji/simple/commands/MarkOrderLineItemDoneCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common-service/src/main/java/com/dlowji/simple/converters/OrderLineItemStatusConverter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common-service/src/main/java/com/dlowji/simple/enums/OrderLineItemStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common-service/src/main/java/com/dlowji/simple/events/OrderLineItemMarkedDoneEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common-service/src/main/java/com/dlowji/simple/model/ProgressOrderLineItemRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common-service/src/main/java/com/dlowji/simple/model/ProgressOrderRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/commands/ProgressOrderCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/events/OrderProgressingEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/model/MarkDoneOrderLineItemRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/model/MarkDoneOrderRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/commands/ProgressOrderCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/events/OrderProgressedEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/ProgressOrderLineItemRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/ProgressOrderRequest.java" afterDir="false" />
+    <list default="true" id="89a18001-5f1e-4cd5-bd47-59be2fec2b84" name="Changes" comment="update fe 16/03">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/controller/KitchenCommandController.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/controller/KitchenCommandController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/service/KitchenCommandService.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/command/api/service/KitchenCommandService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/query/api/controller/KitchenQueryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen-service/src/main/java/com/dlowji/simple/query/api/controller/KitchenQueryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/api/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/api/auth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/api/order.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/api/order.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/button/Button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/button/Button.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/button/PaypalButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/button/PaypalButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/constants/categoryOrderItem.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/constants/categoryOrderItem.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/interfaces/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/interfaces/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/layouts/AuthenticationLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/layouts/AuthenticationLayout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/common/MenuRightContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/common/MenuRightContent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/common/SubMenuSidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/common/SubMenuSidebar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/dashboard/DashboardSidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/dashboard/DashboardSidebar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/menu/MenuItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/menu/MenuItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/menu/MenuLeftContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/menu/MenuLeftContent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/menu/MenuOrder.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/menu/MenuOrder.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/order/OrderItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/order/OrderItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/order/OrderMain.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/order/OrderMain.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/table/TableItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/table/TableItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/DashboardPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/DashboardPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/LoginPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/LoginPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/useAuth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/useAuth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/styles/bases/_general.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles/bases/_general.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/styles/bases/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles/bases/_variables.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/styles/modules/_menu.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles/modules/_menu.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/styles/modules/_order.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles/modules/_order.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/styles/modules/_sidebar.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles/modules/_sidebar.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/types/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/types/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/utils/formatCurrency.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/utils/formatCurrency.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/aggregate/OrderAggregate.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/aggregate/OrderAggregate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/commands/CreateOrderCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/commands/CreateOrderCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/controller/OrderCommandController.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/controller/OrderCommandController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/data/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/data/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/enums/OrderLineItemStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/enums/OrderLineItemStatus.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/events/OrderEventsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/events/OrderEventsHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/OrderDetailResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/OrderDetailResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/OrderLineItemResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/OrderLineItemResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/OrderResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/OrderResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/TableRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/model/TableRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/services/OrderCommandService.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/command/api/services/OrderCommandService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/projection/OrderProjection.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/dlowji/simple/query/api/projection/OrderProjection.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,8 +52,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Enum" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -58,6 +65,7 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="JpbToolWindowState">
     <option name="myId2FirstActivated">
@@ -75,7 +83,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2LzeqzVXMja5ou5sdVna8GhD7K9" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -103,7 +111,8 @@
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;e84b7d6fd08688c7b45a4066f89f8fb6&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;d6cd5f4fc3b022ce8061212f1f307bbe&quot;,
     &quot;ts.external.directory.path&quot;: &quot;D:\\SOA\\microservice-midterm\\frontend\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -112,9 +121,6 @@
     <option name="notificationShown" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="com.dlowji.simple.command.api.model" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\soa\microservice-midterm\account-service\src\main\java\com\dlowji\simple" />
     </key>
@@ -180,17 +186,17 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Spring Boot.AccountServiceApplication" />
       <item itemvalue="Spring Boot.OrderServiceApplication" />
       <item itemvalue="Spring Boot.ApiGatewayApplication" />
+      <item itemvalue="Spring Boot.AccountServiceApplication" />
       <item itemvalue="Spring Boot.KitchenServiceApplication" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.KitchenServiceApplication" />
+        <item itemvalue="Spring Boot.AccountServiceApplication" />
         <item itemvalue="Spring Boot.ApiGatewayApplication" />
         <item itemvalue="Spring Boot.OrderServiceApplication" />
-        <item itemvalue="Spring Boot.AccountServiceApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -239,16 +245,13 @@
       <workItem from="1678513581326" duration="9291000" />
       <workItem from="1678529324220" duration="2566000" />
       <workItem from="1678539266506" duration="6945000" />
-      <workItem from="1678878999012" duration="17916000" />
-      <workItem from="1678946311217" duration="27000" />
-      <workItem from="1678946360226" duration="5903000" />
-      <workItem from="1678959818255" duration="17061000" />
-      <workItem from="1679061885743" duration="40000" />
-      <workItem from="1679067344459" duration="1363000" />
-      <workItem from="1679237758971" duration="2418000" />
-      <workItem from="1679319435904" duration="10012000" />
-      <workItem from="1679364235333" duration="4792000" />
-      <workItem from="1679390874822" duration="2287000" />
+      <workItem from="1679480305956" duration="3484000" />
+      <workItem from="1679544343436" duration="3642000" />
+      <workItem from="1679663209643" duration="3207000" />
+      <workItem from="1679738336054" duration="1547000" />
+      <workItem from="1679741715826" duration="5514000" />
+      <workItem from="1679888769548" duration="1394000" />
+      <workItem from="1679896890652" duration="615000" />
     </task>
     <task id="LOCAL-00001" summary="config pom file of parent folder">
       <created>1676885189780</created>
@@ -411,35 +414,7 @@
       <option name="project" value="LOCAL" />
       <updated>1678547863597</updated>
     </task>
-    <task id="LOCAL-00024" summary="update code 15/03">
-      <created>1678880732674</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1678880732674</updated>
-    </task>
-    <task id="LOCAL-00025" summary="update order process">
-      <created>1678898126912</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1678898126912</updated>
-    </task>
-    <task id="LOCAL-00026" summary="fix update order">
-      <created>1678973891589</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1678973891589</updated>
-    </task>
-    <task id="LOCAL-00027" summary="fix controller">
-      <created>1678976778275</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1678976778275</updated>
-    </task>
-    <option name="localTasksCounter" value="28" />
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -467,6 +442,10 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="config pom file of parent folder" />
+    <MESSAGE value="implement order service" />
+    <MESSAGE value="implement kitchen-service, account-service, common-service&#10;can create employee and account in account-service" />
+    <MESSAGE value="implement saga pattern to create account" />
     <MESSAGE value="implement kitchen service" />
     <MESSAGE value="implement api gateway" />
     <MESSAGE value="implement endpoint for GET tables, GET orders - haven't test yet" />
@@ -488,10 +467,6 @@
     <MESSAGE value="implement get order history" />
     <MESSAGE value="fix bug" />
     <MESSAGE value="update getme api and fix schedule" />
-    <MESSAGE value="update code 15/03" />
-    <MESSAGE value="update order process" />
-    <MESSAGE value="fix update order" />
-    <MESSAGE value="fix controller" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix controller" />
+    <option name="LAST_COMMIT_MESSAGE" value="update getme api and fix schedule" />
   </component>
 </project>

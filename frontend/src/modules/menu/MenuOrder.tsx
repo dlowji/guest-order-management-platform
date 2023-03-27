@@ -11,11 +11,10 @@ interface IMenuOrderProps {}
 
 const MenuOrder: React.FunctionComponent<IMenuOrderProps> = () => {
 	const { id } = useParams<{ id: string }>();
-	const removeAll = useMenuItemsOrder((state) => state.removeAll);
 
 	const navigate = useNavigate();
 
-	const orderItems = useMenuItemsOrder((state) => state.menuItemsOrder);
+	const orderItems = useMenuItemsOrder((state) => state.menuOrder.menuItemsOrder);
 
 	const queryClient = useQueryClient();
 	const { mutate: updateOrderLineItems } = useMutation({
@@ -28,11 +27,11 @@ const MenuOrder: React.FunctionComponent<IMenuOrderProps> = () => {
 				Swal.fire('Ordered!', 'Your order has been sent to the kitchen.', 'success');
 				return;
 			} else {
-				Swal.fire('Error!', 'Something went wrong.', 'error');
+				Swal.fire('Error!', data?.message || 'Error! Please try again later', 'error');
 			}
 		},
-		onError: () => {
-			console.log('Error updating order line items');
+		onError: (data) => {
+			console.log(data);
 			Swal.fire('Error!', 'Something went wrong.', 'error');
 		},
 	});
@@ -84,7 +83,6 @@ const MenuOrder: React.FunctionComponent<IMenuOrderProps> = () => {
 		}).then((result) => {
 			if (result.isConfirmed) {
 				if (id) {
-					removeAll();
 					Swal.fire('Deleted!', 'Your items have been removed.', 'success');
 					navigate(`/table`);
 				} else {
