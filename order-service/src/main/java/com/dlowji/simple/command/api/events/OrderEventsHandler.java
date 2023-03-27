@@ -198,36 +198,39 @@ public class OrderEventsHandler {
         System.out.println(existOrder);
         if (existOrder.isPresent()) {
             Order order = existOrder.get();
-            List<OrderLineItem> orderLineItemList = order.getOrderLineItemList();
-            System.out.println(orderLineItemList);
-            System.out.println(progressOrderLineItemRequestList);
-            for (ProgressOrderLineItemRequest progressOrderLineItemRequest : progressOrderLineItemRequestList) {
-                OrderLineItem orderLineItem = orderLineItemList.stream().filter(item -> Objects.equals(item.getId(), progressOrderLineItemRequest.getId()))
-                        .findFirst()
-                        .get();
-                if (progressOrderLineItemRequest.getOrderLineItemStatus() == OrderLineItemStatus.STOCK_OUT) {
-                    orderLineItem.setOrderLineItemStatus(OrderLineItemStatus.STOCK_OUT);
+            if (order.getOrderStatus() == OrderStatus.CREATED) {
+
+                List<OrderLineItem> orderLineItemList = order.getOrderLineItemList();
+                System.out.println(orderLineItemList);
+                System.out.println(progressOrderLineItemRequestList);
+                for (ProgressOrderLineItemRequest progressOrderLineItemRequest : progressOrderLineItemRequestList) {
+                    OrderLineItem orderLineItem = orderLineItemList.stream().filter(item -> Objects.equals(item.getId(), progressOrderLineItemRequest.getId()))
+                            .findFirst()
+                            .get();
+                    if (progressOrderLineItemRequest.getOrderLineItemStatus() == OrderLineItemStatus.STOCK_OUT) {
+                        orderLineItem.setOrderLineItemStatus(OrderLineItemStatus.STOCK_OUT);
 //                    orderLineItemList.remove(orderLineItem);
-                    BigDecimal result = orderLineItem.getPrice().multiply(BigDecimal.valueOf(progressOrderLineItemRequest.getQuantity()));
-                    BigDecimal subTotal = order.getSubTotal();
-                    BigDecimal tax = order.getTax();
-                    BigDecimal itemDiscount = order.getItemDiscount();
-                    BigDecimal discount = order.getDiscount();
-                    subTotal = subTotal.subtract(result);
-                    BigDecimal total = subTotal.add(tax);
-                    BigDecimal grandTotal = total.subtract(itemDiscount).subtract(discount);
-                    order.setSubTotal(subTotal);
-                    order.setTotal(total);
-                    order.setGrandTotal(grandTotal);
-                } else {
-                    orderLineItem.setOrderLineItemStatus(OrderLineItemStatus.COOKING);
+                        BigDecimal result = orderLineItem.getPrice().multiply(BigDecimal.valueOf(progressOrderLineItemRequest.getQuantity()));
+                        BigDecimal subTotal = order.getSubTotal();
+                        BigDecimal tax = order.getTax();
+                        BigDecimal itemDiscount = order.getItemDiscount();
+                        BigDecimal discount = order.getDiscount();
+                        subTotal = subTotal.subtract(result);
+                        BigDecimal total = subTotal.add(tax);
+                        BigDecimal grandTotal = total.subtract(itemDiscount).subtract(discount);
+                        order.setSubTotal(subTotal);
+                        order.setTotal(total);
+                        order.setGrandTotal(grandTotal);
+                    } else {
+                        orderLineItem.setOrderLineItemStatus(OrderLineItemStatus.COOKING);
+                    }
+                    orderLineItemRepository.save(orderLineItem);
                 }
-                orderLineItemRepository.save(orderLineItem);
+                LocalDateTime current = LocalDateTime.now();
+                order.setOrderStatus(OrderStatus.IN_PROCESSING);
+                order.setLastProcessing(current);
+                orderRepository.save(order);
             }
-            LocalDateTime current = LocalDateTime.now();
-            order.setOrderStatus(OrderStatus.IN_PROCESSING);
-            order.setLastProcessing(current);
-            orderRepository.save(order);
         }
     }
 
