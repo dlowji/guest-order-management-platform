@@ -6,16 +6,17 @@ import OrderItem from './OrderItem';
 import { useQuery } from '@tanstack/react-query';
 import orderApi from '@api/order';
 import LoadingCenter from '@modules/common/LoadingCenter';
+import { useQueryString } from '@utils/queryString';
 
 interface IOrderMainProps {}
 
 const OrderMain: React.FunctionComponent<IOrderMainProps> = () => {
 	const [activeOrder, setActiveOrder] = React.useState<string>('#456644');
-
+	const { q: status } = useQueryString();
 	const { data: orderItems, isFetching } = useQuery({
-		queryKey: ['order'],
+		queryKey: ['order', status],
 		queryFn: () => {
-			return orderApi.getAll();
+			return orderApi.getAll(status);
 		},
 	});
 

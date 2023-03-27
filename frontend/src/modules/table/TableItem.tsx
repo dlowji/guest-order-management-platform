@@ -5,7 +5,6 @@ import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 import { useAuth } from '@stores/useAuth';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import tableApi from '@api/table';
 import orderApi from '@api/order';
 interface ITableItem {
 	seats: number;
@@ -24,12 +23,6 @@ const TableItem: React.FunctionComponent<ITableItemProps> = ({
 }) => {
 	if (seats % 2 !== 0) seats += 1;
 	const currentUser = useAuth((store) => store.user);
-	const employeeId = currentUser?.accountId;
-	const [orderId, setOrderId] = React.useState<string | null>(null);
-	if (!employeeId) {
-		toast.error('You are not logged in');
-		return null;
-	}
 
 	const statusColor = React.useMemo(() => {
 		if (status === 'FREE') return 'table-item-free';
@@ -40,10 +33,9 @@ const TableItem: React.FunctionComponent<ITableItemProps> = ({
 	const navigate = useNavigate();
 	const queryClient = useQueryClient();
 	const { mutate: createOrder } = useMutation({
-		mutationFn: () => orderApi.placeTableOrder(tableId, employeeId),
+		mutationFn: (employeeId: string) => orderApi.placeTableOrder(tableId, employeeId),
 		onSuccess: (data) => {
 			if (data.code === 200) {
-				setOrderId(data.orderId as string);
 				navigate(`/menu/order/${data.orderId}`);
 			} else {
 				toast.error(data.message);
@@ -54,7 +46,26 @@ const TableItem: React.FunctionComponent<ITableItemProps> = ({
 		},
 	});
 
-	const handleChooseTable = async (tableId: string) => {
+	const { mutate: chooseTableOccupied } = useMutation({
+		mutationFn: () => orderApi.getByTableId(tableId),
+		onSuccess: (data) => {
+			if (data.code === 200) {
+				navigate(`/menu/order/${data.data?.orderId}`);
+			} else {
+				toast.error(data.message);
+			}
+		},
+		onError: () => {
+			toast.error('This table is occupied, please choose another table');
+		},
+	});
+
+	const handleChooseTable = async () => {
+		const employeeId = currentUser?.accountId;
+		if (!employeeId) {
+			toast.error('You are not logged in');
+			return null;
+		}
 		if (status === 'FREE') {
 			queryClient.invalidateQueries(['table', '']);
 			Swal.fire({
@@ -68,7 +79,7 @@ const TableItem: React.FunctionComponent<ITableItemProps> = ({
 				showCancelButton: true,
 			}).then(async (result) => {
 				if (result.isConfirmed) {
-					createOrder();
+					createOrder(employeeId);
 				}
 			});
 		}
@@ -78,13 +89,12 @@ const TableItem: React.FunctionComponent<ITableItemProps> = ({
 		}
 
 		if (status === 'OCCUPIED') {
-			if (orderId) navigate(`/menu/order/${orderId}`);
-			toast.error('This order is already in progress. Please choose another order');
+			chooseTableOccupied();
 		}
 	};
 	return (
 		<Link
-			onClick={() => handleChooseTable(tableId)}
+			onClick={handleChooseTable}
 			className={`cursor-pointer hover:opacity-90 hover:scale-95 transition-all duration-300 ease-out table-item table-item-${seats} ${statusColor} `}
 			to={''}
 			style={{

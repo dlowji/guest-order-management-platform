@@ -5,6 +5,7 @@ import { devtools } from 'zustand/middleware';
 interface IUserState {
 	user: Partial<TUser> | null;
 	setUser: (user: TUser) => void;
+	removeUser: () => void;
 }
 
 export const useAuth = create<IUserState>()(
@@ -12,6 +13,7 @@ export const useAuth = create<IUserState>()(
 		(set) => ({
 			user: null,
 			setUser: (user: TUser) => set({ user }),
+			removeUser: () => set({ user: null }),
 		}),
 		{
 			name: 'Auth store',

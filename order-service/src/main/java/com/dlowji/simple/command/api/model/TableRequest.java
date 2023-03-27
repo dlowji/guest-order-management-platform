@@ -14,6 +14,5 @@ public class TableRequest {
     @NotEmpty(message = "Please enter a valid table code")
     private String code;
     @NotNull(message = "Please enter capacity of table")
-    @NotEmpty(message = "Please enter a valid capacity")
     private int capacity;
 }

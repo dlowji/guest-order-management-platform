@@ -4,3 +4,7 @@ export function formatCurrency(value: number) {
 		currency: 'VND',
 	}).format(value);
 }
+
+export function convertToUSD(value: number) {
+	return Math.floor(value / 23000);
+}

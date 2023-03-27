@@ -225,7 +225,9 @@
 				&-minus,
 				&-plus,
 				&-edit,
-				&-delete {
+				&-delete,
+				&-done,
+				&-cancel {
 					cursor: pointer;
 					display: flex;
 					align-items: center;

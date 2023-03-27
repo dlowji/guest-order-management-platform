@@ -33,7 +33,7 @@ const Button: React.FunctionComponent<IButtonProps> = ({
 		return (
 			<Link
 				to={href}
-				className={`inline-block px-7 py-3 font-semibold text-sm leading-snug uppercase rounded shadow-md transition duration-150 ease-in-out ${className}`}
+				className={`inline-block px-7 py-3 bg-orange-400 font-semibold text-sm leading-snug uppercase rounded shadow-md hover:bg-primaryff hover:shadow-lg focus:bg-primaryff focus:shadow-lg focus:outline-none focus:ring-0 active:bg-orange-700 active:shadow-lg transition duration-150 ease-in-out ${className}`}
 				onClick={onClick}
 			>
 				{child}

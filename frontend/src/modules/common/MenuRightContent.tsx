@@ -5,7 +5,7 @@ import MenuOrderItem from '../menu/MenuOrderItem';
 import MenuOrder from '@modules/menu/MenuOrder';
 import { Link, useOutletContext } from 'react-router-dom';
 import { useMenuItemsOrder } from '@stores/useMenuItemsOrder';
-import formatOrderItems from '@utils/formatOrderItems';
+import Overlay from '@components/common/Overlay';
 
 interface IMenuRightContentProps {
 	children?: React.ReactNode;
@@ -60,12 +60,7 @@ const MenuRightContent: React.FunctionComponent<IMenuRightContentProps> = () => 
 
 	return (
 		<>
-			<button
-				className={`fixed inset-0 w-full h-full bg-slate-500 bg-opacity-50 z-20 ${
-					isActive ? 'opacity-100 visible' : 'opacity-0 invisible w-0 h-0'
-				} transition-opacity menu-overlay`}
-				onClick={onToggle}
-			></button>
+			<Overlay isActive={isActive} onToggle={onToggle}></Overlay>
 			<div className={`menu-right ${isActive ? 'active' : ''} transition-transform `}>
 				<div className="menu-order">
 					{orderId ? (
@@ -92,17 +87,6 @@ const MenuRightContent: React.FunctionComponent<IMenuRightContentProps> = () => 
 									})
 								)}
 							</div>
-							{/* {hasPayment ? (
-								<PayPalScriptProvider
-									options={{
-										'client-id':
-											'AUv8rrc_P-EbP2E0mpb49BV7rFt3Usr-vdUZO8VGOnjRehGHBXkSzchr37SYF2GNdQFYSp72jh5QUhzG',
-									}}
-								>
-									<MenuPayment orderItems={orderItems}></MenuPayment>
-								</PayPalScriptProvider>
-							) : (
-							)} */}
 							<MenuOrder></MenuOrder>
 						</>
 					) : (

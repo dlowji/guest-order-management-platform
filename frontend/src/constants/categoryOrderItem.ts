@@ -5,18 +5,18 @@ export const orderCategoryItems = [
 		link: '#',
 	},
 	{
-		id: 'processing',
+		id: 'created',
+		name: 'Created',
+		link: '?q=created',
+	},
+	{
+		id: 'in_processing',
 		name: 'Processing',
-		link: '?q=processing',
+		link: '?q=in_processing',
 	},
 	{
 		id: 'completed',
 		name: 'Completed',
 		link: '?q=completed',
-	},
-	{
-		id: 'cancelled',
-		name: 'Cancelled',
-		link: '?q=cancelled',
 	},
 ];

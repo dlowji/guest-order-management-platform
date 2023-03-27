@@ -11,7 +11,7 @@ interface IOrderItemProps {
 }
 
 const OrderItem: React.FunctionComponent<IOrderItemProps> = ({
-	item: { orderId, createdAt, tableId, grandTotal, orderStatus },
+	item: { orderId, createdAt, grandTotal, orderStatus },
 	active = false,
 	onClick,
 }) => {

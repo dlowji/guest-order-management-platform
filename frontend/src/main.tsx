@@ -1,3 +1,4 @@
+import '@styles/index.scss';
 import {
 	createBrowserRouter,
 	createRoutesFromElements,
@@ -6,7 +7,6 @@ import {
 } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
-import '@styles/index.scss';
 import Fallback from '@components/common/Fallback';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,7 +15,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import ProtectedRoute from '@modules/common/ProtectedRoute';
 import Role from '@constants/ERole';
-import CheckoutPage from '@pages/CheckoutPage';
+import KitchenOrder from '@modules/kitchen/KitchenOrder';
+import { OrderDetailProvider } from '@context/useOrderDetail';
 
 const MainLayout = lazy(() =>
 	import('@layouts/MainLayout').then((module) => ({ default: module.default })),
@@ -45,6 +46,14 @@ const OrderPage = lazy(() =>
 	import('@pages/OrderPage').then((module) => ({ default: module.default })),
 );
 
+const KitchenPage = lazy(() =>
+	import('@pages/KitchenPage').then((module) => ({ default: module.default })),
+);
+
+const CheckoutPage = lazy(() =>
+	import('@pages/CheckoutPage').then((module) => ({ default: module.default })),
+);
+
 const router = createBrowserRouter(
 	createRoutesFromElements(
 		<>
@@ -56,6 +65,17 @@ const router = createBrowserRouter(
 						<Route path="/menu/order/:id" element={<MenuRightContent></MenuRightContent>} />
 					</Route>
 					<Route path="/order" element={<OrderPage />}></Route>
+				</Route>
+				<Route element={<ProtectedRoute allowedRoles={[Role.CHEF]} />}>
+					<Route path="/kitchen" element={<KitchenPage />}></Route>
+					<Route
+						path="/kitchen/:orderId"
+						element={
+							<OrderDetailProvider>
+								<KitchenOrder />
+							</OrderDetailProvider>
+						}
+					></Route>
 				</Route>
 			</Route>
 			<Route element={<ProtectedRoute allowedRoles={[Role.ADMIN, Role.EMPLOYEE]} />}>
@@ -80,7 +100,8 @@ const queryClient = new QueryClient({
 	defaultOptions: {
 		queries: {
 			refetchOnWindowFocus: false,
-			staleTime: 1000 * 60 * 2,
+			staleTime: 1000 * 30 * 1,
+			cacheTime: 1000 * 60 * 1,
 		},
 	},
 });

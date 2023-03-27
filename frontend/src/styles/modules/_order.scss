@@ -74,8 +74,17 @@
 			color: $grayf7;
 			border-radius: 20px;
 		}
-		&.in-processing,
 		&.created {
+			&.active {
+				border: 1px solid $createdTable;
+				box-shadow: rgba($createdTable, 0.2) 0px 8px 24px;
+			}
+			& .order-item-status {
+				background-color: $createdTable;
+			}
+		}
+
+		&.in-processing {
 			&.active {
 				border: 1px solid $dineInTable;
 				box-shadow: rgba($dineInTable, 0.2) 0px 8px 24px;

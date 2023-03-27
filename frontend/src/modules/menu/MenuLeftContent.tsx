@@ -6,9 +6,9 @@ import MenuItem from './MenuItem';
 import { useMenuItems } from '@stores/useMenuItems';
 import { useQuery } from '@tanstack/react-query';
 import kitchenApi from '@api/kitchen';
-import CircleLoading from '@components/loading/CircleLoading';
 import { TDish } from '@customTypes/index';
 import { useQueryString } from '@utils/queryString';
+import LoadingCenter from '@modules/common/LoadingCenter';
 
 interface IMenuLeftContentProps {
 	children?: React.ReactNode;
@@ -37,11 +37,7 @@ const MenuLeftContent: React.FunctionComponent<IMenuLeftContentProps> = () => {
 	return (
 		<div className="menu-left">
 			<MenuLeftHeader></MenuLeftHeader>
-			{isFetching && (
-				<div className="flex items-center justify-center w-full">
-					<CircleLoading color="#ff7200"></CircleLoading>
-				</div>
-			)}
+			{isFetching && <LoadingCenter></LoadingCenter>}
 
 			{!isFetching && !isError && menuItems && (
 				<>

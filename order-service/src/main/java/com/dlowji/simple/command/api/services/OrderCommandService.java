@@ -73,6 +73,7 @@ public class OrderCommandService {
                 .orderStatus(OrderStatus.CREATED)
                 .build();
         try {
+            System.out.println("inside service, " + createOrderCommand);
             String orderId2 = commandGateway.sendAndWait(createOrderCommand);
             response.put("code", 0);
             response.put("message", "Create order successfully");

@@ -46,7 +46,7 @@ const PaypalButton: React.FunctionComponent<IPaypalButtonProps> = ({
 				}}
 				disabled={isLoading}
 				forceReRender={[amount, currency, style]}
-				className={`${className} w-full`}
+				className={` w-full min-w-[400px] ${className}`}
 				createOrder={createOrder}
 				onApprove={onApprove}
 				onError={onError}

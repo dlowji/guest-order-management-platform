@@ -73,9 +73,35 @@ class AuthApi {
 		};
 	}
 
-	// public async logout(): Promise<void> {
+	public async logout(): Promise<{
+		status: number;
+		message: string;
+	}> {
+		try {
+			console.log(this.request);
 
-	// }
+			const response = await this.request.post<{
+				code: number;
+				message: string;
+			}>(`${this.url}/logout`);
+			if (response.data.code === 0) {
+				return {
+					status: response.status,
+					message: response.data.message,
+				};
+			}
+			return {
+				status: 400,
+				message: 'Logout failed! Please try again later.',
+			};
+		} catch (error) {
+			console.log('🚀 ~ AuthApi ~ logout ~ error', error);
+			return {
+				status: 400,
+				message: 'Logout failed! Please try again later.',
+			};
+		}
+	}
 }
 
 const authApi = new AuthApi();

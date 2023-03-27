@@ -1,9 +1,10 @@
 import { IMenuItem } from '@interfaces/index';
-import { useMenuItemsOrder } from '@stores/useMenuItemsOrder';
+import { useAuth } from '@stores/useAuth';
 import { formatCurrency } from '@utils/formatCurrency';
 import * as React from 'react';
-import { useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import MenuButtonAddToCart from './MenuButtonAddToCart';
+import MenuButtonToggle from './MenuButtonToggle';
+import Role from '@constants/ERole';
 
 interface IMenuItemProps extends IMenuItem {}
 
@@ -15,36 +16,30 @@ const MenuItem: React.FunctionComponent<IMenuItemProps> = ({
 	status,
 	icon,
 }) => {
-	if (status.toLowerCase() === 'available') {
-		icon += ' !text-green-500';
-	}
-
-	if (status.toLowerCase() === 'best seller') {
-		icon += ' !text-yellow-500';
-	}
-
-	if (status.toLowerCase() === 'must try') {
-		icon += ' !text-red-500';
-	}
-
-	const addToCart = useMenuItemsOrder((state) => state.addToOrder);
-
-	const { id: idParams } = useParams<{ id: string }>();
-
-	const handleAddToCard = () => {
-		if (!idParams) {
-			toast.error('Please choose a table first');
-			return;
+	const iconClassnames = React.useMemo(() => {
+		if (status.toLowerCase() === 'available') {
+			return `${icon} !text-green-500`;
 		}
-		addToCart({
-			dishId: id,
-			quantity: 1,
-			price,
-			image,
-			note: '',
-			title,
-		});
-	};
+
+		if (status.toLowerCase() === 'best seller') {
+			return `${icon} !text-yellow-500`;
+		}
+
+		if (status.toLowerCase() === 'must try') {
+			return `${icon} !text-red-500`;
+		}
+		return icon;
+	}, [status]);
+
+	const user = useAuth((state) => state.user);
+
+	const roleName = user?.roleName;
+	const isEmployee = React.useMemo(() => {
+		if ((roleName && roleName === Role.ADMIN) || roleName === Role.EMPLOYEE) {
+			return true;
+		}
+		return false;
+	}, [roleName]);
 
 	return (
 		<div className="menu-item">
@@ -60,11 +55,18 @@ const MenuItem: React.FunctionComponent<IMenuItemProps> = ({
 				</div>
 				<div className="menu-item-status">
 					<span>{status}</span>
-					{icon && <i className={icon}></i>}
+					{iconClassnames && <i className={iconClassnames}></i>}
 				</div>
-				<button className="menu-item-button" onClick={handleAddToCard}>
-					Add to cart
-				</button>
+				{isEmployee ? (
+					<MenuButtonAddToCart
+						dishId={id}
+						image={image}
+						title={title}
+						price={price}
+					></MenuButtonAddToCart>
+				) : (
+					<MenuButtonToggle isAvailable></MenuButtonToggle>
+				)}
 			</div>
 		</div>
 	);

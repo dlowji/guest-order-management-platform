@@ -56,7 +56,7 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = () => {
 			if (status === 200) {
 				setTokenService(data as string);
 				refetch();
-				navigate('/table');
+				navigate('/');
 			} else {
 				const errors = data as Record<string, string>;
 				Object.keys(errors).forEach((key) => {

@@ -8,8 +8,9 @@
 	height: $heightSidebar;
 	position: sticky;
 	top: 0;
-	background: $grayf7;
+	background: $dashboardColor;
 	z-index: 10;
+	box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 
 	&-logo {
 		padding: 10px;
