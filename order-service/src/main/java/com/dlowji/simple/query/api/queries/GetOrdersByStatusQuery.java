@@ -1,6 +1,6 @@
 package com.dlowji.simple.query.api.queries;
 
-import com.dlowji.simple.command.api.enums.OrderStatus;
+import com.dlowji.simple.enums.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

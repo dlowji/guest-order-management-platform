@@ -36,8 +36,14 @@ public class KitchenCommandController {
         return kitchenCommandService.markDone(progressOrderRequest);
     }
 
+    @PostMapping("/toggle/{dishId}")
+    public ResponseEntity<?> toggleDish(@PathVariable String dishId) {
+        return kitchenCommandService.toggleDish(dishId);
+    }
+
     @PostMapping("/category")
     public String createCategory(@Valid @RequestBody CategoryRequest categoryRequest) {
+
         Category category = Category.builder()
                 .categoryId(categoryRequest.getCategoryId())
                 .categoryName(categoryRequest.getCategoryName())

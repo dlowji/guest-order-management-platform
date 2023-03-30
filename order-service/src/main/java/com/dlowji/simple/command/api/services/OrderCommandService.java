@@ -5,12 +5,14 @@ import com.dlowji.simple.command.api.commands.PlaceOrderCommand;
 import com.dlowji.simple.command.api.commands.ProgressOrderCommand;
 import com.dlowji.simple.command.api.commands.UpdatePlacedOrderCommand;
 import com.dlowji.simple.command.api.data.*;
-import com.dlowji.simple.command.api.enums.OrderLineItemStatus;
-import com.dlowji.simple.command.api.enums.OrderStatus;
 import com.dlowji.simple.command.api.enums.TableStatus;
 import com.dlowji.simple.command.api.model.*;
-import com.dlowji.simple.query.api.queries.GetAccountByIdQuery;
-import com.dlowji.simple.query.api.queries.GetDishByIdQuery;
+import com.dlowji.simple.enums.OrderLineItemStatus;
+import com.dlowji.simple.enums.OrderStatus;
+import com.dlowji.simple.model.AccountResponse;
+import com.dlowji.simple.model.DishResponse;
+import com.dlowji.simple.queries.GetAccountByIdQuery;
+import com.dlowji.simple.queries.GetDishByIdQuery;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
@@ -230,6 +232,23 @@ public class OrderCommandService {
 
     public ResponseEntity<?> progressOrder(ProgressOrderRequest progressOrderRequest) {
         Map<String, Object> response = new LinkedHashMap<>();
+
+        String orderId = progressOrderRequest.getOrderId();
+        if (orderRepository.findById(orderId).isEmpty()) {
+            response.put("code", 401);
+            response.put("message", "Order does not exist");
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        List<ProgressOrderLineItemRequest> progressOrderLineItemRequestList = progressOrderRequest.getProgressOrderLineItemRequestList();
+        for (ProgressOrderLineItemRequest progressOrderLineItemRequest : progressOrderLineItemRequestList) {
+            if (orderLineItemRepository.findById(progressOrderLineItemRequest.getId()).isEmpty()) {
+                response.put("code", 401);
+                response.put("message", "Order line item does not exist in this order");
+                return ResponseEntity.badRequest().body(response);
+            }
+        }
+
         ProgressOrderCommand progressOrderCommand = ProgressOrderCommand.builder()
                 .orderId(progressOrderRequest.getOrderId())
                 .progressOrderLineItemRequestList(progressOrderRequest.getProgressOrderLineItemRequestList())

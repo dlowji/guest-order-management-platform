@@ -14,7 +14,6 @@ public class OrderServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(OrderServiceApplication.class, args);
     }
-
     @Autowired
     public void configure(EventProcessingConfigurer configurer) {
         configurer.registerListenerInvocationErrorHandler(

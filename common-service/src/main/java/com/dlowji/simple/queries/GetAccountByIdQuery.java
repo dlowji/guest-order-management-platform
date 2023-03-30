@@ -1,4 +1,4 @@
-package com.dlowji.simple.query.api.queries;
+package com.dlowji.simple.queries;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetOrderDetailByIdQuery {
-    private String orderId;
+public class GetAccountByIdQuery {
+    private String accountId;
 }

@@ -1,8 +1,8 @@
 package com.dlowji.simple.query.api.controller;
 
-import com.dlowji.simple.command.api.model.AccountResponse;
 import com.dlowji.simple.command.api.util.JwtUtil;
-import com.dlowji.simple.query.api.queries.GetAccountByIdQuery;
+import com.dlowji.simple.model.AccountResponse;
+import com.dlowji.simple.queries.GetAccountByIdQuery;
 import com.dlowji.simple.query.api.queries.GetAccountByUsernameQuery;
 import com.dlowji.simple.query.api.queries.GetAccountsQuery;
 import io.jsonwebtoken.Claims;
@@ -81,7 +81,7 @@ public class AccountQueryController {
             AccountResponse accountResponse = queryGateway.query(getAccountByUsernameQuery, ResponseTypes.instanceOf(AccountResponse.class)).join();
 
             if (accountResponse == null) {
-                response.put("code", 800);
+                response.put("code", 500);
                 response.put("message", "something wrong getme");
                 return ResponseEntity.internalServerError().body(response);
             }

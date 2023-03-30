@@ -1,6 +1,6 @@
-package com.dlowji.simple.command.api.model;
+package com.dlowji.simple.model;
 
-import com.dlowji.simple.command.api.enums.OrderLineItemStatus;
+import com.dlowji.simple.enums.OrderLineItemStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

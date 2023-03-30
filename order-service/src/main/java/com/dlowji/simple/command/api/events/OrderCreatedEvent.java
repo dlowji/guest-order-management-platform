@@ -1,7 +1,10 @@
 package com.dlowji.simple.command.api.events;
 
-import com.dlowji.simple.command.api.enums.OrderStatus;
-import lombok.*;
+import com.dlowji.simple.enums.OrderStatus;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
