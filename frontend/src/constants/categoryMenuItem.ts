@@ -29,4 +29,10 @@ export const categoriesItem = [
 		icon: 'fas fa-cocktail',
 		link: '?q=drink',
 	},
+	{
+		id: 5,
+		name: 'Pasta',
+		icon: 'fas fa-pastafarianism',
+		link: '?q=pasta',
+	},
 ];

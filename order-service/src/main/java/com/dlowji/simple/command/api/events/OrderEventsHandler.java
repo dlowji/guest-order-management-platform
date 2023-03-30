@@ -11,7 +11,7 @@ import com.dlowji.simple.events.OrderLineItemMarkedDoneEvent;
 import lombok.RequiredArgsConstructor;
 import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventHandler;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.math.BigDecimal;
@@ -21,7 +21,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-@Component
+@Service
 @ProcessingGroup("order")
 public class OrderEventsHandler {
 
@@ -195,18 +195,19 @@ public class OrderEventsHandler {
         List<ProgressOrderLineItemRequest> progressOrderLineItemRequestList = orderProgressedEvent.getProgressOrderLineItemRequestList();
         Optional<Order> existOrder = orderRepository.findById(orderId);
         System.out.println(orderId);
-        System.out.println(existOrder);
+        System.out.println(existOrder.isPresent());
         if (existOrder.isPresent()) {
             Order order = existOrder.get();
-            if (order.getOrderStatus() == OrderStatus.CREATED) {
-
-                List<OrderLineItem> orderLineItemList = order.getOrderLineItemList();
-                System.out.println(orderLineItemList);
-                System.out.println(progressOrderLineItemRequestList);
-                for (ProgressOrderLineItemRequest progressOrderLineItemRequest : progressOrderLineItemRequestList) {
-                    OrderLineItem orderLineItem = orderLineItemList.stream().filter(item -> Objects.equals(item.getId(), progressOrderLineItemRequest.getId()))
-                            .findFirst()
-                            .get();
+            List<OrderLineItem> orderLineItemList = order.getOrderLineItemList();
+            System.out.println(orderLineItemList);
+            System.out.println(progressOrderLineItemRequestList);
+            for (ProgressOrderLineItemRequest progressOrderLineItemRequest : progressOrderLineItemRequestList) {
+                Optional<OrderLineItem> existOrderLineItem = orderLineItemList.stream().filter(item -> Objects.equals(item.getId(), progressOrderLineItemRequest.getId()))
+                .findFirst();
+                if (existOrderLineItem.isPresent()) {
+                    OrderLineItem orderLineItem = existOrderLineItem.get();
+                    System.out.println("order line item");
+                    System.out.println(orderLineItem);
                     if (progressOrderLineItemRequest.getOrderLineItemStatus() == OrderLineItemStatus.STOCK_OUT) {
                         orderLineItem.setOrderLineItemStatus(OrderLineItemStatus.STOCK_OUT);
 //                    orderLineItemList.remove(orderLineItem);

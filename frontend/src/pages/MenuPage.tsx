@@ -34,6 +34,7 @@ const MenuPage: React.FunctionComponent<IMenuPageProps> = () => {
 							quantity: item.quantity,
 							image: item.image,
 							note: item.note,
+							orderLineItemStatus: item.orderLineItemStatus,
 						};
 					});
 					setOrderItems({
