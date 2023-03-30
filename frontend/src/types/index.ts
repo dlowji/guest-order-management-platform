@@ -52,3 +52,10 @@ export interface IOrderDetails extends TOrder {
 	promoCode: number;
 	discount: number;
 }
+
+export interface ICategoryItem {
+	categoryId: string;
+	categoryName: string;
+	icon: string;
+	link: string;
+}

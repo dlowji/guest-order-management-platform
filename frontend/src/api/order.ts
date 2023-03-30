@@ -182,7 +182,11 @@ class OrderApi {
 				message?: string;
 			}>(`${this.url}/progress`, {
 				orderId,
-				progressOrderLineItemRequestList: [...items],
+				progressOrderLineItemRequestList: items.map((item) => ({
+					id: item.orderLineItemId,
+					quantity: item.quantity,
+					orderLineItemStatus: item.orderLineItemStatus,
+				})),
 			});
 
 			if (response.data.code === 0) {
