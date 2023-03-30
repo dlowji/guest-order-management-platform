@@ -1,6 +1,6 @@
-package com.dlowji.simple.command.api.converter;
+package com.dlowji.simple.converters;
 
-import com.dlowji.simple.command.api.enums.OrderStatus;
+import com.dlowji.simple.enums.OrderStatus;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 

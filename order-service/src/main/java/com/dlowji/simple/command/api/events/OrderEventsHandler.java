@@ -1,17 +1,16 @@
 package com.dlowji.simple.command.api.events;
 
 import com.dlowji.simple.command.api.data.*;
-import com.dlowji.simple.command.api.enums.OrderLineItemStatus;
-import com.dlowji.simple.command.api.enums.OrderStatus;
 import com.dlowji.simple.command.api.enums.TableStatus;
 import com.dlowji.simple.command.api.model.CustomOrderLineItemRequest;
 import com.dlowji.simple.command.api.model.ProgressOrderLineItemRequest;
 import com.dlowji.simple.command.api.model.UpdateOrderLineItemRequest;
-import com.dlowji.simple.events.OrderLineItemMarkedDoneEvent;
-import lombok.RequiredArgsConstructor;
+import com.dlowji.simple.enums.OrderLineItemStatus;
+import com.dlowji.simple.enums.OrderStatus;
+import com.dlowji.simple.events.OrderLineItemsMarkedDoneEvent;
 import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventHandler;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.math.BigDecimal;
@@ -20,8 +19,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-@RequiredArgsConstructor
-@Service
+
+@Component
 @ProcessingGroup("order")
 public class OrderEventsHandler {
 
@@ -29,13 +28,17 @@ public class OrderEventsHandler {
 
     private final IOrderLineItemRepository orderLineItemRepository;
     private final ITableRepository tableRepository;
+
+    public OrderEventsHandler(IOrderRepository orderRepository, IOrderLineItemRepository orderLineItemRepository, ITableRepository tableRepository) {
+        this.orderRepository = orderRepository;
+        this.orderLineItemRepository = orderLineItemRepository;
+        this.tableRepository = tableRepository;
+    }
+
     @EventHandler
     public void on(OrderCreatedEvent orderCreatedEvent) {
-        System.out.println("inside event handle" + orderCreatedEvent);
         String tableId = orderCreatedEvent.getTableId();
-        System.out.println(orderCreatedEvent);
         Optional<SeveredTable> existTable = tableRepository.findById(tableId);
-        System.out.println(existTable.isPresent());
         if (existTable.isPresent()) {
             SeveredTable table = existTable.get();
             table.setTableStatus(TableStatus.OCCUPIED);
@@ -194,20 +197,14 @@ public class OrderEventsHandler {
         String orderId = orderProgressedEvent.getOrderId();
         List<ProgressOrderLineItemRequest> progressOrderLineItemRequestList = orderProgressedEvent.getProgressOrderLineItemRequestList();
         Optional<Order> existOrder = orderRepository.findById(orderId);
-        System.out.println(orderId);
-        System.out.println(existOrder.isPresent());
         if (existOrder.isPresent()) {
             Order order = existOrder.get();
             List<OrderLineItem> orderLineItemList = order.getOrderLineItemList();
-            System.out.println(orderLineItemList);
-            System.out.println(progressOrderLineItemRequestList);
             for (ProgressOrderLineItemRequest progressOrderLineItemRequest : progressOrderLineItemRequestList) {
                 Optional<OrderLineItem> existOrderLineItem = orderLineItemList.stream().filter(item -> Objects.equals(item.getId(), progressOrderLineItemRequest.getId()))
-                .findFirst();
+                        .findFirst();
                 if (existOrderLineItem.isPresent()) {
                     OrderLineItem orderLineItem = existOrderLineItem.get();
-                    System.out.println("order line item");
-                    System.out.println(orderLineItem);
                     if (progressOrderLineItemRequest.getOrderLineItemStatus() == OrderLineItemStatus.STOCK_OUT) {
                         orderLineItem.setOrderLineItemStatus(OrderLineItemStatus.STOCK_OUT);
 //                    orderLineItemList.remove(orderLineItem);
@@ -236,20 +233,29 @@ public class OrderEventsHandler {
     }
 
     @EventHandler
-    public void on(OrderLineItemMarkedDoneEvent orderLineItemMarkedDoneEvent) {
+    public void on(OrderLineItemsMarkedDoneEvent orderLineItemMarkedDoneEvent) {
         String orderId = orderLineItemMarkedDoneEvent.getOrderId();
-        Long orderLineItemId = orderLineItemMarkedDoneEvent.getOrderLineItemId();
+        List<Long> orderLineItemIds = orderLineItemMarkedDoneEvent.getOrderLineItemIds();
         Optional<Order> existOrder = orderRepository.findById(orderId);
         if (existOrder.isPresent()) {
             Order order = existOrder.get();
             List<OrderLineItem> orderLineItemList = order.getOrderLineItemList();
-            OrderLineItem orderLineItem = orderLineItemList.stream().filter(item -> Objects.equals(item.getId(), orderLineItemId)).findFirst().get();
-            orderLineItem.setOrderLineItemStatus(OrderLineItemStatus.COOKED);
-
+            for (Long orderLineItemId : orderLineItemIds) {
+                Optional<OrderLineItem> existOrderLineItem = orderLineItemList.stream().filter(item -> Objects.equals(item.getId(), orderLineItemId)).findFirst();
+                if (existOrderLineItem.isPresent()) {
+                    OrderLineItem orderLineItem = existOrderLineItem.get();
+                    if (orderLineItem.getOrderLineItemStatus() == OrderLineItemStatus.COOKING) {
+                        orderLineItem.setOrderLineItemStatus(OrderLineItemStatus.COOKED);
+                    }
+                    orderLineItemRepository.save(orderLineItem);
+                }
+            }
+            boolean completed = orderLineItemList.stream().allMatch(item -> item.getOrderLineItemStatus() == OrderLineItemStatus.COOKED);
+            if (completed) {
+                order.setOrderStatus(OrderStatus.COMPLETED);
+            }
             LocalDateTime current = LocalDateTime.now();
             order.setLastProcessing(current);
-
-            orderLineItemRepository.save(orderLineItem);
             orderRepository.save(order);
         }
     }

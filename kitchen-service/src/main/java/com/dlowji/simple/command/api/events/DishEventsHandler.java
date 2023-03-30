@@ -4,6 +4,7 @@ import com.dlowji.simple.command.api.data.Category;
 import com.dlowji.simple.command.api.data.Dish;
 import com.dlowji.simple.command.api.data.ICategoryRepository;
 import com.dlowji.simple.command.api.data.IDishRepository;
+import com.dlowji.simple.command.api.enums.DishStatus;
 import org.axonframework.eventhandling.EventHandler;
 import org.springframework.stereotype.Component;
 
@@ -35,6 +36,20 @@ public class DishEventsHandler {
                     .dishStatus(dishCreatedEvent.getDishStatus())
                     .build();
             dishRepository.save(dish);
+        }
+    }
+
+    @EventHandler
+    public void on(DishToggledEvent dishToggledEvent) {
+        String dishId = dishToggledEvent.getDishId();
+        Optional<Dish> existDish = dishRepository.findById(dishId);
+        if (existDish.isPresent()) {
+            Dish dish = existDish.get();
+            if (dish.getDishStatus() == DishStatus.AVAILABLE) {
+                dish.setDishStatus(DishStatus.UN_AVAILABLE);
+            } else {
+                dish.setDishStatus(DishStatus.AVAILABLE);
+            }
         }
     }
 }

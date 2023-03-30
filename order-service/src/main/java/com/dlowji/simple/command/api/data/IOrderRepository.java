@@ -1,6 +1,6 @@
 package com.dlowji.simple.command.api.data;
 
-import com.dlowji.simple.command.api.enums.OrderStatus;
+import com.dlowji.simple.enums.OrderStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

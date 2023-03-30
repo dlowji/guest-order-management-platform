@@ -1,8 +1,8 @@
 package com.dlowji.simple.command.api.data;
 
-import com.dlowji.simple.command.api.converter.OrderLineItemStatusConverter;
-import com.dlowji.simple.command.api.enums.OrderLineItemStatus;
+import com.dlowji.simple.converters.OrderLineItemStatusConverter;
 import com.dlowji.simple.data.TimeStamp;
+import com.dlowji.simple.enums.OrderLineItemStatus;
 import jakarta.persistence.*;
 import lombok.*;
 

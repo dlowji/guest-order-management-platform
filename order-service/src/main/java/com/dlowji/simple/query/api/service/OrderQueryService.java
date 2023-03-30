@@ -1,9 +1,10 @@
 package com.dlowji.simple.query.api.service;
 
-import com.dlowji.simple.command.api.enums.OrderStatus;
-import com.dlowji.simple.command.api.model.OrderDetailResponse;
-import com.dlowji.simple.command.api.model.OrderResponse;
+import com.dlowji.simple.enums.OrderStatus;
+import com.dlowji.simple.model.OrderDetailResponse;
+import com.dlowji.simple.model.OrderResponse;
 import com.dlowji.simple.model.ScheduleDetailResponse;
+import com.dlowji.simple.queries.GetOrderDetailByIdQuery;
 import com.dlowji.simple.queries.GetScheduleDetailByIdQuery;
 import com.dlowji.simple.query.api.queries.*;
 import com.dlowji.simple.utils.StringUtils;

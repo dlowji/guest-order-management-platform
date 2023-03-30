@@ -1,11 +1,12 @@
 package com.dlowji.simple.command.api.aggregate;
 
 import com.dlowji.simple.command.api.commands.*;
-import com.dlowji.simple.command.api.enums.OrderStatus;
 import com.dlowji.simple.command.api.events.*;
 import com.dlowji.simple.command.api.model.CustomOrderLineItemRequest;
-import com.dlowji.simple.commands.MarkOrderLineItemDoneCommand;
-import com.dlowji.simple.events.OrderLineItemMarkedDoneEvent;
+import com.dlowji.simple.commands.MarkOrderLineItemDoneCommandVersion2;
+import com.dlowji.simple.commands.MarkOrderLineItemsDoneCommand;
+import com.dlowji.simple.enums.OrderStatus;
+import com.dlowji.simple.events.OrderLineItemsMarkedDoneEvent;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -14,7 +15,6 @@ import org.axonframework.spring.stereotype.Aggregate;
 
 import java.util.ArrayList;
 import java.util.List;
-
 @Aggregate
 public class OrderAggregate {
     @AggregateIdentifier
@@ -42,12 +42,18 @@ public class OrderAggregate {
     }
 
     @CommandHandler
-    public void handle(MarkOrderLineItemDoneCommand markOrderLineItemDoneCommand) {
-        OrderLineItemMarkedDoneEvent markedDoneEvent = OrderLineItemMarkedDoneEvent.builder()
+    public void handle(MarkOrderLineItemsDoneCommand markOrderLineItemDoneCommand) {
+        System.out.println(markOrderLineItemDoneCommand);
+        OrderLineItemsMarkedDoneEvent markedDoneEvent = OrderLineItemsMarkedDoneEvent.builder()
                 .orderId(markOrderLineItemDoneCommand.getOrderId())
-                .orderLineItemId(markOrderLineItemDoneCommand.getOrderLineItemId())
+                .orderLineItemIds(markOrderLineItemDoneCommand.getOrderLineItemIds())
                 .build();
         AggregateLifecycle.apply(markedDoneEvent);
+    }
+
+    @CommandHandler
+    public void handle(MarkOrderLineItemDoneCommandVersion2 markOrderLineItemDoneCommandVersion2) {
+        System.out.println(markOrderLineItemDoneCommandVersion2);
     }
 
     @CommandHandler
@@ -91,7 +97,6 @@ public class OrderAggregate {
 
     @EventSourcingHandler
     public void on(OrderCreatedEvent orderCreatedEvent) {
-        System.out.println(orderCreatedEvent);
         this.orderId = orderCreatedEvent.getOrderId();
         this.userId = orderCreatedEvent.getAccountId();
         this.tableId = orderCreatedEvent.getTableId();
@@ -120,7 +125,7 @@ public class OrderAggregate {
     }
 
     @EventSourcingHandler
-    public void on(OrderLineItemMarkedDoneEvent orderLineItemMarkedDoneEvent) {
+    public void on(OrderLineItemsMarkedDoneEvent orderLineItemMarkedDoneEvent) {
         this.orderId = orderLineItemMarkedDoneEvent.getOrderId();
     }
 

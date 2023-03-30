@@ -1,9 +1,10 @@
 package com.dlowji.simple.command.api.aggregate;
 
 import com.dlowji.simple.command.api.commands.CreateDishCommand;
+import com.dlowji.simple.command.api.commands.ToggleDishCommand;
 import com.dlowji.simple.command.api.enums.DishStatus;
 import com.dlowji.simple.command.api.events.DishCreatedEvent;
-import com.dlowji.simple.command.api.service.KitchenCommandService;
+import com.dlowji.simple.command.api.events.DishToggledEvent;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -32,6 +33,20 @@ public class KitchenAggregate {
         DishCreatedEvent dishCreatedEvent = new DishCreatedEvent();
         BeanUtils.copyProperties(createDishCommand, dishCreatedEvent);
         AggregateLifecycle.apply(dishCreatedEvent);
+    }
+
+    @CommandHandler
+    public void handle(ToggleDishCommand toggleDishCommand) {
+        DishToggledEvent dishToggledEvent = DishToggledEvent.builder()
+                .dishId(toggleDishCommand.getDishId())
+                .build();
+
+        AggregateLifecycle.apply(dishToggledEvent);
+    }
+
+    @EventSourcingHandler
+    public void on(DishToggledEvent dishToggledEvent) {
+        this.dishId = dishToggledEvent.getDishId();
     }
 
     @EventSourcingHandler

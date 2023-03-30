@@ -1,4 +1,4 @@
-package com.dlowji.simple.command.api.model;
+package com.dlowji.simple.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 public class AccountResponse {
     private String accountId;
     private String username;
-    private String password;
     private String employeeId;
     private String roleName;
 }

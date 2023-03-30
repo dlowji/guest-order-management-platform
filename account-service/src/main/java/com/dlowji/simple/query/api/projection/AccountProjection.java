@@ -2,8 +2,8 @@ package com.dlowji.simple.query.api.projection;
 
 import com.dlowji.simple.command.api.data.Account;
 import com.dlowji.simple.command.api.data.IAccountRepository;
-import com.dlowji.simple.command.api.model.AccountResponse;
-import com.dlowji.simple.query.api.queries.GetAccountByIdQuery;
+import com.dlowji.simple.model.AccountResponse;
+import com.dlowji.simple.queries.GetAccountByIdQuery;
 import com.dlowji.simple.query.api.queries.GetAccountByUsernameQuery;
 import com.dlowji.simple.query.api.queries.GetAccountsQuery;
 import org.axonframework.queryhandling.QueryHandler;
@@ -44,6 +44,7 @@ public class AccountProjection {
             return null;
         }
         Account existAccount = accountRepository.findByUsername(username);
+        System.out.println(existAccount);
         if (existAccount == null) {
             return null;
         }

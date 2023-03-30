@@ -1,9 +1,14 @@
 package com.dlowji.simple.query.api.projection;
 
 import com.dlowji.simple.command.api.data.*;
-import com.dlowji.simple.command.api.enums.OrderStatus;
-import com.dlowji.simple.command.api.model.*;
-import com.dlowji.simple.query.api.queries.*;
+import com.dlowji.simple.enums.OrderStatus;
+import com.dlowji.simple.model.*;
+import com.dlowji.simple.queries.GetAccountByIdQuery;
+import com.dlowji.simple.queries.GetDishByIdQuery;
+import com.dlowji.simple.queries.GetOrderDetailByIdQuery;
+import com.dlowji.simple.query.api.queries.GetOrdersByStatusQuery;
+import com.dlowji.simple.query.api.queries.GetOrdersQuery;
+import com.dlowji.simple.query.api.queries.GetProcessingOrderByTableIdQuery;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
 import org.axonframework.queryhandling.QueryHandler;
@@ -28,7 +33,6 @@ public class OrderProjection {
     @QueryHandler
     public List<OrderResponse> handle(GetOrdersQuery getOrdersQuery) {
         List<Order> orders = orderRepository.findAll();
-
         return orders.stream().map(this::mapToOrderResponse).toList();
     }
 
@@ -119,10 +123,11 @@ public class OrderProjection {
                     .build();
             AccountResponse accountResponse = queryGateway.query(getAccountByIdQuery, ResponseTypes.instanceOf(AccountResponse.class)).join();
             if (accountResponse != null) {
-
                 SeveredTable table = existTable.get();
                 List<OrderLineItem> orderLineItemList = order.getOrderLineItemList();
+                System.out.println(orderLineItemList);
                 List<OrderLineItemResponse> orderLineItemResponseList = orderLineItemList.stream().map(this::mapToOrderLineItemResponse).toList();
+                System.out.println(orderLineItemResponseList);
                 OrderResponse orderResponse = OrderResponse.builder()
                         .orderId(order.getOrderId())
                         .accountName(accountResponse.getUsername())
@@ -135,7 +140,9 @@ public class OrderProjection {
                         .createdAt(order.getCreatedAt())
                         .updatedAt(order.getUpdatedAt())
                         .build();
-                orderLineItemResponseList.forEach(orderLineItemResponse -> orderResponse.getOrderLineItemResponseList().add(orderLineItemResponse));
+                if (!orderLineItemResponseList.isEmpty()) {
+                    orderLineItemResponseList.forEach(orderLineItemResponse -> orderResponse.getOrderLineItemResponseList().add(orderLineItemResponse));
+                }
                 return orderResponse;
             }
         }

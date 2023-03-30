@@ -1,9 +1,9 @@
 package com.dlowji.simple.query.api.service;
 
 import com.dlowji.simple.command.api.model.CategoryResponse;
-import com.dlowji.simple.command.api.model.DishResponse;
+import com.dlowji.simple.model.DishResponse;
+import com.dlowji.simple.queries.GetDishByIdQuery;
 import com.dlowji.simple.query.api.queries.GetCategoriesQuery;
-import com.dlowji.simple.query.api.queries.GetDishByIdQuery;
 import com.dlowji.simple.query.api.queries.GetDishesByCategoryQuery;
 import com.dlowji.simple.query.api.queries.GetDishesQuery;
 import org.axonframework.messaging.responsetypes.ResponseTypes;

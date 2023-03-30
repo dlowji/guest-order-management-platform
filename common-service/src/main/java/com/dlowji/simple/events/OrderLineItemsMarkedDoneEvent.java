@@ -5,11 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderLineItemMarkedDoneEvent {
+public class OrderLineItemsMarkedDoneEvent {
     private String orderId;
-    private Long orderLineItemId;
+    private List<Long> orderLineItemIds;
 }

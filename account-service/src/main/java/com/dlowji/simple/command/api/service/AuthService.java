@@ -9,8 +9,8 @@ import com.dlowji.simple.command.api.data.IRoleRepository;
 import com.dlowji.simple.command.api.data.IScheduleRepository;
 import com.dlowji.simple.command.api.model.AccountLoginRequest;
 import com.dlowji.simple.command.api.model.AccountRegisterRequest;
-import com.dlowji.simple.command.api.model.AccountResponse;
 import com.dlowji.simple.command.api.util.JwtUtil;
+import com.dlowji.simple.model.AccountResponse;
 import com.dlowji.simple.model.ScheduleDetailResponse;
 import com.dlowji.simple.query.api.queries.GetAccountByUsernameQuery;
 import com.dlowji.simple.query.api.queries.GetLatestScheduleByEmployeeQuery;
@@ -65,7 +65,7 @@ public class AuthService {
             }
             String token = jwtUtil.generateToken(username);
             response.put("code", 0);
-            response.put("id", account.getAccountId());
+            response.put("accountId", account.getAccountId());
             response.put("username", account.getUsername());
             response.put("role", account.getEmployee().getRole().getRoleName());
             response.put("access_token", token);

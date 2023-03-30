@@ -1,18 +1,17 @@
 package com.dlowji.simple.commands;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
+
+import java.util.List;
 
 @Data
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class MarkOrderLineItemDoneCommand {
+public class MarkOrderLineItemDoneCommandVersion2 {
     @TargetAggregateIdentifier
     private String orderId;
 
-    private Long orderLineItemId;
+    private String test;
+    private List<Long> test2;
 }

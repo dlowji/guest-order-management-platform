@@ -1,20 +1,19 @@
-package com.dlowji.simple.command.api.commands;
+package com.dlowji.simple.commands;
 
-import com.dlowji.simple.enums.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
-@Builder
+import java.util.List;
+
 @Data
-@NoArgsConstructor
+@Builder
 @AllArgsConstructor
-public class CreateOrderCommand {
+@NoArgsConstructor
+public class MarkOrderLineItemsDoneCommand {
     @TargetAggregateIdentifier
     private String orderId;
-    private String accountId;
-    private String tableID;
-    private OrderStatus orderStatus;
+    private List<Long> orderLineItemIds;
 }
