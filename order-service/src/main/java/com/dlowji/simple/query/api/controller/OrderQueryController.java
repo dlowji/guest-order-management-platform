@@ -4,6 +4,7 @@ import com.dlowji.simple.query.api.service.OrderQueryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 @RestController
@@ -38,5 +39,21 @@ public class OrderQueryController {
     @GetMapping("/best-seller/{quantity}")
     public ResponseEntity<?> getBestSellerDishes(@PathVariable String quantity) {
         return orderQueryService.getBestSellerDishes(quantity);
+    }
+
+    @GetMapping("/{filter}")
+    public ResponseEntity<?> getOrdersByDMY(@PathVariable String filter) {
+        LocalDate current = LocalDate.now();
+        return orderQueryService.getOrderHistoryByDMY(current.getYear(), current.getMonthValue(), current.getDayOfMonth(), filter);
+    }
+
+    @GetMapping("/duration/{am}/{pm}")
+    public ResponseEntity<?> getOrdersByDuration(@PathVariable String am, @PathVariable String pm) {
+        return orderQueryService.getOrdersByDuration(am, pm);
+    }
+
+    @GetMapping("/home")
+    public ResponseEntity<?> getHome() {
+        return orderQueryService.getHome();
     }
 }

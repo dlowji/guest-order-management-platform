@@ -1,9 +1,6 @@
 package com.dlowji.simple.command.api.services;
 
-import com.dlowji.simple.command.api.commands.CreateOrderCommand;
-import com.dlowji.simple.command.api.commands.PlaceOrderCommand;
-import com.dlowji.simple.command.api.commands.ProgressOrderCommand;
-import com.dlowji.simple.command.api.commands.UpdatePlacedOrderCommand;
+import com.dlowji.simple.command.api.commands.*;
 import com.dlowji.simple.command.api.data.*;
 import com.dlowji.simple.command.api.enums.TableStatus;
 import com.dlowji.simple.command.api.model.*;
@@ -264,5 +261,27 @@ public class OrderCommandService {
             return ResponseEntity.internalServerError().body(response);
         }
 
+    }
+
+    public ResponseEntity<?> checkout(String id) {
+        Map<String, Object> response = new LinkedHashMap<>();
+        if (orderRepository.findById(id).isEmpty()) {
+            response.put("code", 400);
+            response.put("message", "Order does not exist");
+            return ResponseEntity.badRequest().body(response);
+        }
+        CheckoutOrderCommand checkoutOrderCommand = CheckoutOrderCommand.builder()
+                .orderId(id)
+                .build();
+        try {
+            commandGateway.send(checkoutOrderCommand);
+            response.put("code", 0);
+            response.put("message", "send signal to checkout order successfully");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("code", 500);
+            response.put("message", "Error checkout order: " + e.getMessage());
+            return ResponseEntity.internalServerError().body(response);
+        }
     }
 }

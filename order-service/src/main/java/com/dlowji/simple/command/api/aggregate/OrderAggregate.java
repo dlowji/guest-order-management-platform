@@ -42,6 +42,13 @@ public class OrderAggregate {
     }
 
     @CommandHandler
+    public void handle(CheckoutOrderCommand checkoutOrderCommand) {
+        OrderCheckedOutEvent orderCheckedOutEvent = OrderCheckedOutEvent.builder()
+                .orderId(checkoutOrderCommand.getOrderId())
+                .build();
+        AggregateLifecycle.apply(orderCheckedOutEvent);
+    }
+    @CommandHandler
     public void handle(MarkOrderLineItemsDoneCommand markOrderLineItemDoneCommand) {
         System.out.println(markOrderLineItemDoneCommand);
         OrderLineItemsMarkedDoneEvent markedDoneEvent = OrderLineItemsMarkedDoneEvent.builder()
@@ -132,5 +139,10 @@ public class OrderAggregate {
     @EventSourcingHandler
     public void on(OrderProgressedEvent orderProgressedEvent) {
         this.orderId = orderProgressedEvent.getOrderId();
+    }
+
+    @EventSourcingHandler
+    public void on(OrderCheckedOutEvent orderCheckedOutEvent) {
+        this.orderId = orderCheckedOutEvent.getOrderId();
     }
 }
