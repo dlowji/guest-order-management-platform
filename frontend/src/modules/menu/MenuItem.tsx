@@ -41,6 +41,16 @@ const MenuItem: React.FunctionComponent<IMenuItemProps> = ({
 		return false;
 	}, [roleName]);
 
+	const reFormatStatus = React.useMemo(() => {
+		if (status.toLowerCase() === 'AVAILABLE') {
+			return 'AVAILABLE';
+		}
+		if (status.toLowerCase() === 'UN_AVAILABLE') {
+			return 'UN AVAILABLE';
+		}
+		return status;
+	}, [status]);
+
 	return (
 		<div className="menu-item">
 			<div className="menu-item-image">
@@ -54,7 +64,7 @@ const MenuItem: React.FunctionComponent<IMenuItemProps> = ({
 					<h4>{formatCurrency(price)}</h4>
 				</div>
 				<div className="menu-item-status">
-					<span>{status}</span>
+					<span>{reFormatStatus}</span>
 					{iconClassnames && <i className={iconClassnames}></i>}
 				</div>
 				{isEmployee ? (
@@ -65,7 +75,7 @@ const MenuItem: React.FunctionComponent<IMenuItemProps> = ({
 						price={price}
 					></MenuButtonAddToCart>
 				) : (
-					<MenuButtonToggle isAvailable></MenuButtonToggle>
+					<MenuButtonToggle isAvailable={status === 'AVAILABLE'} dishId={id}></MenuButtonToggle>
 				)}
 			</div>
 		</div>
