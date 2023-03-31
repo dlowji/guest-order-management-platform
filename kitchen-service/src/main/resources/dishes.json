@@ -1,0 +1,178 @@
+
+[
+{
+    "title":"MARGARITA",
+    "image":"https://hips.hearstapps.com/hmg-prod/images/margarita-1592951298.jpg?crop=1xw:1xh;center,top&resize=980:*",
+    "price":300000,
+    "summary":"Cloyingly sweet margarita mixes have given this drink a bad name. A well-made version is a fresh mix of lime juice and tequila, with a hint of sweetener",
+    "categoryId":"C01"
+},
+{
+    "title":"COSMOPOLITAN",
+    "image":"https://hips.hearstapps.com/hmg-prod/images/cosmopolitan-1592951320.jpg?crop=1xw:1xh;center,top&resize=980:*",
+    "price":300000,
+    "summary":"The cosmo became almost ubiquitous in the '90s thanks to the TV show Sex and the City, but this spin on the martini remains just as tasty today as when Carrie Bradshaw made it famous",
+    "categoryId":"C01"
+},
+{
+    "title":"NEGRONI",
+    "image":"https://hips.hearstapps.com/hmg-prod/images/negroni-1592951342.jpg?crop=1xw:1xh;center,top&resize=980:*",
+    "price":300000,
+    "summary":"A favorite of bartenders all over the world, the Negroni is a simple three-ingredient cocktail: gin, Campari ,sweet vermouth",
+    "categoryId":"C01"
+},
+{
+    "title":"MOSCOW MULE",
+    "image":"https://hips.hearstapps.com/hmg-prod/images/moscow-mule-1592951361.jpg?crop=1xw:1xh;center,top&resize=980:*",
+    "price":300000,
+    "summary":"Popular for good reason, the Moscow Mule is one of the most refreshing things to sip on a hot summer day. Its suggested vessel, a copper mug, also just looks sharp.",
+    "categoryId":"C01"
+},
+{
+    "title":"MARTINI",
+    "image":"https://hips.hearstapps.com/hmg-prod/images/martini-1592951711.jpg?crop=1xw:1xh;center,top&resize=980:*",
+    "price":300000,
+    "summary":"James Bond was wrong—whether you drink it with gin or vodka, stirred is the way to go when ordering a martini.",
+    "categoryId":"C01"
+},
+{
+    "title":"TIRAMISU LAYER CAKE",
+    "image":"https://img.sndimg.com/food/image/upload/w_621,h_349,fl_progressive,c_fill,q_80/v1/img/recipes/20/27/85/Ij1SHD8TQ1g4MUz24nQ3_food.com-60.jpg",
+    "price":300000,
+    "summary":"basically coffee-infused sponge cake layers frosted with creamy lightly sweetened mascarpone cream, then dusted with cocoa powder",
+    "categoryId":"C02"
+},
+{
+    "title":"LEMON SOUFFLES",
+    "image":"https://img.sndimg.com/food/image/upload/f_auto,c_thumb,q_55,w_860,ar_3:2/v1/img/recipes/52/80/94/9XsiVISSHqYb64kilY3y_lemon%2520souffle-1488.jpg",
+    "price":210000,
+    "summary":"This classic soufflé variety is characterized by its airy texture and a subtle lemon flavor. It consists of a blend of creamy egg yolk base, flour, lemon zest, sugar, and fluffy egg whites.",
+    "categoryId":"C02"
+},
+{
+    "title":"BROWNIE SUNDAE",
+    "image":"https://img.sndimg.com/food/image/upload/f_auto,c_thumb,q_55,w_860,ar_3:2/v1/img/recipes/52/80/94/9XsiVISSHqYb64kilY3y_lemon%2520souffle-1488.jpg",
+    "price":370000,
+    "summary":"Topped with ice cream and chocolate sauce, these fudgy, gooey brownies make the perfect base for a classic, restaurant-style brownie sundae. Don't forget the whipped cream!",
+    "categoryId":"C02"
+},
+{
+    "title":"CHOCOLATE CHIP PANOOKIES",
+    "image":"https://img.sndimg.com/food/image/upload/f_auto,c_thumb,q_55,w_860,ar_3:2/v1/img/recipes/52/80/94/9XsiVISSHqYb64kilY3y_lemon%2520souffle-1488.jpg",
+    "price":250000,
+    "summary":"These giant chocolate chip cookies are baked in mini pie tins. The ooey-gooey 'pan cookies' are best served hot out of the oven topped with a scoop of ice cream!",
+    "categoryId":"C02"
+},
+{
+    "title":"STRAWBERRY SHORTCAKE",
+    "image":"https://img.sndimg.com/food/image/upload/f_auto,c_thumb,q_55,w_860,ar_3:2/v1/img/recipes/52/80/94/9XsiVISSHqYb64kilY3y_lemon%2520souffle-1488.jpg",
+    "price":210000,
+    "summary":"A true Strawberry Shortcake is not a layer cake, it's a biscuit topped with fresh berries and mounds of whipped cream. It's the perfect early summer dessert",
+    "categoryId":"C02"
+},
+{
+    "title":"THE BEST SAUSAGE PIZZAS",
+    "image":"https://www.tasteofhome.com/wp-content/uploads/2019/12/The-Best-Sausage-Pizzas_EXPS_TOHFM20_245369-_E09_26_4b-34.jpg?resize=700,700",
+    "price":110000,
+    "summary":"What makes this recipe unique is the slow overnight fermentation of the pizza dough. The flour has time to hydrate and relax, which makes the dough so much easier to roll out!",
+    "categoryId":"C03"
+},
+{
+    "title":"ARTICHOKE CHICKEN PESTO PIZZA",
+    "image":"https://www.tasteofhome.com/wp-content/uploads/2019/02/Artichoke-Chicken-Pesto-Pizza_EXPS_SDAM19_23872_E12_07_5b-1.jpg?resize=696,696",
+    "price":120000,
+    "summary":"Make pizza night an upscale affair with this fun twist on the traditional pie. A prebaked crust and prepared pesto keep things quick and easy.",
+    "categoryId":"C03"
+},
+{
+    "title":"BARBECUED CHICKEN PIZZAS",
+    "image":"https://www.tasteofhome.com/wp-content/uploads/2018/01/Barbecued-Chicken-Pizzas_EXPS_SDJJ17_44709_C02_17_2b-12.jpg?resize=700,700",
+    "price":125000,
+    "summary":"So fast and so easy with refrigerated pizza crust, these saucy, smoky pizzas make quick fans with their rustic, hot-off-the-grill flavor. They're perfect for impromptu cookouts and summer dinners on the patio",
+    "categoryId":"C03"
+},
+{
+    "title":"PEPPERONI PAN PIZZA",
+    "image":"https://www.tasteofhome.com/wp-content/uploads/2018/01/Pepperoni-Pan-Pizza_EXPS_HSCBZ17_9865_C07_25_2b-7.jpg?resize=700,700",
+    "price":130000,
+    "summary":"This pepperoni pan pizza is made with a simple yet superlative from-scratch tomato sauce, two types of mozzarella, Parmesan cheese, pepperoni, and either store-bought or homemade dough.",
+    "categoryId":"C03"
+},
+{
+    "title":"BACON-CHICKEN CLUB PIZZA",
+    "image":"https://www.tasteofhome.com/wp-content/uploads/2018/01/Bacon-Chicken-Club-Pizza_EXPS_CHBZ19_46938_E10_23_4b-3.jpg?resize=696,696",
+    "price":105000,
+    "summary":"A chicken club pizza topped with lettuce, tomatoes and dressing? You’re in for a treat! Vegetables give the cheesy crust a cool crunch. ",
+    "categoryId":"C03"
+},
+{
+    "title":"BBQ CHICKEN BURGERS",
+    "image":"https://www.tasteofhome.com/wp-content/uploads/2018/01/exps28800_UG143377D12_18_1b_RMS-8.jpg?resize=700,700",
+    "price":105000,
+    "summary":"These sticky burgers can easily be rustled up on a warm evening for a last-minute barbecue",
+    "categoryId":"C04"
+},
+{
+    "title":"HALLOUMI BURGERS",
+    "image":"https://www.tasteofhome.com/wp-content/uploads/2018/01/exps47164_CW163683D03_31_1b-3.jpg?resize=696,696",
+    "price":105000,
+    "summary":"These veggie halloumi burgers in brioche buns are perfect for the whole family. Serve as a quick and easy lunch - they're also great on camping holidays",
+    "categoryId":"C04"
+},
+{
+    "title":"BARBECUED BEEF BURGER",
+    "image":"https://www.tasteofhome.com/wp-content/uploads/2018/01/Aloha-Burgers_EXPS_FT20_1460_F_0303_1.jpg?resize=700,700",
+    "price":105000,
+    "summary":"A classic beef burger is a must-have at a barbecue. Pack blue cheese in the centre to make it a little more special and serve with your favourite sides",
+    "categoryId":"C04"
+},
+{
+    "title":"EASY VEGAN BURGERS",
+    "image":"https://www.tasteofhome.com/wp-content/uploads/2018/01/All-American-Hamburgers_EXPS_CWAS22_29321_P2_MD_04_19_1b_v2.jpg?resize=700,700",
+    "price":105000,
+    "summary":"Make vegan burgers with polenta and spice with cumin, chilli and coriander. Cook in the oven or on the barbecue and serve with a plant-based salsa",
+    "categoryId":"C04"
+},
+{
+    "title":"BHAJI BURGER",
+    "image":"https://www.tasteofhome.com/wp-content/uploads/2019/05/Grilled-Chicken-Ranch-Burgers_EXPS_SDJJ19_176470_C02_07_3b-11.jpg?resize=700,700",
+    "price":105000,
+    "summary":"We've combined two of our favourite recipes to make a bhaji in a bun. Serve with mango chutney and a fluffy brioche bun",
+    "categoryId":"C04"
+},
+{
+    "title":"TROFIE AL PESTO",
+    "image":"https://www.eataly.ca/wp-content/uploads/2020/03/AQ4I3210web.jpg",
+    "price":105000,
+    "summary":"The northern coastal region Liguria is especially celebrated for its light, herb-heavy dishes. One of our favourite regional dishes is the famed trofie al pesto: pesto pasta.",
+    "categoryId":"C05"
+},
+{
+    "title":"ZITI ALLA NORMA",
+    "image":"https://www.eataly.ca/wp-content/uploads/2018/02/tagliatelle-al-ragu-pasta-web.jpg",
+    "price":105000,
+    "summary":"If there is one recipe that will make you feel like you’re eating at nonna‘s, this is it. Made with eggplant, ricotta, and chunky tomato sauce",
+    "categoryId":"C05"
+},
+{
+    "title":"PICI ALL'AGLIONE",
+    "image":"https://www.eataly.ca/wp-content/uploads/2020/03/bucatini-al-tonno-tuna-pasta.jpg",
+    "price":105000,
+    "summary":"Toscana is celebrated for a rustic cuisine that showcases simple ingredients in flavourful recipes, like this traditional pasta in spicy tomato-garlic sauce.",
+    "categoryId":"C05"
+},
+{
+    "title":"SPAGHETTI CACIO E PEPE",
+    "image":"https://www.eataly.ca/wp-content/uploads/2020/12/lasagne_021.jpg",
+    "price":105000,
+    "summary":"Rich cheese, bronze-extruded pasta, and freshly-ground pepper — the ultimate comfort food, “cacio e pepe” is a Roman dish that will make you forget all about mac-and-cheese.",
+    "categoryId":"C05"
+},
+{
+    "title":"LASAGNE ALLA BOLOGNESE",
+    "image":"https://www.eataly.ca/wp-content/uploads/2020/05/Pasta-Penne-allarrabbiata.jpg",
+    "price":105000,
+    "summary":"A traditional dish from Emilia-Romagna, Lasagne alla Bolognese is made with egg pasta, creamy béchamel, and Bolognese ragù. A nearly perfect recipe, this dish has been loved by all for centuries",
+    "categoryId":"C05"
+}
+]
