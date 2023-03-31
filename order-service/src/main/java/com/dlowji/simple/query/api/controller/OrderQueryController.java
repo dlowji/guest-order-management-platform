@@ -29,8 +29,14 @@ public class OrderQueryController {
     public ResponseEntity<?> getItemListByOrderId(@PathVariable String id) {
         return orderQueryService.getItemListByOrderId(id);
     }
-    @GetMapping("/history")
-    public ResponseEntity<?> getOrderHistoryBySchedule(@RequestHeader(value = "Authorization") String authorizationHeader) {
-        return orderQueryService.getOrderHistoryBySchedule(authorizationHeader);
+
+    @GetMapping("/history/{scheduleId}")
+    public ResponseEntity<?> getOrderHistoryBySchedule(@PathVariable String scheduleId) {
+        return orderQueryService.getOrderHistoryBySchedule(scheduleId);
+    }
+
+    @GetMapping("/best-seller/{quantity}")
+    public ResponseEntity<?> getBestSellerDishes(@PathVariable String quantity) {
+        return orderQueryService.getBestSellerDishes(quantity);
     }
 }

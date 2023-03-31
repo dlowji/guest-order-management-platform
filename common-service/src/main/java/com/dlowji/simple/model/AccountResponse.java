@@ -14,4 +14,5 @@ public class AccountResponse {
     private String username;
     private String employeeId;
     private String roleName;
+    private String scheduleId;
 }
