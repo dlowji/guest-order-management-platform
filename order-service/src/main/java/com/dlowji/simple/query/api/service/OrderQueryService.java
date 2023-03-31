@@ -1,5 +1,7 @@
 package com.dlowji.simple.query.api.service;
 
+import com.dlowji.simple.command.api.data.ITableRepository;
+import com.dlowji.simple.command.api.enums.TableStatus;
 import com.dlowji.simple.enums.OrderStatus;
 import com.dlowji.simple.model.OrderDetailResponse;
 import com.dlowji.simple.model.OrderLineItemResponse;
@@ -14,17 +16,22 @@ import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderQueryService {
     private final QueryGateway queryGateway;
+    private final ITableRepository tableRepository;
 
-    public OrderQueryService(QueryGateway queryGateway) {
+    public OrderQueryService(QueryGateway queryGateway, ITableRepository tableRepository) {
         this.queryGateway = queryGateway;
+        this.tableRepository = tableRepository;
     }
 
     public ResponseEntity<?> getOrdersByProperties(Map<String, String> queryParams) {
@@ -227,5 +234,59 @@ public class OrderQueryService {
             response.put("message", "Invalid quantity");
             return ResponseEntity.badRequest().body(response);
         }
+    }
+
+    public ResponseEntity<?> getOrdersByDuration(String am, String pm) {
+        Map<String, Object> response = new LinkedHashMap<>();
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h a");
+            LocalTime time = LocalTime.parse(pm + " PM", formatter);
+            int endHour = time.getHour();
+            LocalTime time2 = LocalTime.parse(am + " AM", formatter);
+            int startHour = time2.getHour();
+            GetOrdersQuery getOrdersQuery = GetOrdersQuery.builder().build();
+            List<OrderResponse> orderResponses = queryGateway.query(getOrdersQuery, ResponseTypes.multipleInstancesOf(OrderResponse.class)).join();
+            LocalTime startTime = LocalTime.of(startHour, 0);
+            LocalTime endTime = LocalTime.of(endHour, 0);
+
+            Map<Integer, Long> orderCountByHour = orderResponses.stream()
+                    .filter(order -> {
+                        ZonedDateTime createdAt = order.getCreatedAt();
+                        LocalTime localTime = createdAt.toLocalTime();
+                        return localTime.isAfter(startTime) && localTime.isBefore(endTime);
+                    })
+                    .collect(Collectors.groupingBy(
+                            order -> order.getCreatedAt().getHour(),
+                            Collectors.counting()
+                    ));
+            response.put("code", 0);
+            response.put("message", "Get order count by hour successfully");
+            response.put("data", orderCountByHour);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("code", 400);
+            response.put("message", "Invalid duration");
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
+
+    public ResponseEntity<?> getHome() {
+        Map<String, Object> response = new LinkedHashMap<>();
+
+        LocalDate currentDate = LocalDate.now();
+        GetOrdersQuery getOrdersQuery = GetOrdersQuery.builder().build();
+        List<OrderResponse> orderResponses = queryGateway.query(getOrdersQuery, ResponseTypes.multipleInstancesOf(OrderResponse.class)).join();
+        List<OrderResponse> currentDateOrders = orderResponses.stream().filter(orderResponse -> orderResponse.getCreatedAt().toLocalDate().equals(currentDate)).toList();
+        BigDecimal revenue = currentDateOrders.stream().map(OrderResponse::getGrandTotal).reduce(BigDecimal.valueOf(0), BigDecimal::add);
+        int totalOrder = currentDateOrders.size();
+        long diningOrders = currentDateOrders.stream().filter(orderResponse -> orderResponse.getOrderStatus() == OrderStatus.IN_PROCESSING).count();
+        int freeTables = tableRepository.findAllByTableStatus(TableStatus.FREE).size();
+        response.put("code", 0);
+        response.put("message", "Get home successfully");
+        response.put("revenue", revenue);
+        response.put("total orders", totalOrder);
+        response.put("dining orders", diningOrders);
+        response.put("free tables", freeTables);
+        return ResponseEntity.ok(response);
     }
 }

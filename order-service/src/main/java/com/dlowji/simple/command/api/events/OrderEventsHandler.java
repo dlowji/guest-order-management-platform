@@ -54,9 +54,27 @@ public class OrderEventsHandler {
                     .promoCode("")
                     .discount(BigDecimal.valueOf(0))
                     .grandTotal(BigDecimal.valueOf(0))
+                    .lastProcessing(LocalDateTime.now())
                     .build();
             tableRepository.save(table);
             orderRepository.save(order);
+        }
+    }
+
+    @EventHandler
+    public void on(OrderCheckedOutEvent orderCheckedOutEvent) {
+        Optional<Order> existOrder = orderRepository.findById(orderCheckedOutEvent.getOrderId());
+        if (existOrder.isPresent()) {
+            Order order = existOrder.get();
+            String tableId = order.getTableId();
+            Optional<SeveredTable> existTable = tableRepository.findById(tableId);
+            if (existTable.isPresent()) {
+                SeveredTable table = existTable.get();
+                table.setTableStatus(TableStatus.FREE);
+                order.setOrderStatus(OrderStatus.COMPLETED);
+                tableRepository.save(table);
+                orderRepository.save(order);
+            }
         }
     }
 
@@ -249,10 +267,6 @@ public class OrderEventsHandler {
                     }
                     orderLineItemRepository.save(orderLineItem);
                 }
-            }
-            boolean completed = orderLineItemList.stream().allMatch(item -> item.getOrderLineItemStatus() == OrderLineItemStatus.COOKED);
-            if (completed) {
-                order.setOrderStatus(OrderStatus.COMPLETED);
             }
             LocalDateTime current = LocalDateTime.now();
             order.setLastProcessing(current);

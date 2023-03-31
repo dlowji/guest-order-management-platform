@@ -28,9 +28,13 @@ public class OrderCommandController {
         return orderCommandService.updatePlacedOrder(updatePlacedOrderRequest);
     }
 
+    @PostMapping("/checkout/{id}")
+    public ResponseEntity<?> checkout(@PathVariable String id) {
+        return orderCommandService.checkout(id);
+    }
+
     @PostMapping("/progress")
     public ResponseEntity<?> progressOrder(@Valid @RequestBody ProgressOrderRequest progressOrderRequest) {
-        System.out.println("in controller");
         System.out.println(progressOrderRequest);
 
         return orderCommandService.progressOrder(progressOrderRequest);
