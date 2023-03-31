@@ -1,0 +1,18 @@
+
+[
+  {
+    "roleId": "R01",
+    "roleName": "Admin",
+    "roleDescription": "Super power role, the role can defeat anyone like @S1mpleOW"
+  },
+  {
+    "roleId": "R02",
+    "roleName": "Employee",
+    "roleDescription": "just a employee, poor"
+  },
+  {
+    "roleId": "R03",
+    "roleName": "Chef",
+    "roleDescription": "A master can use knife kill giant things such as: fish, beef, pork, my heart...."
+  }
+]

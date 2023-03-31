@@ -2,6 +2,7 @@ package com.dlowji.simple.query.api.service;
 
 import com.dlowji.simple.enums.OrderStatus;
 import com.dlowji.simple.model.OrderDetailResponse;
+import com.dlowji.simple.model.OrderLineItemResponse;
 import com.dlowji.simple.model.OrderResponse;
 import com.dlowji.simple.model.ScheduleDetailResponse;
 import com.dlowji.simple.queries.GetOrderDetailByIdQuery;
@@ -16,11 +17,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZonedDateTime;
-import java.time.chrono.ChronoZonedDateTime;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class OrderQueryService {
@@ -116,20 +113,20 @@ public class OrderQueryService {
         }
     }
 
-    public ResponseEntity<?> getOrderHistoryBySchedule(String authorizationHeader) {
+    public ResponseEntity<?> getOrderHistoryBySchedule(String scheduleId) {
         Map<String, Object> response = new LinkedHashMap<>();
         GetScheduleDetailByIdQuery getScheduleDetailByIdQuery = GetScheduleDetailByIdQuery.builder()
-                .scheduleId(authorizationHeader)
+                .scheduleId(scheduleId)
                 .build();
-
+//
         ScheduleDetailResponse scheduleDetailResponse = queryGateway.query(getScheduleDetailByIdQuery,
                 ResponseTypes.instanceOf(ScheduleDetailResponse.class)).join();
         if (scheduleDetailResponse == null) {
-            response.put("code", 700);
+            response.put("code", 400);
             response.put("message", "Schedule does not exist");
             return ResponseEntity.badRequest().body(response);
         }
-
+//
         GetOrdersQuery getOrdersQuery = GetOrdersQuery.builder().build();
         List<OrderResponse> orderResponseList = queryGateway.query(getOrdersQuery, ResponseTypes.multipleInstancesOf(OrderResponse.class)).join();
         LocalTime startHour = scheduleDetailResponse.getStartWorkHour();
@@ -141,8 +138,8 @@ public class OrderQueryService {
         for (OrderResponse orderResponse : orderResponseList) {
             ZonedDateTime processTime = orderResponse.getCreatedAt();
             if (processTime.getDayOfMonth() == workDate.getDayOfMonth()
-                    && processTime.isAfter(ChronoZonedDateTime.from(startHour))
-                    && processTime.isBefore(ChronoZonedDateTime.from(endHour))) {
+                    && processTime.toLocalTime().isAfter(startHour)
+                    && processTime.toLocalTime().isBefore(endHour)) {
                 result.add(orderResponse);
             }
         }
@@ -202,6 +199,33 @@ public class OrderQueryService {
             response.put("code", 500);
             response.put("message", "Error getting item list by order id: " + e.getMessage());
             return ResponseEntity.internalServerError().body(response);
+        }
+    }
+
+    public ResponseEntity<?> getBestSellerDishes(String quantityString) {
+        Map<String, Object> response = new LinkedHashMap<>();
+        try {
+            int quantity = Integer.parseInt(quantityString);
+            GetOrdersQuery getOrdersQuery = GetOrdersQuery.builder().build();
+            List<OrderResponse> orderResponses = queryGateway.query(getOrdersQuery, ResponseTypes.multipleInstancesOf(OrderResponse.class)).join();
+            Map<String, Integer> dishQuantities = new HashMap<>();
+            for (OrderResponse orderResponse : orderResponses) {
+                for (OrderLineItemResponse orderLineItemResponse : orderResponse.getOrderLineItemResponseList()) {
+                    dishQuantities.merge(orderLineItemResponse.getTitle(), orderLineItemResponse.getQuantity(), Integer::sum);
+                }
+            }
+            List<Map.Entry<String, Integer>> bestSellers = dishQuantities.entrySet().stream()
+                    .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
+                    .limit(quantity)
+                    .toList();
+            response.put("code", 0);
+            response.put("message", "Get top " + quantity + " best seller successfully");
+            response.put("data", bestSellers);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("code", 400);
+            response.put("message", "Invalid quantity");
+            return ResponseEntity.badRequest().body(response);
         }
     }
 }

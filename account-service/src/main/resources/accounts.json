@@ -1,0 +1,39 @@
+
+[
+  {
+    "username": "admin1234",
+    "password": "admin1234",
+    "fullName": "Tom Riddle",
+    "email": "dev.loivo2k2@gmail.com",
+    "gender": 1,
+    "salary": 1200,
+    "dob": "2002-01-24",
+    "address": "Inside My Le's heart",
+    "roleId": "R01",
+    "phone": "0937732655"
+  },
+  {
+    "username": "staff",
+    "password": "staff",
+    "fullName": "Do Quoc Dung",
+    "email": "langtusitinh_0312000@gmail.com",
+    "gender": 0,
+    "salary": 1200,
+    "dob": "2002-01-24",
+    "address": "Inside My Le's heart",
+    "roleId": "R02",
+    "phone": "0918620891"
+  },
+  {
+    "username": "chef",
+    "password": "chef",
+    "fullName": "Gordon Ramsey",
+    "email": "nhathotinhtuyetvong@gmail.com",
+    "gender": 1,
+    "salary": 1200,
+    "dob": "2002-01-24",
+    "address": "Inside My Le's heart",
+    "roleId": "R03",
+    "phone": "0933064848"
+  }
+]

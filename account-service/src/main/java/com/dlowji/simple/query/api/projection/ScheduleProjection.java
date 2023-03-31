@@ -29,7 +29,6 @@ public class ScheduleProjection {
         String scheduleId = getScheduleDetailByIdQuery.getScheduleId();
         Optional<Schedule> existSchedule = scheduleRepository.findById(scheduleId);
         return existSchedule.map(this::mapToScheduleDetailResponse).orElse(null);
-
     }
 
     @QueryHandler
