@@ -7,6 +7,7 @@ import com.dlowji.simple.queries.GetAccountByIdQuery;
 import com.dlowji.simple.queries.GetDishByIdQuery;
 import com.dlowji.simple.queries.GetOrderDetailByIdQuery;
 import com.dlowji.simple.query.api.queries.GetOrdersByStatusQuery;
+import com.dlowji.simple.query.api.queries.GetOrdersByYearQuery;
 import com.dlowji.simple.query.api.queries.GetOrdersQuery;
 import com.dlowji.simple.query.api.queries.GetProcessingOrderByTableIdQuery;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
@@ -54,6 +55,13 @@ public class OrderProjection {
         String tableId = getProcessingOrderByTableIdQuery.getTableId();
         List<Order> orderList = orderRepository.findByTableId(tableId);
         return mapToOrderResponse(orderList.stream().filter(order -> order.getOrderStatus()!= OrderStatus.COMPLETED).findFirst().get());
+    }
+
+    @QueryHandler
+    public List<OrderResponse> handle(GetOrdersByYearQuery getOrdersByYearQuery) {
+        List<Order> orders = orderRepository.findAll();
+        int filterYear = getOrdersByYearQuery.getYear();
+        return orders.stream().filter(order -> order.getCreatedAt().getYear() == filterYear).map(this::mapToOrderResponse).toList();
     }
 
     private OrderDetailResponse mapToOrderDetailResponse(Order order) {
