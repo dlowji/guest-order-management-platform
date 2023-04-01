@@ -1,7 +1,7 @@
 package com.dlowji.simple.command.api.service;
 
 import com.dlowji.simple.command.api.commands.CreateDishCommand;
-import com.dlowji.simple.command.api.commands.ToggleDishCommand;
+import com.dlowji.simple.command.api.data.Dish;
 import com.dlowji.simple.command.api.data.IDishRepository;
 import com.dlowji.simple.command.api.enums.DishStatus;
 import com.dlowji.simple.command.api.model.DishRequest;
@@ -91,19 +91,21 @@ public class KitchenCommandService {
 
     public ResponseEntity<?> toggleDish(String dishId) {
         Map<String, Object> response = new LinkedHashMap<>();
-
-        if (dishRepository.findById(dishId).isEmpty()) {
-            response.put("code", 401);
-            response.put("message", "Dish not exist");
-            return ResponseEntity.badRequest().body(response);
-        }
-
-        ToggleDishCommand toggleDishCommand = ToggleDishCommand.builder()
-                .dishId(dishId)
-                .build();
-
         try {
-            commandGateway.send(toggleDishCommand);
+            Optional<Dish> existDish = dishRepository.findById(dishId);
+            if (existDish.isEmpty()) {
+                response.put("code", 401);
+                response.put("message", "Dish not exist");
+                return ResponseEntity.badRequest().body(response);
+            } else {
+                Dish dish = existDish.get();
+                if (dish.getDishStatus() == DishStatus.AVAILABLE) {
+                    dish.setDishStatus(DishStatus.UN_AVAILABLE);
+                } else {
+                    dish.setDishStatus(DishStatus.AVAILABLE);
+                }
+                dishRepository.save(dish);
+            }
             response.put("code", 0);
             response.put("message", "Send signal to toggle dish successfully!");
             return ResponseEntity.ok(response);
