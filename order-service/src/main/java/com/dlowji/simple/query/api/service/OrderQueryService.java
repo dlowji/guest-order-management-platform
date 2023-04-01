@@ -3,10 +3,8 @@ package com.dlowji.simple.query.api.service;
 import com.dlowji.simple.command.api.data.ITableRepository;
 import com.dlowji.simple.command.api.enums.TableStatus;
 import com.dlowji.simple.enums.OrderStatus;
-import com.dlowji.simple.model.OrderDetailResponse;
-import com.dlowji.simple.model.OrderLineItemResponse;
-import com.dlowji.simple.model.OrderResponse;
-import com.dlowji.simple.model.ScheduleDetailResponse;
+import com.dlowji.simple.model.*;
+import com.dlowji.simple.queries.GetDishByIdQuery;
 import com.dlowji.simple.queries.GetOrderDetailByIdQuery;
 import com.dlowji.simple.queries.GetScheduleDetailByIdQuery;
 import com.dlowji.simple.query.api.queries.*;
@@ -17,9 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -158,12 +154,15 @@ public class OrderQueryService {
         return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<?> getOrderHistoryByDMY(int year, int month, int day, String filter) {
+    public ResponseEntity<?> getOrderHistoryByDMY(long timestamp, String filter) {
         Map<String, Object> response = new LinkedHashMap<>();
-
+        Instant instant = Instant.ofEpochSecond(timestamp);
+        ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
+        LocalDate filterDate = zonedDateTime.toLocalDate();
         GetOrdersByYearQuery getOrdersByYearQuery = GetOrdersByYearQuery.builder()
-                .year(year)
+                .year(filterDate.getYear())
                 .build();
+        System.out.println(filterDate);
         List<OrderResponse> orderResponseList = queryGateway.query(getOrdersByYearQuery, ResponseTypes.multipleInstancesOf(OrderResponse.class)).join();
 
         if (filter.equals("year")) {
@@ -174,7 +173,8 @@ public class OrderQueryService {
         }
 
         List<OrderResponse> result = new ArrayList<>();
-
+        int day = filterDate.getDayOfMonth();
+        int month = filterDate.getMonthValue();
         for (OrderResponse orderResponse : orderResponseList) {
             ZonedDateTime processTime = orderResponse.getCreatedAt();
             if (filter.equals("day") && processTime.getDayOfMonth() == day && processTime.getMonthValue() == month) {
@@ -218,20 +218,38 @@ public class OrderQueryService {
             Map<String, Integer> dishQuantities = new HashMap<>();
             for (OrderResponse orderResponse : orderResponses) {
                 for (OrderLineItemResponse orderLineItemResponse : orderResponse.getOrderLineItemResponseList()) {
-                    dishQuantities.merge(orderLineItemResponse.getTitle(), orderLineItemResponse.getQuantity(), Integer::sum);
+                    dishQuantities.merge(orderLineItemResponse.getDishId(), orderLineItemResponse.getQuantity(), Integer::sum);
                 }
             }
             List<Map.Entry<String, Integer>> bestSellers = dishQuantities.entrySet().stream()
                     .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
                     .limit(quantity)
                     .toList();
+            List<Object> data = new ArrayList<>();
+            bestSellers.forEach(stringIntegerEntry -> {
+                String dishId = stringIntegerEntry.getKey();
+                GetDishByIdQuery getDishByIdQuery = GetDishByIdQuery.builder()
+                        .dishId(dishId)
+                        .build();
+                DishResponse dishResponse = queryGateway.query(getDishByIdQuery, ResponseTypes.instanceOf(DishResponse.class)).join();
+                if (dishResponse != null) {
+                    Map<String, Object> result = new LinkedHashMap<>();
+                    result.put("dishId", dishResponse.getDishId());
+                    result.put("title", dishResponse.getTitle());
+                    result.put("price", dishResponse.getPrice());
+                    result.put("status", dishResponse.getDishStatus());
+                    result.put("image", dishResponse.getImage());
+                    result.put("totalOrdered", stringIntegerEntry.getValue());
+                    data.add(result);
+                }
+            });
             response.put("code", 0);
             response.put("message", "Get top " + quantity + " best seller successfully");
-            response.put("data", bestSellers);
+            response.put("data", data);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             response.put("code", 400);
-            response.put("message", "Invalid quantity");
+            response.put("message", "Invalid quantity " + e.getMessage());
             return ResponseEntity.badRequest().body(response);
         }
     }
@@ -277,7 +295,7 @@ public class OrderQueryService {
         GetOrdersQuery getOrdersQuery = GetOrdersQuery.builder().build();
         List<OrderResponse> orderResponses = queryGateway.query(getOrdersQuery, ResponseTypes.multipleInstancesOf(OrderResponse.class)).join();
         List<OrderResponse> currentDateOrders = orderResponses.stream().filter(orderResponse -> orderResponse.getCreatedAt().toLocalDate().equals(currentDate)).toList();
-        BigDecimal revenue = currentDateOrders.stream().map(OrderResponse::getGrandTotal).reduce(BigDecimal.valueOf(0), BigDecimal::add);
+        BigDecimal revenue = currentDateOrders.stream().filter(orderResponse -> orderResponse.getOrderStatus()==OrderStatus.COMPLETED).map(OrderResponse::getGrandTotal).reduce(BigDecimal.valueOf(0), BigDecimal::add);
         int totalOrder = currentDateOrders.size();
         long diningOrders = currentDateOrders.stream().filter(orderResponse -> orderResponse.getOrderStatus() == OrderStatus.IN_PROCESSING).count();
         int freeTables = tableRepository.findAllByTableStatus(TableStatus.FREE).size();
