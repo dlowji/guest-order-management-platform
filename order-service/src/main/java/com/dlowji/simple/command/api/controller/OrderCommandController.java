@@ -1,5 +1,6 @@
 package com.dlowji.simple.command.api.controller;
 
+import com.dlowji.simple.command.api.model.CheckoutOrderRequest;
 import com.dlowji.simple.command.api.model.CreateOrderRequest;
 import com.dlowji.simple.command.api.model.ProgressOrderRequest;
 import com.dlowji.simple.command.api.model.UpdatePlacedOrderRequest;
@@ -28,9 +29,9 @@ public class OrderCommandController {
         return orderCommandService.updatePlacedOrder(updatePlacedOrderRequest);
     }
 
-    @PostMapping("/checkout/{id}")
-    public ResponseEntity<?> checkout(@PathVariable String id) {
-        return orderCommandService.checkout(id);
+    @PostMapping("/checkout")
+    public ResponseEntity<?> checkout(@Valid @RequestBody CheckoutOrderRequest checkoutOrderRequest) {
+        return orderCommandService.checkout(checkoutOrderRequest.getOrderId());
     }
 
     @PostMapping("/progress")
