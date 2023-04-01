@@ -15,9 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -156,12 +154,15 @@ public class OrderQueryService {
         return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<?> getOrderHistoryByDMY(int year, int month, int day, String filter) {
+    public ResponseEntity<?> getOrderHistoryByDMY(long timestamp, String filter) {
         Map<String, Object> response = new LinkedHashMap<>();
-
+        Instant instant = Instant.ofEpochSecond(timestamp);
+        ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
+        LocalDate filterDate = zonedDateTime.toLocalDate();
         GetOrdersByYearQuery getOrdersByYearQuery = GetOrdersByYearQuery.builder()
-                .year(year)
+                .year(filterDate.getYear())
                 .build();
+        System.out.println(filterDate);
         List<OrderResponse> orderResponseList = queryGateway.query(getOrdersByYearQuery, ResponseTypes.multipleInstancesOf(OrderResponse.class)).join();
 
         if (filter.equals("year")) {
@@ -172,7 +173,8 @@ public class OrderQueryService {
         }
 
         List<OrderResponse> result = new ArrayList<>();
-
+        int day = filterDate.getDayOfMonth();
+        int month = filterDate.getMonthValue();
         for (OrderResponse orderResponse : orderResponseList) {
             ZonedDateTime processTime = orderResponse.getCreatedAt();
             if (filter.equals("day") && processTime.getDayOfMonth() == day && processTime.getMonthValue() == month) {
