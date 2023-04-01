@@ -19,6 +19,7 @@ import KitchenOrder from '@modules/kitchen/KitchenOrder';
 import { OrderDetailProvider } from '@context/useOrderDetail';
 import RedirectPage from '@pages/RedirectPage';
 import ErrorPage from '@pages/ErrorPage';
+import HistoryDetail from '@modules/history/HistoryDetail';
 
 const MainLayout = lazy(() =>
 	import('@layouts/MainLayout').then((module) => ({ default: module.default })),
@@ -67,6 +68,7 @@ const router = createBrowserRouter(
 				<Route element={<ProtectedRoute allowedRoles={[Role.ADMIN]} />}>
 					<Route path="/home" element={<DashboardPage />}></Route>
 					<Route path="/history" element={<HistoryPage />}></Route>
+					<Route path="/history/:orderId" element={<HistoryDetail />}></Route>
 				</Route>
 				<Route element={<ProtectedRoute allowedRoles={[Role.ADMIN, Role.EMPLOYEE, Role.CHEF]} />}>
 					<Route path="/" element={<RedirectPage />}></Route>

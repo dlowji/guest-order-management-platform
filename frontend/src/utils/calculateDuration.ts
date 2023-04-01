@@ -1,4 +1,5 @@
-export const calculateDuration = (start: string, end?: number) => {
+export const calculateDuration = (start: string, end?: string) => {
+	if (start === '' && end === '') return { days: 0, hours: 0, minutes: 0, seconds: 0 };
 	// Set the start time
 	const startTime = new Date(start);
 

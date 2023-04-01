@@ -31,6 +31,24 @@ class KitchenApi {
 		}
 	}
 
+	public async getDishesByStatus(status = 'available'): Promise<TDish[]> {
+		try {
+			const response = await this.request.get<{
+				code: number;
+				data: TDish[];
+			}>(`${this.url}/menu/status?q=${status}`);
+
+			if (response.data.code === 0) {
+				return response.data.data;
+			}
+			return [];
+		} catch (error) {
+			console.log(error);
+
+			return [];
+		}
+	}
+
 	public async getCategories(): Promise<ICategoryItem[]> {
 		try {
 			const response = await this.request.get<{
