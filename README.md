@@ -9,7 +9,7 @@ Guests can positively order and observe ordered dishes, as well as the grand tot
 Staffs can write guest's orders on the order slip, transfer them to the kitchen using platform instead of manual.
 Besides, chefs can control dishes were ordered by guests, especially ensure the correctness of note from guests.
 
-## Installation
+## Prerequisites
 -  Java JDK 17(https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 -  Intellij IDEA 2022(https://www.jetbrains.com/idea/download/#section=windows)
 -  Postman(https://www.postman.com/downloads/)
@@ -17,7 +17,12 @@ Besides, chefs can control dishes were ordered by guests, especially ensure the 
 -  Axon server 4.6.11(https://developer.axoniq.io/axon-server/download)
 
 ## Usage
-
+- Start Axon server
+- Run AccountServiceApplication
+- Run OrderServiceApplication
+- Run KitchenServiceApplication
+- Run ApiGatewayApplication
+- Access frontend folder and read markdown file
 
 ### Use these accounts below to login into the platform
 + HTTP Method: POST
