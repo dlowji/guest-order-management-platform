@@ -13,8 +13,8 @@
     "phone": "0937732655"
   },
   {
-    "username": "staff",
-    "password": "staff",
+    "username": "staff1234",
+    "password": "staff1234",
     "fullName": "Do Quoc Dung",
     "email": "langtusitinh_0312000@gmail.com",
     "gender": 0,
@@ -25,8 +25,8 @@
     "phone": "0918620891"
   },
   {
-    "username": "chef",
-    "password": "chef",
+    "username": "chef1234",
+    "password": "chef1234",
     "fullName": "Gordon Ramsey",
     "email": "nhathotinhtuyetvong@gmail.com",
     "gender": 1,

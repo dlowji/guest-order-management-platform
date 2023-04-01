@@ -1,9 +1,11 @@
+import orderApi from '@api/order';
 import { checkoutSteps } from '@constants/checkoutSteps';
 import { PaymentItemsProvider } from '@context/usePaymentItems';
 import MultiStep from '@modules/checkout/MultiStep';
 import TopnavCheckout from '@modules/checkout/TopnavCheckout';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import { usePayment } from '@stores/usePayment';
+import { useQuery } from '@tanstack/react-query';
 import * as React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -17,6 +19,26 @@ const CheckoutPage: React.FunctionComponent<ICheckoutPageProps> = () => {
 	const navigate = useNavigate();
 	const setPayment = usePayment((state) => state.setPayment);
 	const payment = usePayment((state) => state.payment);
+	useQuery({
+		queryKey: ['order', orderId],
+		queryFn: () => {
+			return orderApi.getById(orderId);
+		},
+		onSuccess: (data) => {
+			if (data.code === 200) {
+				const orderDetails = data.data;
+				if (orderDetails?.orderStatus === 'COMPLETED') {
+					setPayment({
+						orderId: orderId as string,
+						currentStep: checkoutSteps.length - 1,
+						totalSteps: checkoutSteps.length,
+						paymentMethod: 'CASH',
+					});
+					navigate(`/checkout/${orderId}/success`);
+				}
+			}
+		},
+	});
 
 	React.useEffect(() => {
 		if (!payment?.currentStep) {
@@ -24,6 +46,7 @@ const CheckoutPage: React.FunctionComponent<ICheckoutPageProps> = () => {
 				orderId: orderId as string,
 				currentStep: 0,
 				totalSteps: checkoutSteps.length,
+				paymentMethod: 'CASH',
 			});
 			navigate(`/checkout/${orderId}/${checkoutSteps[0].link}`);
 			return;

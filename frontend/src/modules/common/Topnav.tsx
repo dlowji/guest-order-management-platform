@@ -1,10 +1,5 @@
 import Button from '@components/button/Button';
-import { checkoutSteps } from '@constants/checkoutSteps';
-import { usePaymentItems } from '@context/usePaymentItems';
-import { usePayment } from '@stores/usePayment';
 import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
 
 interface ITopnavProps {
 	onBack: () => void;

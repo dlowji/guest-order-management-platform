@@ -41,7 +41,7 @@ public class OrderQueryController {
         return orderQueryService.getBestSellerDishes(quantity);
     }
 
-    @GetMapping("/{filter}")
+    @GetMapping("/years/{filter}")
     public ResponseEntity<?> getOrdersByDMY(@PathVariable String filter) {
         LocalDate current = LocalDate.now();
         return orderQueryService.getOrderHistoryByDMY(current.getYear(), current.getMonthValue(), current.getDayOfMonth(), filter);

@@ -1,20 +1,20 @@
 export const ORDER_METHODS = [
 	{
-		id: 'cash',
+		id: 'CASH',
 		name: 'Cash',
 		icon: 'fas fa-money-bill-wave',
 		isActive: true,
 	},
 	{
-		id: 'credit_card',
+		id: 'CREDIT_CARD',
 		name: 'Credit Card',
 		icon: 'fas fa-credit-card',
 		isActive: false,
 	},
 	{
-		id: 'e_wallet',
-		name: 'E-Wallet',
+		id: 'PAYPAL',
+		name: 'Paypal',
 		icon: 'fab fa-paypal',
-		isActive: true,
+		isActive: false,
 	},
 ];

@@ -56,6 +56,8 @@ const KitchenOrderLineItems: React.FunctionComponent<IKitchenOrderLineItemsProps
 				if (response.code === 200) {
 					toast.success('Start cooking dishes!');
 					queryClient.refetchQueries(['order', orderId]);
+					queryClient.refetchQueries(['order', 'in_processing']);
+					navigate(`/kitchen?q=in_processing`);
 				} else {
 					toast.error(response.message || 'Something went wrong!');
 				}
@@ -83,9 +85,9 @@ const KitchenOrderLineItems: React.FunctionComponent<IKitchenOrderLineItemsProps
 				const response = await kitchenApi.markDoneOrder(orderId, orderLineItems);
 				if (response.code === 200) {
 					toast.success('Order marked as done!');
-					queryClient.refetchQueries(['order', 'created']);
+					queryClient.refetchQueries(['order', 'in_processing']);
 					queryClient.refetchQueries(['order', orderId]);
-					navigate('/kitchen');
+					navigate('/kitchen?q=in_processing');
 				} else {
 					toast.error(response.message || 'Something went wrong!');
 				}

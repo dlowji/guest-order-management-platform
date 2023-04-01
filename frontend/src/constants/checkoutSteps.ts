@@ -23,9 +23,9 @@ export const checkoutSteps = [
 		component: CheckoutStepThree,
 	},
 	{
-		id: 'step-four',
-		title: 'Order confirmed',
-		link: 'step-four',
+		id: 'success',
+		title: 'Checkout completed',
+		link: 'success',
 		component: CheckoutStepFour,
 	},
 ];

@@ -13,21 +13,44 @@ import {
 import { convertToUSD } from '@utils/formatCurrency';
 import { ORDER_METHODS } from '@constants/orderMethods';
 import Button from '@components/button/Button';
+import { PaymentMethod } from '@customTypes/index';
+import { useMutation } from '@tanstack/react-query';
+import orderApi from '@api/order';
 
 interface ICheckoutStepTwoProps {}
-type orderMethods = 'cash' | 'credit_card' | 'e_wallet';
-const CheckoutStepTwo: React.FunctionComponent<ICheckoutStepTwoProps> = (props) => {
+const CheckoutStepTwo: React.FunctionComponent<ICheckoutStepTwoProps> = () => {
 	const nextStep = usePayment((state) => state.nextStep);
-	const [orderMethod, setOrderMethod] = React.useState<orderMethods>('cash');
+	const paymentMethod = usePayment((state) => state.payment.paymentMethod);
+	const currentOrderId = usePayment((state) => state.payment.orderId);
+
+	const setPaymentMethod = usePayment((state) => state.setPaymentMethod);
+
+	const { mutate } = useMutation({
+		mutationFn: () => {
+			return orderApi.checkoutOrder(currentOrderId);
+		},
+		onSuccess: (data) => {
+			if (data.code === 200) {
+				nextStep();
+			} else {
+				toast.error(data.message);
+			}
+		},
+	});
+
+	const handleCheckoutByCash = () => {
+		mutate();
+	};
+
 	const handleMoveToNextStep = () => {
 		Swal.fire({
 			title: 'Are you sure?',
 			text: `${
-				orderMethod === 'cash'
+				paymentMethod === 'CASH'
 					? 'Will you pay by cash?'
-					: orderMethod === 'credit_card'
+					: paymentMethod === 'CREDIT_CARD'
 					? 'Will you pay by credit card?'
-					: 'Will you pay by e-wallet?'
+					: 'Will you pay by PayPal?'
 			}`,
 			icon: 'warning',
 			showCancelButton: true,
@@ -36,8 +59,9 @@ const CheckoutStepTwo: React.FunctionComponent<ICheckoutStepTwoProps> = (props) 
 			confirmButtonText: 'Yes',
 		}).then((result) => {
 			if (result.isConfirmed) {
-				nextStep();
-				Swal.fire('Success!', 'Please choose the method', 'success');
+				if (paymentMethod === 'CASH') {
+					handleCheckoutByCash();
+				}
 			}
 		});
 	};
@@ -46,8 +70,8 @@ const CheckoutStepTwo: React.FunctionComponent<ICheckoutStepTwoProps> = (props) 
 		paymentItem: { items: orderItems },
 	} = usePaymentItems();
 
-	const handleChangeMethod = (methodId: orderMethods) => {
-		setOrderMethod(methodId);
+	const handleChangeMethod = (methodId: PaymentMethod) => {
+		setPaymentMethod(methodId);
 	};
 
 	const handleShowUnavailableMethod = () => {
@@ -95,7 +119,7 @@ const CheckoutStepTwo: React.FunctionComponent<ICheckoutStepTwoProps> = (props) 
 	};
 
 	const {
-		paymentItem: { items, total, tableName },
+		paymentItem: { total },
 	} = usePaymentItems();
 	const convertAmount = React.useMemo(() => {
 		return convertToUSD(total);
@@ -107,12 +131,12 @@ const CheckoutStepTwo: React.FunctionComponent<ICheckoutStepTwoProps> = (props) 
 				return (
 					<button
 						className={`menu-order-method-item md:min-w-[200px] flex items-center justify-center ${
-							orderMethod === method.id ? 'active' : ''
+							paymentMethod === method.id ? 'active' : ''
 						}`}
 						key={method.id}
 						onClick={() =>
 							method.isActive
-								? handleChangeMethod(method.id as orderMethods)
+								? handleChangeMethod(method.id as PaymentMethod)
 								: handleShowUnavailableMethod()
 						}
 					>
@@ -125,7 +149,7 @@ const CheckoutStepTwo: React.FunctionComponent<ICheckoutStepTwoProps> = (props) 
 				<Button
 					type="button"
 					className={`btn btn-primary w-full transition-all duration-300 ease-in-out h-0 ${
-						orderMethod === 'cash' ? 'opacity-100 visible h-[48px] mt-5' : 'opacity-0 invisible'
+						paymentMethod === 'CASH' ? 'opacity-100 visible h-[48px] mt-5' : 'opacity-0 invisible'
 					}`}
 					onClick={handleMoveToNextStep}
 					variant="primary"
@@ -141,7 +165,7 @@ const CheckoutStepTwo: React.FunctionComponent<ICheckoutStepTwoProps> = (props) 
 					onApprove={onApprove}
 					showSpinner={true}
 					className={`${
-						orderMethod === 'e_wallet' ? 'opacity-100 visible h-[48px] mt-5' : 'opacity-0 invisible'
+						paymentMethod === 'PAYPAL' ? 'opacity-100 visible h-[48px] mt-5' : 'opacity-0 invisible'
 					} transition-all duration-300 ease-in-out h-0 md:min-w-[200px] min-w-[100px]`}
 				></PaypalButton>
 			</div>
