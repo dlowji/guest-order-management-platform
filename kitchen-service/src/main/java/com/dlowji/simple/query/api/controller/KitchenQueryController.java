@@ -26,6 +26,11 @@ public class KitchenQueryController {
         return dishQueryService.getAllDishes();
     }
 
+    @GetMapping("/menu/status")
+    public ResponseEntity<?> getDishesByStatus(@RequestParam(name = "q") String dishStatus) {
+            return dishQueryService.getDishesByStatus(dishStatus.toLowerCase());
+    }
+
     @GetMapping("/category")
     public ResponseEntity<?> getAllCategories() {
         return dishQueryService.getAllCategories();

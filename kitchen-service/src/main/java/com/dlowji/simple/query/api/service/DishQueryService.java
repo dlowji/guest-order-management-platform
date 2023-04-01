@@ -96,4 +96,17 @@ public class DishQueryService {
             return ResponseEntity.internalServerError().body(response);
         }
     }
+
+    public ResponseEntity<?> getDishesByStatus(String dishStatus) {
+        Map<String, Object> response = new LinkedHashMap<>();
+
+        GetDishesQuery getDishesQuery = GetDishesQuery.builder().build();
+        List<DishResponse> dishResponseList = queryGateway.query(getDishesQuery, ResponseTypes.multipleInstancesOf(DishResponse.class)).join();
+
+        List<DishResponse> result = dishResponseList.stream().filter(dishResponse -> dishResponse.getDishStatus().equalsIgnoreCase(dishStatus)).toList();
+        response.put("code", 0);
+        response.put("message", "Get dishes by status successfully");
+        response.put("data", result);
+        return ResponseEntity.ok(response);
+    }
 }

@@ -3,10 +3,8 @@ package com.dlowji.simple.query.api.service;
 import com.dlowji.simple.command.api.data.ITableRepository;
 import com.dlowji.simple.command.api.enums.TableStatus;
 import com.dlowji.simple.enums.OrderStatus;
-import com.dlowji.simple.model.OrderDetailResponse;
-import com.dlowji.simple.model.OrderLineItemResponse;
-import com.dlowji.simple.model.OrderResponse;
-import com.dlowji.simple.model.ScheduleDetailResponse;
+import com.dlowji.simple.model.*;
+import com.dlowji.simple.queries.GetDishByIdQuery;
 import com.dlowji.simple.queries.GetOrderDetailByIdQuery;
 import com.dlowji.simple.queries.GetScheduleDetailByIdQuery;
 import com.dlowji.simple.query.api.queries.*;
@@ -218,20 +216,38 @@ public class OrderQueryService {
             Map<String, Integer> dishQuantities = new HashMap<>();
             for (OrderResponse orderResponse : orderResponses) {
                 for (OrderLineItemResponse orderLineItemResponse : orderResponse.getOrderLineItemResponseList()) {
-                    dishQuantities.merge(orderLineItemResponse.getTitle(), orderLineItemResponse.getQuantity(), Integer::sum);
+                    dishQuantities.merge(orderLineItemResponse.getDishId(), orderLineItemResponse.getQuantity(), Integer::sum);
                 }
             }
             List<Map.Entry<String, Integer>> bestSellers = dishQuantities.entrySet().stream()
                     .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
                     .limit(quantity)
                     .toList();
+            List<Object> data = new ArrayList<>();
+            bestSellers.forEach(stringIntegerEntry -> {
+                String dishId = stringIntegerEntry.getKey();
+                GetDishByIdQuery getDishByIdQuery = GetDishByIdQuery.builder()
+                        .dishId(dishId)
+                        .build();
+                DishResponse dishResponse = queryGateway.query(getDishByIdQuery, ResponseTypes.instanceOf(DishResponse.class)).join();
+                if (dishResponse != null) {
+                    Map<String, Object> result = new LinkedHashMap<>();
+                    result.put("dishId", dishResponse.getDishId());
+                    result.put("title", dishResponse.getTitle());
+                    result.put("price", dishResponse.getPrice());
+                    result.put("status", dishResponse.getDishStatus());
+                    result.put("image", dishResponse.getImage());
+                    result.put("totalOrdered", stringIntegerEntry.getValue());
+                    data.add(result);
+                }
+            });
             response.put("code", 0);
             response.put("message", "Get top " + quantity + " best seller successfully");
-            response.put("data", bestSellers);
+            response.put("data", data);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             response.put("code", 400);
-            response.put("message", "Invalid quantity");
+            response.put("message", "Invalid quantity " + e.getMessage());
             return ResponseEntity.badRequest().body(response);
         }
     }
