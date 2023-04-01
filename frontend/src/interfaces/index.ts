@@ -20,3 +20,10 @@ export interface IMenuItem {
 	status: string;
 	icon?: string;
 }
+
+export interface IDashboard {
+	totalOrders: number;
+	revenue: number;
+	diningOrders: number;
+	freeTables: number;
+}

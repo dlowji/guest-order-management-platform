@@ -1,5 +1,5 @@
 import Role from '@constants/ERole';
-import { IMenuOrderItem } from '@interfaces/index';
+import { IDashboard, IMenuOrderItem } from '@interfaces/index';
 
 export type TStatusTable = 'FREE' | 'OCCUPIED' | 'CHECK_IN';
 export type TStatusOrder = 'CREATED' | 'IN_PROCESSING' | 'CANCELED' | 'COMPLETED';
@@ -59,3 +59,10 @@ export interface ICategoryItem {
 	icon: string;
 	link: string;
 }
+
+export type TDashboardResponse = {
+	code: number;
+	message: string;
+} & keyof IDashboard;
+
+export type PaymentMethod = 'CASH' | 'CREDIT_CARD' | 'PAYPAL';

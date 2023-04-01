@@ -12,7 +12,7 @@ import { usePaymentItems } from '@context/usePaymentItems';
 
 interface ICheckoutStepOneProps {}
 
-const CheckoutStepOne: React.FunctionComponent<ICheckoutStepOneProps> = (props) => {
+const CheckoutStepOne: React.FunctionComponent<ICheckoutStepOneProps> = () => {
 	const nextStep = usePayment((state) => state.nextStep);
 	const handleMoveToNextStep = () => {
 		Swal.fire({

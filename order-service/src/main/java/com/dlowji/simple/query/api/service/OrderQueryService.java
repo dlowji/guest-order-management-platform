@@ -302,9 +302,9 @@ public class OrderQueryService {
         response.put("code", 0);
         response.put("message", "Get home successfully");
         response.put("revenue", revenue);
-        response.put("total orders", totalOrder);
-        response.put("dining orders", diningOrders);
-        response.put("free tables", freeTables);
+        response.put("totalOrders", totalOrder);
+        response.put("diningOrders", diningOrders);
+        response.put("freeTables", freeTables);
         return ResponseEntity.ok(response);
     }
 }

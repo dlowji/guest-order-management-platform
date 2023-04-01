@@ -15,6 +15,7 @@ interface MenuItemsOrderState {
 	// setMenuItemsOrder: (menuItems: IMenuOrderItem) => void;
 	addToOrder: (menuItems: IMenuOrderItem) => void;
 	increment: (dishId: string, orderLineItemId?: number) => void;
+	decrement: (dishId: string, orderLineItemId?: number) => void;
 	updateNote: (dishId: string, note: string, orderLineItemId?: number) => void;
 	getMenuItemsOrder: () => IMenuOrderItem[];
 }
@@ -83,6 +84,30 @@ export const useMenuItemsOrder = create(
 					);
 					if (currentOrderItem) {
 						currentOrderItem.quantity += 1;
+						return {
+							menuOrder: {
+								...state.menuOrder,
+								menuItemsOrder: [...state.menuOrder.menuItemsOrder],
+							},
+						};
+					}
+					return {
+						menuOrder: {
+							...state.menuOrder,
+							menuItemsOrder: [...state.menuOrder.menuItemsOrder],
+						},
+					};
+				});
+			},
+			decrement: (dishId: string, orderLineItemId?: number) => {
+				return set((state) => {
+					const currentOrderItem = state.menuOrder.menuItemsOrder.find(
+						(item) => item.orderLineItemId === orderLineItemId && item.dishId === dishId,
+					);
+					if (currentOrderItem) {
+						if (currentOrderItem.quantity > 1) {
+							currentOrderItem.quantity -= 1;
+						}
 						return {
 							menuOrder: {
 								...state.menuOrder,

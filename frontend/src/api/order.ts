@@ -1,7 +1,9 @@
 import type { AxiosInstance } from 'axios';
 import http from './http';
-import { IOrderDetails, TOrder } from '@customTypes/index';
-import { IMenuOrderItem } from '@interfaces/index';
+import { IOrderDetails, TDashboardResponse, TOrder } from '@customTypes/index';
+import { IDashboard, IMenuOrderItem } from '@interfaces/index';
+import { statisticItemsDashboard } from '@constants/statisticItemsDashboard';
+import { formatCurrency } from '@utils/formatCurrency';
 
 class OrderApi {
 	private url: string;
@@ -204,6 +206,76 @@ class OrderApi {
 			return {
 				code: 400,
 				message: "Can't progress order",
+			};
+		}
+	}
+
+	public async getDashboardStatistics() {
+		try {
+			const response = await this.request.get<TDashboardResponse>(`${this.url}/home`);
+			if (response.data.code === 0) {
+				const statistics = response.data as TDashboardResponse;
+				const newStatisticItems = statisticItemsDashboard.map((item) => {
+					const value = statistics[item.id as keyof TDashboardResponse];
+					if (item.id === 'revenue') {
+						return {
+							...item,
+							value: formatCurrency(value as number),
+						};
+					}
+					return {
+						...item,
+						value: value.toString(),
+					};
+				});
+				return {
+					code: 200,
+					data: newStatisticItems || [],
+				};
+			} else {
+				return {
+					code: 400,
+					message: "Can't get home",
+				};
+			}
+		} catch (error) {
+			return {
+				code: 400,
+				message: "Can't get home",
+			};
+		}
+	}
+
+	public async checkoutOrder(orderId: string) {
+		if (!orderId) {
+			return {
+				code: 400,
+				message: "Can't checkout order",
+			};
+		}
+		try {
+			const response = await this.request.post<{
+				code: number;
+				message?: string;
+			}>(`${this.url}/checkout`, {
+				orderId,
+			});
+
+			if (response.data.code === 0) {
+				return {
+					code: 200,
+					message: 'Order checked out successfully',
+				};
+			} else {
+				return {
+					code: 400,
+					message: response.data.message || "Can't checkout order",
+				};
+			}
+		} catch (error) {
+			return {
+				code: 400,
+				message: "Can't checkout order",
 			};
 		}
 	}

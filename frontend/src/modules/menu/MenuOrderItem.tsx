@@ -1,3 +1,4 @@
+import { OrderLineItemStatusResponse } from '@constants/orderLineItemStatus';
 import { IMenuOrderItem } from '@interfaces/index';
 import { useMenuItemsOrder } from '@stores/useMenuItemsOrder';
 import { useQueryClient } from '@tanstack/react-query';
@@ -16,6 +17,7 @@ const MenuOrderItem: React.FunctionComponent<IMenuOrderItemProps> = ({
 	quantity = 1,
 	note = 'nothing',
 	image,
+	orderLineItemStatus,
 }) => {
 	const { id: orderId } = useParams<{ id: string }>();
 
@@ -29,36 +31,22 @@ const MenuOrderItem: React.FunctionComponent<IMenuOrderItemProps> = ({
 	const queryClient = useQueryClient();
 	const increment = useMenuItemsOrder((state) => state.increment);
 	const updateNoteItem = useMenuItemsOrder((state) => state.updateNote);
+	const decrement = useMenuItemsOrder((state) => state.decrement);
 
 	const handleIncrement = async () => {
-		// const { value: newQuantity } = await Swal.fire({
-		// 	title: 'Quantity',
-		// 	input: 'number',
-		// 	inputValue: quantity,
-		// 	showCancelButton: true,
-		// 	inputValidator: (value) => {
-		// 		if (!value) {
-		// 			return 'You need to write something!';
-		// 		}
-
-		// 		if (!Number.isInteger(Number(value))) {
-		// 			return 'Quantity must be a number';
-		// 		}
-
-		// 		if (+value < quantity) {
-		// 			return 'Quantity must be greater than current quantity';
-		// 		}
-		// 		return '';
-		// 	},
-		// });
-
-		// if (newQuantity && newQuantity !== quantity) {
-		// 	// queryClient.invalidateQueries(['orderDetail', orderId]);
-
-		// 	Swal.fire('Updated!', 'Your item has been updated.', 'success');
-		// }
-
 		increment(dishId, orderLineItemId);
+	};
+
+	const handleDecrement = async () => {
+		if (orderLineItemStatus !== OrderLineItemStatusResponse.UN_COOK) {
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: 'You cannot decrease quantity of this item!',
+			});
+			return;
+		}
+		decrement(dishId, orderLineItemId);
 	};
 
 	const handleUpdateNote = async () => {
@@ -97,9 +85,9 @@ const MenuOrderItem: React.FunctionComponent<IMenuOrderItemProps> = ({
 				</div>
 				<div className="menu-order-item-btn">
 					<div className="menu-order-item-add">
-						{/* <button className="menu-order-item-btn-minus" onClick={() => handleDecrement(dishId)}>
+						<button className="menu-order-item-btn-minus" onClick={handleDecrement}>
 							<i className="fas fa-minus"></i>
-						</button> */}
+						</button>
 						<span className="menu-order-item-quantity">{quantity}</span>
 						<button className="menu-order-item-btn-plus" onClick={handleIncrement}>
 							<i className="fas fa-plus"></i>

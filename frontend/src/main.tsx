@@ -17,6 +17,8 @@ import ProtectedRoute from '@modules/common/ProtectedRoute';
 import Role from '@constants/ERole';
 import KitchenOrder from '@modules/kitchen/KitchenOrder';
 import { OrderDetailProvider } from '@context/useOrderDetail';
+import RedirectPage from '@pages/RedirectPage';
+import ErrorPage from '@pages/ErrorPage';
 
 const MainLayout = lazy(() =>
 	import('@layouts/MainLayout').then((module) => ({ default: module.default })),
@@ -54,12 +56,20 @@ const CheckoutPage = lazy(() =>
 	import('@pages/CheckoutPage').then((module) => ({ default: module.default })),
 );
 
+const HistoryPage = lazy(() =>
+	import('@pages/HistoryPage').then((module) => ({ default: module.default })),
+);
+
 const router = createBrowserRouter(
 	createRoutesFromElements(
-		<>
+		<Route errorElement={<ErrorPage />}>
 			<Route element={<MainLayout />}>
+				<Route element={<ProtectedRoute allowedRoles={[Role.ADMIN]} />}>
+					<Route path="/home" element={<DashboardPage />}></Route>
+					<Route path="/history" element={<HistoryPage />}></Route>
+				</Route>
 				<Route element={<ProtectedRoute allowedRoles={[Role.ADMIN, Role.EMPLOYEE, Role.CHEF]} />}>
-					<Route path="/" element={<DashboardPage />} />
+					<Route path="/" element={<RedirectPage />}></Route>
 					<Route path="/table" element={<TablePage />} />
 					<Route path="/menu" element={<MenuPage />}>
 						<Route path="/menu/order/:id" element={<MenuRightContent></MenuRightContent>} />
@@ -92,7 +102,7 @@ const router = createBrowserRouter(
 			>
 				<Route path="/login" element={<LoginPage></LoginPage>} />
 			</Route>
-		</>,
+		</Route>,
 	),
 );
 
