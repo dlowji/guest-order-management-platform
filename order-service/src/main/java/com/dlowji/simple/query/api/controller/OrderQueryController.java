@@ -42,7 +42,7 @@ public class OrderQueryController {
         return orderQueryService.getBestSellerDishes(quantity);
     }
 
-    @GetMapping("/filter")
+    @PostMapping("/filter")
     public ResponseEntity<?> getOrdersByDMY(@Valid @RequestBody FilterOrderRequest filterOrderRequest) {
         return orderQueryService.getOrderHistoryByDMY(filterOrderRequest.getTimestamp(), filterOrderRequest.getFilter());
     }
