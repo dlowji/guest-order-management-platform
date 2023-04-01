@@ -295,7 +295,7 @@ public class OrderQueryService {
         GetOrdersQuery getOrdersQuery = GetOrdersQuery.builder().build();
         List<OrderResponse> orderResponses = queryGateway.query(getOrdersQuery, ResponseTypes.multipleInstancesOf(OrderResponse.class)).join();
         List<OrderResponse> currentDateOrders = orderResponses.stream().filter(orderResponse -> orderResponse.getCreatedAt().toLocalDate().equals(currentDate)).toList();
-        BigDecimal revenue = currentDateOrders.stream().map(OrderResponse::getGrandTotal).reduce(BigDecimal.valueOf(0), BigDecimal::add);
+        BigDecimal revenue = currentDateOrders.stream().filter(orderResponse -> orderResponse.getOrderStatus()==OrderStatus.COMPLETED).map(OrderResponse::getGrandTotal).reduce(BigDecimal.valueOf(0), BigDecimal::add);
         int totalOrder = currentDateOrders.size();
         long diningOrders = currentDateOrders.stream().filter(orderResponse -> orderResponse.getOrderStatus() == OrderStatus.IN_PROCESSING).count();
         int freeTables = tableRepository.findAllByTableStatus(TableStatus.FREE).size();
