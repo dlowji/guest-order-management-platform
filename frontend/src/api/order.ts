@@ -1,7 +1,7 @@
 import type { AxiosInstance } from 'axios';
 import http from './http';
-import { IOrderDetails, TDashboardResponse, TOrder } from '@customTypes/index';
-import { IDashboard, IMenuOrderItem } from '@interfaces/index';
+import { BestSeller, IOrderDetails, TDashboardResponse, TOrder } from '@customTypes/index';
+import { IMenuOrderItem } from '@interfaces/index';
 import { statisticItemsDashboard } from '@constants/statisticItemsDashboard';
 import { formatCurrency } from '@utils/formatCurrency';
 
@@ -276,6 +276,71 @@ class OrderApi {
 			return {
 				code: 400,
 				message: "Can't checkout order",
+			};
+		}
+	}
+
+	public async getBestSeller(limit = 5) {
+		try {
+			const response = await this.request.get<{
+				code: number;
+				message: string;
+				data: BestSeller[];
+			}>(`${this.url}/best-seller/${limit}`);
+			if (response.data.code === 0) {
+				const bestSeller = response?.data?.data || [];
+				console.log('🚀 ~ OrderApi ~ getBestSeller ~ bestSeller:', bestSeller);
+				return {
+					code: 200,
+					items: bestSeller,
+				};
+			} else {
+				return {
+					code: 400,
+					message: "Can't get best seller",
+				};
+			}
+		} catch (error) {
+			return {
+				code: 400,
+				message: "Can't get best seller",
+			};
+		}
+	}
+
+	public async getHistory(
+		timestamp: number,
+		filter: 'day' | 'month' | 'year',
+	): Promise<{
+		code: number;
+		message?: string;
+		data?: IOrderDetails[];
+	}> {
+		try {
+			const response = await this.request.post<{
+				code: number;
+				message: string;
+				data: IOrderDetails[];
+			}>(`${this.url}/filter`, {
+				timestamp,
+				filter,
+			});
+			if (response.data.code === 0) {
+				const history = response?.data?.data || [];
+				return {
+					code: 200,
+					data: history,
+				};
+			} else {
+				return {
+					code: 400,
+					message: "Can't get history",
+				};
+			}
+		} catch (error) {
+			return {
+				code: 400,
+				message: "Can't get history",
 			};
 		}
 	}

@@ -42,14 +42,18 @@ const MenuItem: React.FunctionComponent<IMenuItemProps> = ({
 	}, [roleName]);
 
 	const reFormatStatus = React.useMemo(() => {
-		if (status.toLowerCase() === 'AVAILABLE') {
-			return 'AVAILABLE';
+		if (status.toUpperCase() === 'AVAILABLE') {
+			return 'Available';
 		}
-		if (status.toLowerCase() === 'UN_AVAILABLE') {
-			return 'UN AVAILABLE';
+		if (status.toUpperCase() === 'UN_AVAILABLE') {
+			return 'Un Available';
 		}
 		return status;
 	}, [status]);
+
+	if (isEmployee && status === 'UN_AVAILABLE') {
+		return null;
+	}
 
 	return (
 		<div className="menu-item">

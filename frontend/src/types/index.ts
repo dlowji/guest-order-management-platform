@@ -18,6 +18,7 @@ export type TUser = {
 	roleId?: string;
 	roleName?: Role;
 	accountId?: string;
+	scheduleId?: string;
 };
 
 export type TDish = {
@@ -51,6 +52,7 @@ export interface IOrderDetails extends TOrder {
 	tax: number;
 	promoCode: number;
 	discount: number;
+	lastProcessing?: string;
 }
 
 export interface ICategoryItem {
@@ -66,3 +68,7 @@ export type TDashboardResponse = {
 } & keyof IDashboard;
 
 export type PaymentMethod = 'CASH' | 'CREDIT_CARD' | 'PAYPAL';
+
+export type BestSeller = TDish & {
+	totalOrdered: number;
+};

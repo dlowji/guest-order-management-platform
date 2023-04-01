@@ -1,19 +1,14 @@
 import orderApi from '@api/order';
-import { statisticItemsDashboard } from '@constants/statisticItemsDashboard';
-import { TDashboardResponse } from '@customTypes/index';
-import { IDashboard } from '@interfaces/index';
 import MainContentHeader from '@modules/common/MainContentHeader';
 import StatisticItem from '@modules/common/StatisticItem';
 import StockOutTable from '@modules/dashboard/StockOutTable';
-import TableStatistic from '@modules/dashboard/TableStatistic';
-import TrendingItem from '@modules/dashboard/TrendingItem';
 import TrendingTable from '@modules/dashboard/TrendingTable';
 import { useQuery } from '@tanstack/react-query';
 import * as React from 'react';
 
 interface IDashboardPageProps {}
 
-const DashboardPage: React.FunctionComponent<IDashboardPageProps> = (props) => {
+const DashboardPage: React.FunctionComponent<IDashboardPageProps> = () => {
 	const { data: statisticItems } = useQuery({
 		queryKey: ['statisticItemsDashboard'],
 		queryFn: () => {
@@ -22,7 +17,7 @@ const DashboardPage: React.FunctionComponent<IDashboardPageProps> = (props) => {
 	});
 
 	return (
-		<div className="mt-3">
+		<div className="mb-10">
 			<MainContentHeader
 				title="Palmon Restaurant"
 				quantity={new Date().toDateString()}
