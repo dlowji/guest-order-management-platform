@@ -14,7 +14,7 @@ const TopnavCheckout: React.FunctionComponent<ITopnavCheckoutProps> = () => {
 	} = usePaymentItems();
 
 	const {
-		payment: { currentStep },
+		payment: { currentStep, totalSteps },
 		prevStep,
 		resetStep,
 	} = usePayment();
@@ -46,6 +46,12 @@ const TopnavCheckout: React.FunctionComponent<ITopnavCheckoutProps> = () => {
 		}
 	};
 	const backToHomePage = () => {
+		if (currentStep === totalSteps - 1) {
+			resetStep();
+			navigate('/');
+			return;
+		}
+
 		Swal.fire({
 			title: 'Are you sure?',
 			text: 'Are you definitely want to cancel checkout?',

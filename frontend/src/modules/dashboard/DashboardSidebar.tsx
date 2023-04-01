@@ -10,9 +10,9 @@ interface IDashboardSidebarProps {}
 const items = [
 	{
 		name: 'Home',
-		href: '/',
+		href: '/home',
 		icon: 'fa-solid fa-house',
-		isActive: false,
+		isActive: true,
 		permissions: [Role.ADMIN],
 	},
 	{
@@ -27,7 +27,7 @@ const items = [
 		href: '/menu',
 		icon: 'fa-sharp fa-solid fa-bell-concierge',
 		isActive: true,
-		permissions: [Role.EMPLOYEE, Role.CHEF],
+		permissions: [Role.EMPLOYEE, Role.CHEF, Role.ADMIN],
 	},
 	{
 		name: 'Order',
@@ -47,7 +47,7 @@ const items = [
 		name: 'History',
 		href: '/history',
 		icon: 'fa-solid fa-clock',
-		isActive: false,
+		isActive: true,
 		permissions: [Role.ADMIN],
 	},
 	{
