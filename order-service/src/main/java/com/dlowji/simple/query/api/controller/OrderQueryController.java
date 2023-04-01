@@ -1,10 +1,11 @@
 package com.dlowji.simple.query.api.controller;
 
+import com.dlowji.simple.command.api.model.FilterOrderRequest;
 import com.dlowji.simple.query.api.service.OrderQueryService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.Map;
 
 @RestController
@@ -41,10 +42,9 @@ public class OrderQueryController {
         return orderQueryService.getBestSellerDishes(quantity);
     }
 
-    @GetMapping("/{filter}")
-    public ResponseEntity<?> getOrdersByDMY(@PathVariable String filter) {
-        LocalDate current = LocalDate.now();
-        return orderQueryService.getOrderHistoryByDMY(current.getYear(), current.getMonthValue(), current.getDayOfMonth(), filter);
+    @GetMapping("/filter")
+    public ResponseEntity<?> getOrdersByDMY(@Valid @RequestBody FilterOrderRequest filterOrderRequest) {
+        return orderQueryService.getOrderHistoryByDMY(filterOrderRequest.getTimestamp(), filterOrderRequest.getFilter());
     }
 
     @GetMapping("/duration/{am}/{pm}")
