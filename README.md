@@ -10,9 +10,11 @@ Staffs can write guest's orders on the order slip, transfer them to the kitchen 
 Besides, chefs can control dishes were ordered by guests, especially ensure the correctness of note from guests.
 
 ## Installation
-- Install Java JDK 17
-- Install Intellij IDEA 2022
-- Install Postman
+-  Java JDK 17(https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
+-  Intellij IDEA 2022(https://www.jetbrains.com/idea/download/#section=windows)
+-  Postman(https://www.postman.com/downloads/)
+-  Nodejs LTS(https://nodejs.org/en)
+-  Axon server 4.6.11(https://developer.axoniq.io/axon-server/download)
 
 ## Usage
 
