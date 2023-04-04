@@ -2,7 +2,6 @@ package com.dlowji.simple.command.api.events;
 
 import com.dlowji.simple.command.api.data.*;
 import com.dlowji.simple.command.api.enums.TableStatus;
-import com.dlowji.simple.command.api.model.CustomOrderLineItemRequest;
 import com.dlowji.simple.command.api.model.ProgressOrderLineItemRequest;
 import com.dlowji.simple.command.api.model.UpdateOrderLineItemRequest;
 import com.dlowji.simple.enums.OrderLineItemStatus;
@@ -25,6 +24,7 @@ import java.util.Optional;
 public class OrderEventsHandler {
 
     private final IOrderRepository orderRepository;
+    private final double VAT_VALUE = 0.1;
 
     private final IOrderLineItemRepository orderLineItemRepository;
     private final ITableRepository tableRepository;
@@ -78,45 +78,45 @@ public class OrderEventsHandler {
         }
     }
 
-    @EventHandler
-    public void on(OrderPlacedEvent orderPlacedEvent) {
-        Optional<Order> existOrder = orderRepository.findById(orderPlacedEvent.getOrderId());
-        if (existOrder.isPresent()) {
-            Order order = existOrder.get();
-            String tableId = order.getTableId();
-            Optional<SeveredTable> existTable = tableRepository.findById(tableId);
-            if (existTable.isPresent()) {
-                SeveredTable table = existTable.get();
-                order.setOrderStatus(OrderStatus.IN_PROCESSING);
-                List<CustomOrderLineItemRequest> customOrderLineItemRequests = orderPlacedEvent.getCustomOrderLineItemRequests();
-                BigDecimal subTotal = order.getSubTotal();
-                BigDecimal itemDiscount = order.getItemDiscount();
-                BigDecimal discount = order.getDiscount();
-                BigDecimal tax = order.getTax();
-                for (CustomOrderLineItemRequest customOrderLineItemRequest : customOrderLineItemRequests) {
-                    OrderLineItem orderLineItem = OrderLineItem.builder()
-                            .dishId(customOrderLineItemRequest.getDishId())
-                            .quantity(customOrderLineItemRequest.getQuantity())
-                            .price(customOrderLineItemRequest.getPrice())
-                            .orderId(order.getOrderId())
-                            .note(customOrderLineItemRequest.getNote())
-                            .build();
-                    orderLineItemRepository.save(orderLineItem);
-                    if (customOrderLineItemRequest.getPrice() != null) {
-                        BigDecimal result = customOrderLineItemRequest.getPrice().multiply(BigDecimal.valueOf(customOrderLineItemRequest.getQuantity()));
-                        subTotal = subTotal.add(result);
-                    }
-                }
-                BigDecimal total = subTotal.add(tax);
-                BigDecimal grandTotal = total.subtract(itemDiscount).subtract(discount);
-                order.setSubTotal(subTotal);
-                order.setTotal(total);
-                order.setGrandTotal(grandTotal);
-                tableRepository.save(table);
-                orderRepository.save(order);
-            }
-        }
-    }
+//    @EventHandler
+//    public void on(OrderPlacedEvent orderPlacedEvent) {
+//        Optional<Order> existOrder = orderRepository.findById(orderPlacedEvent.getOrderId());
+//        if (existOrder.isPresent()) {
+//            Order order = existOrder.get();
+//            String tableId = order.getTableId();
+//            Optional<SeveredTable> existTable = tableRepository.findById(tableId);
+//            if (existTable.isPresent()) {
+//                SeveredTable table = existTable.get();
+//                order.setOrderStatus(OrderStatus.IN_PROCESSING);
+//                List<CustomOrderLineItemRequest> customOrderLineItemRequests = orderPlacedEvent.getCustomOrderLineItemRequests();
+//                BigDecimal subTotal = order.getSubTotal();
+//                BigDecimal itemDiscount = order.getItemDiscount();
+//                BigDecimal discount = order.getDiscount();
+//                BigDecimal tax = order.getTax();
+//                for (CustomOrderLineItemRequest customOrderLineItemRequest : customOrderLineItemRequests) {
+//                    OrderLineItem orderLineItem = OrderLineItem.builder()
+//                            .dishId(customOrderLineItemRequest.getDishId())
+//                            .quantity(customOrderLineItemRequest.getQuantity())
+//                            .price(customOrderLineItemRequest.getPrice())
+//                            .orderId(order.getOrderId())
+//                            .note(customOrderLineItemRequest.getNote())
+//                            .build();
+//                    orderLineItemRepository.save(orderLineItem);
+//                    if (customOrderLineItemRequest.getPrice() != null) {
+//                        BigDecimal result = customOrderLineItemRequest.getPrice().multiply(BigDecimal.valueOf(customOrderLineItemRequest.getQuantity()));
+//                        subTotal = subTotal.add(result);
+//                    }
+//                }
+//                BigDecimal total = subTotal.add(tax);
+//                BigDecimal grandTotal = total.subtract(itemDiscount).subtract(discount);
+//                order.setSubTotal(subTotal);
+//                order.setTotal(total);
+//                order.setGrandTotal(grandTotal);
+//                tableRepository.save(table);
+//                orderRepository.save(order);
+//            }
+//        }
+//    }
 
     @EventHandler
     public void on(PlacedOrderUpdatedEvent placedOrderUpdatedEvent) {
@@ -128,7 +128,7 @@ public class OrderEventsHandler {
             BigDecimal subTotal = order.getSubTotal();
             BigDecimal itemDiscount = order.getItemDiscount();
             BigDecimal discount = order.getDiscount();
-            BigDecimal tax = order.getTax();
+            BigDecimal tax;
 
             for (UpdateOrderLineItemRequest updateOrderLineItemRequest : updateOrderLineItemRequestList) {
                 if (updateOrderLineItemRequest.isCreate()) {
@@ -143,9 +143,11 @@ public class OrderEventsHandler {
                             .build();
                     BigDecimal result = orderLineItem.getPrice().multiply(BigDecimal.valueOf(updateOrderLineItemRequest.getQuantity()));
                     subTotal = subTotal.add(result);
+                    tax = subTotal.multiply(BigDecimal.valueOf(VAT_VALUE));
                     BigDecimal total = subTotal.add(tax);
                     BigDecimal grandTotal = total.subtract(itemDiscount).subtract(discount);
                     order.setSubTotal(subTotal);
+                    order.setTax(tax);
                     order.setTotal(total);
                     order.setGrandTotal(grandTotal);
                     orderLineItemRepository.save(orderLineItem);
@@ -197,9 +199,11 @@ public class OrderEventsHandler {
                         }
                         BigDecimal result = existOrderLineItem.getPrice().multiply(BigDecimal.valueOf(moreQuantity));
                         subTotal = subTotal.add(result);
+                        tax = subTotal.multiply(BigDecimal.valueOf(VAT_VALUE));
                         BigDecimal total = subTotal.add(tax);
                         BigDecimal grandTotal = total.subtract(itemDiscount).subtract(discount);
                         order.setSubTotal(subTotal);
+                        order.setTax(tax);
                         order.setTotal(total);
                         order.setGrandTotal(grandTotal);
                         orderLineItemRepository.save(existOrderLineItem);
@@ -228,13 +232,15 @@ public class OrderEventsHandler {
 //                    orderLineItemList.remove(orderLineItem);
                         BigDecimal result = orderLineItem.getPrice().multiply(BigDecimal.valueOf(progressOrderLineItemRequest.getQuantity()));
                         BigDecimal subTotal = order.getSubTotal();
-                        BigDecimal tax = order.getTax();
+                        BigDecimal tax;
                         BigDecimal itemDiscount = order.getItemDiscount();
                         BigDecimal discount = order.getDiscount();
                         subTotal = subTotal.subtract(result);
+                        tax = subTotal.multiply(BigDecimal.valueOf(VAT_VALUE));
                         BigDecimal total = subTotal.add(tax);
                         BigDecimal grandTotal = total.subtract(itemDiscount).subtract(discount);
                         order.setSubTotal(subTotal);
+                        order.setTax(tax);
                         order.setTotal(total);
                         order.setGrandTotal(grandTotal);
                     } else {
