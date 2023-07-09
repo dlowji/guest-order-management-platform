@@ -1,5 +1,3 @@
-# Soa midterm platform
-
 ## Name
 Paimon - Guests Orders Management Platform
 
